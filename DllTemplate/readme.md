@@ -1,37 +1,32 @@
 # DllTemplate
 
-基于C#的的Hook
+English | [中文](readme.zh-CN.md)
 
-## 环境配置
+C#-based hooks for mods.
 
-- 项目文件在Dev文件夹下，发布时不需要留
+## Environment Setup
 
-- 编译时，修改.csproj，将**GamePath**改为你的游戏目录
+- The project files are under `Dev`. They are not required when publishing the mod.
+- Before building, edit `Dev/DllTemplate.csproj` and set `GamePath` to your game directory:
 
-![alt text](/Assets/image.png)
+```xml
+<GamePath>D:\Witch's Apocalyptic Journey</GamePath>
+<DllPath>$(GamePath)\Witch's Apocalyptic Journey_Data\Managed</DllPath>
+```
 
-- 建议使用Rider或者VSCODE进行编译
+- Rider or VS Code is recommended for building.
 
+## Features
 
+- Attribute-based hooks: supports `HookBefore` and `HookAfter`.
+- Full code completion.
+- Better support for C# language features.
+- Cross-platform is not supported.
 
-## 特性
+## Getting Started
 
-- 基于属性的**Hook**：支持**HookBefore**与**HookAfter**
-
-- 完整的代码补全
-
-- 更好的C#语言特性支持
-
-- **不支持跨平台**
-
-## 开始使用
-
-- 在mod的入口处方法标记**ModInitialize**
-
-- 在你想要作为Hook的方法上加上属性**HookBefore**或**HookAfter**
-
-- Patch的方法必须为静态，若要Patch实例方法，第一个参数默认为其实例。
-
-- Patch的方法参数可以不全，但必须保证顺序
-
-- 使用方式：**dotnet build**后将编译出的dll改名为Entry.dll拖入Scripts文件夹下
+- Mark the mod entry method with `ModInitialize`.
+- Add `HookBefore` or `HookAfter` to the methods you want to use as hooks.
+- Patch methods must be static. When patching an instance method, the first parameter is the instance by default.
+- Patch method parameters can be partial, but their order must match the target method.
+- After running `dotnet build`, rename the built DLL to `Entry.dll` and place it in the `Scripts` folder.

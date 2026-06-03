@@ -1,36 +1,40 @@
-# Mod 编写手册
+# Mod Authoring Guide
 
-## 1. 快速开始
-- 复制 `ModTemplate`，重命名为你的 Mod 目录（目录名必须与 `ModName` 一致）。
-- 修改 `ModConfig.json`：
+English | [中文](README.zh-CN.md)
 
-  - `ModName`：模组名
-  - `ModAuthor`：作者名
-  - `ModVersion`：版本
-  - `ModDescription`：描述
-  - `IconPath`：图标路径（通常 `Icon.png`）
-  - `Enabled`：是否启用
-  - `Dependencies`（可选）：依赖列表，格式 `ModName.ModAuthor`
+## 1. Quick Start
 
-## 2. 目录约定
-- `Scripts/Entry.lua`：入口脚本，加载时执行。
-- `Data/`：新增的数值配置表。
-- `Text/`：新增的文本配置表。
-- `ModResource/`：资源文件（图片、动画等）。
+- Copy `ModTemplate` and rename it to your mod folder. The folder name must match `ModName`.
+- Edit `ModConfig.json`:
+  - `ModName`: mod name
+  - `ModAuthor`: author name
+  - `ModVersion`: version
+  - `ModDescription`: description
+  - `IconPath`: icon path, usually `Icon.png`
+  - `Enabled`: whether the mod is enabled
+  - `Dependencies` (optional): dependency list in the format `ModName.ModAuthor`
 
-## 3. 入口脚本专用方法
-- 推荐入口：`function ModConfig:Setup() ... end`
-- 你可以在 `Setup` 内进行三类操作：
+## 2. Directory Conventions
 
-  - 改表：`ModifyDataConfig` / `SetDataConfig`
-  - 资源重定向：`RedirectSourcePath`
-  - 合并表 `MergeDataConfig`
-  - 方法 Hook：`AddMethodHookBefore` / `AddMethodHookAfter`
+- `Scripts/Entry.lua`: entry script, executed when the mod loads.
+- `Data/`: new gameplay/config data tables.
+- `Text/`: new text and localization tables.
+- `ModResource/`: resource files such as images and animations.
 
-示例：
+## 3. Entry Script Methods
+
+- Recommended entry point: `function ModConfig:Setup() ... end`
+- In `Setup`, you can:
+  - Change tables: `ModifyDataConfig` / `SetDataConfig`
+  - Redirect resources: `RedirectSourcePath`
+  - Merge tables: `MergeDataConfig`
+  - Hook methods: `AddMethodHookBefore` / `AddMethodHookAfter`
+
+Example:
+
 ```lua
 function ModConfig:Setup()
-  self:ModifyDataConfig("career_3", "Name", "故障机器人")
+  self:ModifyDataConfig("career_3", "Name", "Defect Robot")
   self:RedirectSourcePath("AnimationLib/支配魔女/Idle", "Mods/YourMod/ModResource/AnimationLib/Defect/Idle")
   self:AddMethodHookBefore("SettingUI.OnEnable", function(ctx)
     CS.UnityEngine.Debug.Log("[YourMod] SettingUI.OnEnable")
@@ -38,117 +42,184 @@ function ModConfig:Setup()
 end
 ```
 
-## 4. 可用 Lua API（self/ModConfig）
-- `SetDataConfig(id, table)`：批量改一行（不会改 `Id` 字段）。
-- `ModifyDataConfig(id, key, value)`：改单个字段。
-- `RedirectSourcePath(originalPath, newPath)`：重定向资源路径。
-- `AddDynamicMethod(methodName, fn)`：注册全局 Lua 方法。
-- `AddMethodHookBefore(typeDotMethod, fn)`：前置 Hook。
-- `AddMethodHookAfter(typeDotMethod, fn)`：后置 Hook。
+## 4. Available Lua API (`self` / `ModConfig`)
 
-## 5. Data/Text CSV 规则
-- 表头（第 1 行）必须与主工程对应 CSV 一致。
-- 注释（第 2 行）用于字段说明，建议保留。
-- *Data*中是物体效果配置，*Text*中是文本及其本地化配置
-- 带*Script*后缀的是脚本列，需要填写*lua*逻辑，self为ScriptExecutor类型。
-- 带*_en*等后缀的是本地化列，目前游戏支持*_en,_zh_hant,_jp*
+- `SetDataConfig(id, table)`: update an entire row, except the `Id` field.
+- `ModifyDataConfig(id, key, value)`: update one field.
+- `RedirectSourcePath(originalPath, newPath)`: redirect a resource path.
+- `AddDynamicMethod(methodName, fn)`: register a global Lua method.
+- `AddMethodHookBefore(typeDotMethod, fn)`: add a before hook.
+- `AddMethodHookAfter(typeDotMethod, fn)`: add an after hook.
 
+## 5. Data/Text CSV Rules
 
-## 6. 物品编纂规则
-- 游戏加载时，会读取根目录*Data*和*Text*下的表，并将同名表进行合并处理。
-- 物品在游戏内的Id组成规则为：`ModName_FileName_Id`，因此，在Data和Text中无法进行覆盖操作，只能进行新增。
-- 若Id带`*`，则不会进入游戏随机池中，否则将正常进入池子。
-- 效果编纂教程规则令见-> [C#版效果编纂教程](https://www.cnblogs.com/DLSinnocence/articles/18948776)
-- 注意，Mod只能识别lua脚本，需要将其中的C#语法改为Lua版本。如调用`AddBuff(buffId, level)`时改为`self:AddBuff(buffId, level)`
-- 更多的Lua语法详见->[Lua教程](https://www.runoob.com/lua/lua-basic-syntax.html)
-- 完整的游戏配置请见-> [网页版](https://dlsinnocence.github.io/gamewiki/) [本地版](Scripts/Lib/DataConfigs)
-- 原版效果示例->Scripts/Lib/DataConfigs（是C#语言的，仅供参考，mod必须用lua编纂）
-- 脚本里引用原版Id使用DataId.Id,引用ModId直接写字面量。
-- 卡牌必须设定BaseScript是AttackCardItem还是CommonCardItem（是否选目标）。
-- 卡牌的持续性效果需要写成Buff。
+- The header row (row 1) must match the corresponding CSV in the main game project.
+- The comment row (row 2) describes fields and should usually be kept.
+- `Data` contains gameplay/effect configuration. `Text` contains display text and localization.
+- Columns ending with `Script` contain Lua logic. `self` is a `ScriptExecutor`.
+- Localization columns can use suffixes such as `_en`, `_zh_hant`, and `_jp`.
 
-## 7. 常见问题
+## 6. Item Authoring Rules
 
-- Mod 未生效
-  - 检查 `ModConfig.json` 的 `Enabled` 是否为 `true`，以及依赖是否正确。
+- On load, the game reads `Data` and `Text` from the mod root and merges tables with the same names.
+- In-game item IDs are generated as `ModName_FileName_Id`, so `Data` and `Text` entries are for adding content, not overriding existing rows.
+- If an ID contains `*`, it will not enter the random pool. Otherwise, it can appear normally in the pool.
+- Effect authoring reference: [C# effect authoring guide](https://www.cnblogs.com/DLSinnocence/articles/18948776)
+- Mods only recognize Lua scripts. Convert C# syntax to Lua syntax. For example, use `self:AddBuff(buffId, level)` instead of `AddBuff(buffId, level)`.
+- Lua syntax reference: [Lua tutorial](https://www.runoob.com/lua/lua-basic-syntax.html)
+- Full game configs: [web version](https://dlsinnocence.github.io/gamewiki/) and [local version](Scripts/Lib/DataConfigs)
+- Vanilla effect examples are under `Scripts/Lib/DataConfigs`. They are written in C# style and are for reference only; mod scripts must be written in Lua.
+- In scripts, reference vanilla IDs with `DataId.Id`; reference mod IDs as string literals.
+- Cards must set `BaseScript` to either `AttackCardItem` or `CommonCardItem`, depending on whether the card selects a target.
+- Persistent card effects should be written as buffs.
 
-- 无法设置字典
-  - 字符串字典不能用[]访问，必须用dict:get_Item  dict:set_Item等，详情参考Xlua。
+## 7. FAQ
 
-- 资源路径是什么？
-  - Mod路径为Mods/<你的Mod名>/……
-  - 原版路径请参考游戏配置表。
+- Mod does not take effect
+  - Check whether `Enabled` in `ModConfig.json` is `true`, and whether dependencies are correct.
 
-- Id为什么有的带星号有的没有？
-  - 区别于是否进池子，有些绝对不会随机获得到的（如职业卡）要加星号。
+- Cannot set a dictionary
+  - String dictionaries cannot be accessed with `[]`. Use `dict:get_Item` and `dict:set_Item`. See XLua details.
 
-- 如何添加有参事件
-  - 战斗中的有参事件目前只提供了四个类型，HurtData,ActionData,NewEnemyData和DamageData，使用时用AddEvent_HurtData之类的调用。
+- What is the resource path?
+  - The mod path is `Mods/<your mod name>/...`
+  - Check the game config tables for vanilla paths.
 
-- Script/Lib里的东西有什么用？
-  - 里面包括了给*EmmyLua*插件用的TypeHint和原版所有配置的参考。
+- Why do some IDs contain `*`?
+  - It controls whether the item enters the random pool. Content that should never be randomly obtained, such as career cards, should use `*`.
 
-- 为什么方法Hook找不到方法？
-  - 自检：是否加了CS前缀，实例方法是否加了self:，方法所在类是否实现有Modifiable接口。
+- How do I add parameterized events?
+  - Combat currently supports four parameterized event types: `HurtData`, `ActionData`, `NewEnemyData`, and `DamageData`. Use calls such as `AddEvent_HurtData`.
 
-## 8. Fight事件列表
-- 需要在ScriptExecutor中添加监听。
+- What is `Scripts/Lib` for?
+  - It contains EmmyLua type hints and references for all vanilla configs.
 
-| 事件名 | 注释 |
+- Why cannot a method hook find the method?
+  - Check whether you added the `CS` prefix, whether instance methods use `self:`, and whether the target class implements `Modifiable`.
+
+## 8. Fight Event List
+
+Add listeners in `ScriptExecutor`.
+
+| Event | Description |
 | --- | --- |
-| `Attack` | 攻击事件 |
-| `AddEnemy` | 添加敌人事件 |
-| `AttackDone` | 攻击完成事件 |
-| `CostPower` | 消耗能量事件 |
-| `NoPower` | 能量不足事件 |
-| `AddPower` | 增加能量事件 |
-| `Dead` | 死亡事件 |
-| `ToughCountZero` | 韧性归零事件 |
-| `OnEnemyDead` | 敌人死亡事件 |
-| `Resurrection` | 复活事件 |
-| `EndRound` | 回合结束事件 |
-| `ICreateCardItem` | 创建卡牌事件（触发 N 次） |
-| `CreateCardItem` | 创建卡牌项事件 |
-| `EndCreateCardItem` | 创建卡牌项结束事件 |
-| `NoPowerWhenTry` | 尝试使用卡牌时能量不足事件 |
-| `Action` | 行动事件 |
-| `BurnCard` | 烧牌事件 |
-| `Init` | 初始化事件 |
-| `OnDiceCheck` | 骰子校验事件 |
-| `OnDiceValue` | 骰子点数事件 |
-| `Win` | 胜利事件 |
-| `Escape` | 逃跑事件 |
-| `StartRound` | 回合开始事件 |
-| `Shuffle` | 洗牌事件 |
-| `OnCameraMove` | 相机移动事件 |
-| `FightStart` | 战斗开始事件 |
-| `Hurt` | 受伤事件 |
-| `Heal` | 治疗事件 |
-| `SelectCardEnd` | 选卡结束事件 |
-| `OnTriggerEffect` | 触发效果事件 |
-| `ScriptExecute` | ScriptExecutor 执行方法 |
+| `Attack` | Attack event |
+| `AddEnemy` | Add enemy event |
+| `AttackDone` | Attack completed |
+| `CostPower` | Consume power |
+| `NoPower` | Not enough power |
+| `AddPower` | Add power |
+| `Dead` | Death |
+| `ToughCountZero` | Toughness reaches zero |
+| `OnEnemyDead` | Enemy death |
+| `Resurrection` | Resurrection |
+| `EndRound` | End of round |
+| `ICreateCardItem` | Create card event, triggered N times |
+| `CreateCardItem` | Create card item |
+| `EndCreateCardItem` | Finish creating card item |
+| `NoPowerWhenTry` | Not enough power when trying to use a card |
+| `Action` | Action event |
+| `BurnCard` | Burn card |
+| `Init` | Initialize |
+| `OnDiceCheck` | Dice check |
+| `OnDiceValue` | Dice value |
+| `Win` | Win |
+| `Escape` | Escape |
+| `StartRound` | Start of round |
+| `Shuffle` | Shuffle |
+| `OnCameraMove` | Camera movement |
+| `FightStart` | Fight start |
+| `Hurt` | Hurt |
+| `Heal` | Heal |
+| `SelectCardEnd` | Card selection ended |
+| `OnTriggerEffect` | Trigger effect |
+| `ScriptExecute` | `ScriptExecutor` executes a method |
 
-### 全局事件（非 Fight）
+### Global Events (Non-Fight)
 
-- 需要在EventCenter中添加监听
+Add listeners in `EventCenter`.
 
-| 事件名 | 注释 |
+| Event | Description |
 | --- | --- |
-| `UIOpen` | UI 打开事件（拼接方法：`UIOpen-Name`） |
-| `UIHelp` | UI 帮助事件 |
-| `UIClose` | UI 关闭事件 |
-| `LanguageChange` | 语言切换事件 |
-|…… | …… |
+| `UIOpen` | UI open event. Method key format: `UIOpen-Name` |
+| `UIHelp` | UI help event |
+| `UIClose` | UI close event |
+| `LanguageChange` | Language change event |
+| ... | ... |
 
-### 其他事件
+### Other Events
 
-例如**RoleTable**，其实现了**INotifyPropertyChanged**，需要找到事件进行监听。
+For example, `RoleTable` implements `INotifyPropertyChanged`; find and listen to the relevant event when needed.
 
-## 9. 快速开始
-1. 删掉*Data*和*Text*中的文件夹，只留下`Card`
-2. 打开`Data`和`Text`下的表格，尝试参照ScriptExecutor类编写效果。
+## 9. Starter Exercise
 
-## 10. 发布Mod
-- 在游戏目录中找到`WorkshopUploader.exe`
+1. Delete folders under `Data` and `Text`, leaving only `Card`.
+2. Open the tables under `Data/Card` and `Text/Card`, then write effects by referring to `ScriptExecutor`.
 
-更多请参见本例子，尝试编写你的第一个Mod吧！
+## 10. Publish Your Mod
+
+The upload tool is shipped with the game. The default path is:
+
+`D:\Witch's Apocalyptic Journey\Witch's Apocalyptic Journey_Data\StreamingAssets\Mod Upload Tool\WorkshopUploader.exe`
+
+### Before Uploading
+
+1. Make sure the mod root contains `ModConfig.json`.
+2. Fill in at least these fields in `ModConfig.json`:
+   - `ModName`: mod name, recommended to match the mod folder name.
+   - `ModAuthor`: author name.
+   - `ModVersion`: version number.
+   - `ModDescription`: default Workshop description. You can still edit it in the upload tool UI.
+   - `IconPath`: preview image path, usually `Icon.png`.
+   - `Enabled`: set to `true` for local testing.
+3. For first upload, `PublishedFileId` can be omitted or empty. The tool writes it back after a successful upload.
+4. Optionally set `WorkshopVisibility` for the default visibility:
+   - `Public`
+   - `FriendsOnly`
+   - `Private`
+   - `Unlisted`
+
+Example:
+
+```json
+{
+  "ModName": "YourMod",
+  "ModVersion": "1.0",
+  "ModAuthor": "YOUR_NAME",
+  "ModDescription": "Your workshop description",
+  "IconPath": "Icon.png",
+  "Enabled": true,
+  "Dependencies": null,
+  "WorkshopVisibility": "Private",
+  "PublishedFileId": ""
+}
+```
+
+### Start the Upload Tool
+
+1. Start Steam and log in to the account that will publish the mod.
+2. Open the upload tool folder under the game directory:
+
+`D:\Witch's Apocalyptic Journey\Witch's Apocalyptic Journey_Data\StreamingAssets\Mod Upload Tool`
+
+3. Run `WorkshopUploader.exe`.
+
+### In the Tool
+
+1. Click "Select Mod Folder" and select the mod root folder that contains `ModConfig.json`.
+2. Click "Reload ModConfig", or wait for the tool to read the config.
+3. Fill in "Title". The title is entered manually and is not auto-filled from `ModName`.
+4. Check "Description", "Preview image", and "Visibility".
+5. To update an existing Workshop item, keep `PublishedFileId`. To create a new item, clear `PublishedFileId`.
+6. Optionally fill in "Change note" for the Steam changelog.
+7. Click "Upload to Workshop".
+
+### Upload Result
+
+- After the first successful upload, the tool writes the returned Steam `PublishedFileId` back to `ModConfig.json`.
+- Later uploads of the same mod use `PublishedFileId` to update the existing Workshop item.
+- If `PublishedFileId` does not belong to the current game or current Steam user, the tool clears it and uploads as a new item.
+- Upload content is copied to a temporary directory first. `.meta` files and `Scripts/Lib/DataConfigs` are not uploaded.
+- If the tool says you need to accept the Steam Workshop legal agreement, confirm it on the Steam page once, then check the item again.
+
+See this example and try writing your first mod.
