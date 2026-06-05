@@ -1,8 +1,8 @@
-# Witch: The End Journey Mod Tutorial
+# Witch's Apocalyptic Journey Mod Tutorial
 
 English | [中文](README.zh-CN.md)
 
-This repository collects mod templates, examples, and development notes for Witch: The End Journey. When creating a new mod, copy either `ModTemplate` or `DllTemplate` into your own mod folder, then edit the configuration and scripts by following the README in that template.
+This repository collects mod templates, examples, and development notes for Witch's Apocalyptic Journey. When creating a new mod, copy either `ModTemplate` or `DllTemplate` into your own mod folder, then edit the configuration and scripts by following the README in that template.
 
 ## Directory Guide
 
