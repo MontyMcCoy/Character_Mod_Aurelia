@@ -1,5 +1,2340 @@
 ---@meta
 
+---@class DialogueManager : Singleton
+---@field Identity System.Collections.Generic.Dictionary
+---@field IsPreviewMode boolean
+---@field IsChat boolean
+---@field Instance DialogueManager -- infered from Singleton`1[DialogueManager]
+---@field GetInstance DialogueManager -- infered from Singleton`1[DialogueManager]
+DialogueManager = {}
+---@alias CS.DialogueManager DialogueManager
+CS.DialogueManager = DialogueManager
+
+---@return DialogueManager
+function DialogueManager.New() end
+function DialogueManager:Init() end
+function DialogueManager:InitPreview() end
+---@param id string
+function DialogueManager:ShowDialogue(id) end
+---@param flag boolean
+function DialogueManager:HideDialogue(flag) end
+---@return boolean
+function DialogueManager:ShowDialogueBoxIfHidden() end
+---@param instanceId string
+---@param emoji GifAsset
+function DialogueManager:ShowEmoji(instanceId, emoji) end
+function DialogueManager:NextDialogue() end
+---@param options System.ValueTuple
+function DialogueManager:ShowOptions(options) end
+function DialogueManager:EndDialogue() end
+
+---@class FightCardManager : System.Object
+---@field cardList System.Collections.ObjectModel.ObservableCollection
+---@field tempList System.Collections.Generic.List
+---@field usedCardList System.Collections.ObjectModel.ObservableCollection
+---@field FightcardList System.Collections.Generic.List
+---@field nascentList System.Collections.Generic.List
+---@field CardTags System.Collections.Generic.Dictionary
+---@field Instance FightCardManager
+FightCardManager = {}
+---@alias CS.FightCardManager FightCardManager
+CS.FightCardManager = FightCardManager
+
+---@return FightCardManager
+function FightCardManager.New() end
+function FightCardManager:Init() end
+---@param dataConfig DataConfig
+function FightCardManager:CardTagCheck(dataConfig) end
+---@param dataConfig IDataConfig
+function FightCardManager:RefreshTag(dataConfig) end
+---@param NeedUsed boolean
+function FightCardManager:RandomIndex(NeedUsed) end
+---@return boolean
+function FightCardManager:HasCard() end
+---@return DataConfig
+function FightCardManager:DrawCard() end
+
+---@class FightManager : Mirror.NetworkBehaviour
+---@field Instance FightManager
+---@field IsFake boolean
+---@field fightType FightType
+---@field level string
+---@field ValueDice ScriptExecutor.DiceWrapper
+---@field CheckDice ScriptExecutor.DiceWrapper
+---@field DefaultDice ScriptExecutor.DiceWrapper
+---@field roleQueue System.Collections.Generic.List
+---@field ActionQueue System.Collections.Generic.List
+---@field statuses System.Collections.Generic.Dictionary
+---@field statusData System.Collections.Generic.Dictionary
+---@field TempVarsMap System.Collections.Generic.Dictionary
+---@field eventList System.Collections.Generic.Queue
+---@field targetList System.Collections.Generic.Queue
+---@field enemyManager EnemyManager
+---@field patternManager PatternManager
+---@field SumOfEnemyPositive number
+---@field EnemyHp number
+---@field NowActionRole string
+---@field waitCount number
+---@field wantLevel string
+---@field ReSetCount number
+---@field TempRoleList System.Collections.Generic.Dictionary
+---@field IsRet boolean
+---@field selfIndex string
+---@field NetworkNowActionRole string
+FightManager = {}
+---@alias CS.FightManager FightManager
+CS.FightManager = FightManager
+
+function FightManager:ResetFirstDeadPlayer() end
+---@param instanceId string
+---@return boolean
+function FightManager:TryMarkFirstDeadPlayer(instanceId) end
+---@param instanceId string
+---@return boolean
+function FightManager:IsFirstDeadPlayer(instanceId) end
+---@param target StatusManager
+---@param from StatusManager
+---@return boolean
+function FightManager:CanTriggerFirstDeadRevive(target, from) end
+function FightManager:ResetWaitCount() end
+---@param level string
+function FightManager:ReadyToInit(level) end
+function FightManager:RpcFightCheck() end
+function FightManager:ReadyToStart() end
+---@param level string
+function FightManager:ReSetFight(level) end
+function FightManager:ClearFightui() end
+---@param action string
+---@param Id string
+---@param sourceInstanceId string
+---@param fromId string
+---@param theData System.Byte[]
+---@param Vars System.String[]
+function FightManager:CmdSendEvent(action, Id, sourceInstanceId, fromId, theData, Vars) end
+---@param level string
+---@param roleQueueStream System.Byte[]
+---@param fromtempRoleListStream System.Byte[]
+---@param positive number
+---@param enemyHp number
+function FightManager:Init(level, roleQueueStream, fromtempRoleListStream, positive, enemyHp) end
+---@param enemyId string
+function FightManager:CmdAddEnemy(enemyId) end
+---@param enemyId string
+function FightManager:RpcAddEnemy(enemyId) end
+---@param statusData StatusDataTransfer
+function FightManager:SyncStatus(statusData) end
+---@param type FightType
+function FightManager:CmdChangeType(type) end
+---@param instanceId string
+function FightManager:CmdPlayChange(instanceId) end
+---@param instanceId string
+---@param isDead boolean
+function FightManager:CmdAnnounceDone(instanceId, isDead) end
+function FightManager:EndPlayerturn() end
+function FightManager:TurnEnd() end
+---@param conn Mirror.NetworkConnection
+---@param newType FightType
+---@param nowAction string
+function FightManager:TargetChangeUnit(conn, newType, nowAction) end
+---@param newType FightType
+function FightManager:ChangeUnit(newType) end
+---@overload fun(self: FightManager, statusCommand: IStatusCommand)
+---@param statusCommand IStatusCommand
+---@param conn Mirror.NetworkConnection
+function FightManager:EnqueueEvent(statusCommand, conn) end
+---@param target Mirror.NetworkConnection
+---@param objCommand Fight.ObjTarget.ObjTargetBase
+function FightManager:TargetEnqueueEvent(target, objCommand) end
+---@param statusCommand Fight.StatusCommand.ClientCommandBase
+function FightManager:CmdEnqueueEvent(statusCommand) end
+---@param conn Mirror.NetworkConnectionToClient
+function FightManager:CmdCheckDead(conn) end
+---@return System.Collections.IEnumerator
+function FightManager:DOAllAction() end
+---@param CareerId string
+---@param playerIdentity string
+function FightManager:CmdChangeCareer(CareerId, playerIdentity) end
+---@param Isshow boolean
+---@param playerIdentity string
+function FightManager:CmdChangeSummon(Isshow, playerIdentity) end
+---@param Isshow boolean
+---@param playerIdentity string
+function FightManager:RpcChangeSummon(Isshow, playerIdentity) end
+---@param CareerId string
+---@param playerIdentity string
+function FightManager:RpcChangeCareer(CareerId, playerIdentity) end
+---@param instanceId string
+---@param index string
+function FightManager:CmdActionChange(instanceId, index) end
+---@param instanceId string
+---@param index string
+function FightManager:RpcActionChange(instanceId, index) end
+---@param fightObject FightObject
+---@return System.Collections.IEnumerator
+function FightManager:DoAction(fightObject) end
+---@return boolean
+function FightManager:Weaved() end
+---@param writer Mirror.NetworkWriter
+---@param forceAll boolean
+function FightManager:SerializeSyncVars(writer, forceAll) end
+---@param reader Mirror.NetworkReader
+---@param initialState boolean
+function FightManager:DeserializeSyncVars(reader, initialState) end
+
+---@class FightManager.RoleData : System.Object
+---@field InstanceId string
+---@field MaxHp number
+---@field CurHp number
+---@field Defend number
+---@field State IStatusManager.State
+---@field career DataConfig
+FightManager.RoleData = {}
+---@alias CS.FightManager.RoleData FightManager.RoleData
+CS.FightManager.RoleData = FightManager.RoleData
+
+---@overload fun() : FightManager.RoleData
+---@param instanceId string
+---@return FightManager.RoleData
+function FightManager.RoleData.New(instanceId) end
+
+---@class MapManager : Mirror.NetworkBehaviour
+---@field ModeMapManager Witch.IModeManager
+---@field CurrentMode string
+---@field mapList System.String[]
+---@field mapData System.String[]
+---@field SumOfEnemyPositive number
+---@field ExHp number
+---@field eventWait number
+---@field eventDone number
+---@field Instance MapManager
+---@field MapTree MapTree
+---@field Level number
+---@field NowDice Dice
+---@field NetworkSumOfEnemyPositive number
+---@field NetworkExHp number
+MapManager = {}
+---@alias CS.MapManager MapManager
+CS.MapManager = MapManager
+
+function MapManager:Awake() end
+function MapManager:RpcTryChange() end
+---@param mapManager string
+function MapManager:SetMap(mapManager) end
+function MapManager:TryChange() end
+---@param conn Mirror.NetworkConnectionToClient
+function MapManager:ReadyToChangeMap(conn) end
+---@param conn Mirror.NetworkConnectionToClient
+function MapManager:CmdReadyToNextMap(conn) end
+---@param name string
+function MapManager:RpcAnnounceNextMap(name) end
+function MapManager:CmdNextMap() end
+---@param mapSelectUI Witch.UI.Window.MapSelectUI
+function MapManager:MapUIStart(mapSelectUI) end
+function MapManager:RpcNextMap() end
+function MapManager:ResetEvent() end
+function MapManager:CmdAnnounceEventWait() end
+function MapManager:CmdEventWait() end
+---@param type string
+---@param id string
+function MapManager:RpcLoadMap(type, id) end
+function MapManager:CloseMapUI() end
+---@param diceJSON string
+function MapManager:RpcSyncDice(diceJSON) end
+---@param level number
+function MapManager:SetLevel(level) end
+---@param seed number
+function MapManager:RpcSyncRandom(seed) end
+---@param mapSelectUI Witch.UI.Window.MapSelectUI
+function MapManager:MapItemInit(mapSelectUI) end
+---@param maps System.String[]
+---@param mapdata System.String[]
+---@param conn Mirror.NetworkConnectionToClient
+function MapManager:CmdSelectMap(maps, mapdata, conn) end
+---@param maps System.String[]
+---@param mapdata System.String[]
+---@param conn Mirror.NetworkConnectionToClient
+function MapManager:CmdSelectMapIncludeSender(maps, mapdata, conn) end
+---@param conn Mirror.NetworkConnection
+---@param maps System.String[]
+---@param mapdata System.String[]
+function MapManager:TargetUpdateMap(conn, maps, mapdata) end
+---@param maps System.String[]
+---@param mapdata System.String[]
+function MapManager:RpcUpdateMap(maps, mapdata) end
+---@param strokeId string
+---@param authorId string
+---@param startPoint UnityEngine.Vector2
+---@param conn Mirror.NetworkConnectionToClient
+function MapManager:CmdMapDrawBegin(strokeId, authorId, startPoint, conn) end
+---@param strokeId string
+---@param authorId string
+---@param startPoint UnityEngine.Vector2
+function MapManager:RpcMapDrawBegin(strokeId, authorId, startPoint) end
+---@param strokeId string
+---@param authorId string
+---@param point UnityEngine.Vector2
+---@param conn Mirror.NetworkConnectionToClient
+function MapManager:CmdMapDrawPoint(strokeId, authorId, point, conn) end
+---@param strokeId string
+---@param authorId string
+---@param point UnityEngine.Vector2
+function MapManager:RpcMapDrawPoint(strokeId, authorId, point) end
+---@param strokeId string
+---@param authorId string
+---@param conn Mirror.NetworkConnectionToClient
+function MapManager:CmdMapDrawEnd(strokeId, authorId, conn) end
+---@param strokeId string
+---@param authorId string
+function MapManager:RpcMapDrawEnd(strokeId, authorId) end
+---@param authorId string
+---@param point UnityEngine.Vector2
+---@param radius number
+---@param conn Mirror.NetworkConnectionToClient
+function MapManager:CmdMapErase(authorId, point, radius, conn) end
+---@param authorId string
+---@param point UnityEngine.Vector2
+---@param radius number
+function MapManager:RpcMapErase(authorId, point, radius) end
+---@param authorId string
+---@param conn Mirror.NetworkConnectionToClient
+function MapManager:CmdMapClearAll(authorId, conn) end
+---@param authorId string
+function MapManager:RpcMapClearAll(authorId) end
+---@param battleRewardsUI Witch.UI.Window.BattleRewardsUI
+function MapManager:SetReward(battleRewardsUI) end
+---@param identity Mirror.NetworkIdentity
+function MapManager:RemoveReady(identity) end
+---@return boolean
+function MapManager:WinTheGame() end
+---@return boolean
+function MapManager:Weaved() end
+---@param writer Mirror.NetworkWriter
+---@param forceAll boolean
+function MapManager:SerializeSyncVars(writer, forceAll) end
+---@param reader Mirror.NetworkReader
+---@param initialState boolean
+function MapManager:DeserializeSyncVars(reader, initialState) end
+
+---@class NarrationManager : Singleton
+---@field Instance NarrationManager -- infered from Singleton`1[NarrationManager]
+---@field GetInstance NarrationManager -- infered from Singleton`1[NarrationManager]
+NarrationManager = {}
+---@alias CS.NarrationManager NarrationManager
+CS.NarrationManager = NarrationManager
+
+---@return NarrationManager
+function NarrationManager.New() end
+---@param ids System.Int32[]
+function NarrationManager:Play(ids) end
+---@param ids System.Int32[]
+function NarrationManager:PlayWithChance(ids) end
+function NarrationManager:PlayFightStartForCurrentEnemies() end
+function NarrationManager:PlayFightWinForCurrentEnemies() end
+---@param enemyId string
+---@return boolean
+function NarrationManager:CurrentFightHasEnemy(enemyId) end
+
+---@class TutorialManager : Singleton
+---@field Instance TutorialManager -- infered from Singleton`1[TutorialManager]
+---@field GetInstance TutorialManager -- infered from Singleton`1[TutorialManager]
+TutorialManager = {}
+---@alias CS.TutorialManager TutorialManager
+CS.TutorialManager = TutorialManager
+
+---@return TutorialManager
+function TutorialManager.New() end
+function TutorialManager:Init() end
+
+---@class VNPlayerManager : UnityEngine.MonoBehaviour
+VNPlayerManager = {}
+---@alias CS.VNPlayerManager VNPlayerManager
+CS.VNPlayerManager = VNPlayerManager
+
+---@param payload System.Object
+function VNPlayerManager:StartPreview(payload) end
+
+---@class MouseRayLogger : UnityEngine.MonoBehaviour
+MouseRayLogger = {}
+---@alias CS.MouseRayLogger MouseRayLogger
+CS.MouseRayLogger = MouseRayLogger
+
+
+---@class GameServer : Mirror.NetworkBehaviour
+---@field EndCommit boolean
+---@field LobbyInfo LobbyInfo
+---@field RoleTables System.Collections.Generic.Dictionary
+---@field isAcceptJoin boolean
+---@field IsRoleTableSynced boolean
+---@field EnemyDone boolean
+---@field PatDone boolean
+---@field Instance GameServer
+GameServer = {}
+---@alias CS.GameServer GameServer
+CS.GameServer = GameServer
+
+---@param roleTables System.Collections.Generic.Dictionary
+function GameServer:StartRole(roleTables) end
+function GameServer:StartGame() end
+function GameServer:RoleRes() end
+---@param tomap System.Collections.Generic.Dictionary
+function GameServer:GetRoles(tomap) end
+---@param roleTable RoleTable
+function GameServer:ReceiveRoleTable(roleTable) end
+---@param onAllReceived System.Action | function
+function GameServer:CollectRoleTables(onAllReceived) end
+function GameServer:SaveGame() end
+function GameServer:EndGame() end
+---@param playerId string
+---@return boolean
+function GameServer:CheckOnline(playerId) end
+---@return boolean
+function GameServer:Weaved() end
+
+---@class PingSelection : Supabase.Postgrest.Models.BaseModel
+---@field max_ping number
+---@field average_ping number
+---@field min_ping number
+PingSelection = {}
+---@alias CS.PingSelection PingSelection
+CS.PingSelection = PingSelection
+
+---@return PingSelection
+function PingSelection.New() end
+
+---@class LatencyRecorder : UnityEngine.MonoBehaviour
+---@field Instance LatencyRecorder
+---@field AvgMs number
+---@field MaxMs number
+---@field MinMs number
+---@field SampleCount number
+LatencyRecorder = {}
+---@alias CS.LatencyRecorder LatencyRecorder
+CS.LatencyRecorder = LatencyRecorder
+
+function LatencyRecorder:StopAndReport() end
+
+---@class LobbyInfo : System.Object
+---@field AddedPlayers System.Collections.Generic.List
+LobbyInfo = {}
+---@alias CS.LobbyInfo LobbyInfo
+CS.LobbyInfo = LobbyInfo
+
+---@return LobbyInfo
+function LobbyInfo.New() end
+
+---@class LobbyInfo.PlayerInfo : System.Object
+---@field Name string
+---@field Id string
+---@field IsSyncedRole boolean
+---@field Version string
+---@field Mods Witch.Mod.ModConfig[]
+---@field Connection Mirror.NetworkConnectionToClient
+LobbyInfo.PlayerInfo = {}
+---@alias CS.LobbyInfo.PlayerInfo LobbyInfo.PlayerInfo
+CS.LobbyInfo.PlayerInfo = LobbyInfo.PlayerInfo
+
+---@return LobbyInfo.PlayerInfo
+function LobbyInfo.PlayerInfo.New() end
+
+---@class LobbyManager : Mirror.NetworkManager
+---@field lobbyId number
+---@field Instance LobbyManager
+LobbyManager = {}
+---@alias CS.LobbyManager LobbyManager
+CS.LobbyManager = LobbyManager
+
+---@param modeType string
+function LobbyManager:SetLobbyModeType(modeType) end
+function LobbyManager:Awake() end
+---@param conn Mirror.NetworkConnectionToClient
+function LobbyManager:OnServerDisconnect(conn) end
+function LobbyManager:OnClientDisconnect() end
+---@param joined boolean
+function LobbyManager:UpdateSteamLobyState(joined) end
+function LobbyManager:QuitLobby() end
+function LobbyManager:OnApplicationQuit() end
+---@param conn Mirror.NetworkConnectionToClient
+function LobbyManager:OnServerConnect(conn) end
+
+---@class PlayerManager : Mirror.NetworkBehaviour
+---@field playerInfo LobbyInfo.PlayerInfo
+---@field LobbyInfos LobbyInfo
+---@field ShareCards Mirror.SyncList
+---@field ShareRelics Mirror.SyncList
+---@field ShareFood Mirror.SyncList
+---@field Instance PlayerManager
+---@field PlayerId string
+---@field NetworkplayerInfo LobbyInfo.PlayerInfo
+---@field NetworkLobbyInfos LobbyInfo
+PlayerManager = {}
+---@alias CS.PlayerManager PlayerManager
+CS.PlayerManager = PlayerManager
+
+function PlayerManager:StartGame() end
+function PlayerManager:EnsureShareFoodCreated() end
+function PlayerManager:ResetShareFood() end
+---@param conn Mirror.NetworkConnectionToClient
+---@param message string
+function PlayerManager:ShowMessage(conn, message) end
+---@param conn Mirror.NetworkConnectionToClient
+---@param roleTable RoleTable
+function PlayerManager:RpcContinueToGame(conn, roleTable) end
+---@param info LobbyInfo.PlayerInfo
+---@param conn Mirror.NetworkConnectionToClient
+function PlayerManager:CmdJoinLobby(info, conn) end
+---@param info LobbyInfo.PlayerInfo
+function PlayerManager:LeaveLobby(info) end
+---@param players System.Collections.Generic.List
+function PlayerManager:RpcUpdateLobby(players) end
+---@param ready boolean
+---@param playerId string
+function PlayerManager:CmdReady(ready, playerId) end
+---@param ready boolean
+---@param playerId string
+function PlayerManager:RpcReady(ready, playerId) end
+function PlayerManager:RpcSyncRoleTables() end
+function PlayerManager:CmdChangeHide() end
+---@param target Mirror.NetworkConnection
+---@param roleTable RoleTable
+---@param GetSaveType string
+function PlayerManager:RpcNewGameInit(target, roleTable, GetSaveType) end
+function PlayerManager:ChangeHide() end
+---@param roleTable RoleTable
+function PlayerManager:CmdSyncRoleTable(roleTable) end
+function PlayerManager:CmdSendSave() end
+function PlayerManager:GameOver() end
+---@param dataConfig string
+---@param fromId string
+function PlayerManager:CmdSendCareer(dataConfig, fromId) end
+---@param dataConfig string
+---@param fromId string
+function PlayerManager:RpcSendCareer(dataConfig, fromId) end
+---@param mapMode string
+function PlayerManager:RpcSetMapMode(mapMode) end
+function PlayerManager:OnStartClient() end
+function PlayerManager:CreateChatPanel() end
+---@param value string
+---@param fromId string
+---@param type string
+function PlayerManager:CmdSendRoleTable(value, fromId, type) end
+---@param value string
+---@param fromId string
+---@param type string
+function PlayerManager:RpcSendRoleTable(value, fromId, type) end
+---@param key string
+---@param value string
+function PlayerManager:SetGameVar(key, value) end
+function PlayerManager:RpcGameOver() end
+---@param saveJson System.Byte[]
+function PlayerManager:CmdSyncHostSave(saveJson) end
+---@param compressed System.Byte[]
+function PlayerManager:RpcHostSave(compressed) end
+function PlayerManager:OnPlayerDisconnected() end
+---@param command Network.Command.RpcCommandBase
+function PlayerManager:SendRpcCommand(command) end
+---@param command Network.Command.RpcCommandBase
+function PlayerManager:SendRpcCommandExcludeOwner(command) end
+---@return boolean
+function PlayerManager:Weaved() end
+---@param writer Mirror.NetworkWriter
+---@param forceAll boolean
+function PlayerManager:SerializeSyncVars(writer, forceAll) end
+---@param reader Mirror.NetworkReader
+---@param initialState boolean
+function PlayerManager:DeserializeSyncVars(reader, initialState) end
+
+---@class BlessingRelic : Singleton
+---@field Instance BlessingRelic -- infered from Singleton`1[BlessingRelic]
+---@field GetInstance BlessingRelic -- infered from Singleton`1[BlessingRelic]
+BlessingRelic = {}
+---@alias CS.BlessingRelic BlessingRelic
+CS.BlessingRelic = BlessingRelic
+
+---@return BlessingRelic
+function BlessingRelic.New() end
+---@return BlessingRelic
+function BlessingRelic:Init() end
+---@param status StatusManager
+---@return BlessingRelic
+function BlessingRelic:Apply(status) end
+---@return BlessingRelic
+function BlessingRelic:Clear() end
+
+---@class AnimatorRole : UnityEngine.MonoBehaviour
+---@field animationPerFrame number
+---@field dataConfig DataConfig
+---@field SpecialScale boolean
+---@field OriPos UnityEngine.Vector2
+---@field InstanceId string
+---@field NeeDYOffset boolean
+---@field animationTimeCounter number
+---@field BottomDistance number
+---@field TopDistance number
+AnimatorRole = {}
+---@alias CS.AnimatorRole AnimatorRole
+CS.AnimatorRole = AnimatorRole
+
+---@param fromData DataConfig
+---@param instanceId string
+---@param needDialogueBox boolean
+---@param yoff boolean
+function AnimatorRole:Init(fromData, instanceId, needDialogueBox, yoff) end
+---@param path string
+---@return string
+function AnimatorRole:TryGetAnimationConfig(path) end
+---@param sprite UnityEngine.Sprite
+---@param instanceId string
+function AnimatorRole:InitSprite(sprite, instanceId) end
+function AnimatorRole:GetConfig() end
+
+---@class RandomMove : UnityEngine.MonoBehaviour
+RandomMove = {}
+---@alias CS.RandomMove RandomMove
+CS.RandomMove = RandomMove
+
+
+---@class RorationFix : UnityEngine.MonoBehaviour
+RorationFix = {}
+---@alias CS.RorationFix RorationFix
+CS.RorationFix = RorationFix
+
+
+---@class UIAnimation : UnityEngine.MonoBehaviour
+---@field FPS number
+---@field SpriteFrames System.Collections.Generic.List
+---@field FrameDurations System.Collections.Generic.List
+---@field GifAsset GifAsset
+---@field IsPlaying boolean
+---@field Foward boolean
+---@field AutoPlay boolean
+---@field Loop boolean
+---@field OnComplete System.Action | function
+---@field SourceSize boolean
+---@field SliceImage boolean
+---@field FrameCount number
+UIAnimation = {}
+---@alias CS.UIAnimation UIAnimation
+CS.UIAnimation = UIAnimation
+
+---@param idx number
+function UIAnimation:SetSprite(idx) end
+---@param gif GifAsset
+function UIAnimation:SetGif(gif) end
+function UIAnimation:Play() end
+function UIAnimation:PlayReverse() end
+function UIAnimation:Pause() end
+function UIAnimation:Resume() end
+function UIAnimation:Stop() end
+function UIAnimation:Rewind() end
+
+---@class UIParallax : UnityEngine.MonoBehaviour
+---@field uiElements UnityEngine.RectTransform[]
+---@field parallaxSpeeds System.Single[]
+---@field minPositions UnityEngine.Vector2[]
+---@field maxPositions UnityEngine.Vector2[]
+UIParallax = {}
+---@alias CS.UIParallax UIParallax
+CS.UIParallax = UIParallax
+
+
+---@class AnimationManager : System.Object
+---@field Instance AnimationManager
+AnimationManager = {}
+---@alias CS.AnimationManager AnimationManager
+CS.AnimationManager = AnimationManager
+
+---@return AnimationManager
+function AnimationManager.New() end
+---@param obj UnityEngine.GameObject
+function AnimationManager:AnimationPlay(obj) end
+---@param obj UnityEngine.Transform
+function AnimationManager:Tailing(obj) end
+
+---@class ProgressButton : UnityEngine.MonoBehaviour
+---@field isLongPress boolean
+---@field OnPress System.Action | function
+---@field progress number
+---@field pressTime number
+---@field maxA number
+---@field acc number
+---@field text TMPro.TMP_Text
+ProgressButton = {}
+---@alias CS.ProgressButton ProgressButton
+CS.ProgressButton = ProgressButton
+
+function ProgressButton:Awake() end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function ProgressButton:OnPointerDown(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function ProgressButton:OnPointerUp(eventData) end
+
+---@class SelectGroup : SwitchButton
+SelectGroup = {}
+---@alias CS.SelectGroup SelectGroup
+CS.SelectGroup = SelectGroup
+
+
+---@class SwitchButton : UnityEngine.MonoBehaviour
+---@field Normal UnityEngine.CanvasGroup
+---@field Pressed UnityEngine.CanvasGroup
+---@field Highlighted UnityEngine.CanvasGroup
+---@field _isOn boolean
+---@field isSingle boolean
+---@field allowSwitchOff boolean
+---@field AlwaysOn boolean
+---@field animationType SwitchButton.AnimationType
+---@field transitionTime number
+---@field isAnimated boolean
+---@field MustLeftClick boolean
+---@field interactable boolean
+---@field onValueChanged UnityEngine.Events.UnityEvent
+---@field onClick UnityEngine.Events.UnityEvent
+---@field isOn boolean
+SwitchButton = {}
+---@alias CS.SwitchButton SwitchButton
+CS.SwitchButton = SwitchButton
+
+function SwitchButton:Awake() end
+function SwitchButton:SetOffImmediate() end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function SwitchButton:OnPointerEnter(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function SwitchButton:OnPointerExit(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function SwitchButton:OnPointerClick(eventData) end
+---@param action System.Action | function
+function SwitchButton:SetElement(action) end
+
+---@class SwitchButton.AnimationType
+---@field None SwitchButton.AnimationType
+---@field Fade SwitchButton.AnimationType
+SwitchButton.AnimationType = {}
+---@alias CS.SwitchButton.AnimationType SwitchButton.AnimationType
+CS.SwitchButton.AnimationType = SwitchButton.AnimationType
+
+
+---@class SwitchButtonGroup : UnityEngine.MonoBehaviour
+SwitchButtonGroup = {}
+---@alias CS.SwitchButtonGroup SwitchButtonGroup
+CS.SwitchButtonGroup = SwitchButtonGroup
+
+
+---@class HorizontalScrollSnapController : UnityEngine.MonoBehaviour
+---@field CurrentStepIndex number
+---@field MaxStepIndex number
+HorizontalScrollSnapController = {}
+---@alias CS.HorizontalScrollSnapController HorizontalScrollSnapController
+CS.HorizontalScrollSnapController = HorizontalScrollSnapController
+
+function HorizontalScrollSnapController:RefreshLayout() end
+function HorizontalScrollSnapController:MovePrevious() end
+function HorizontalScrollSnapController:MoveNext() end
+function HorizontalScrollSnapController:SnapToNearest() end
+function HorizontalScrollSnapController:SnapToNearestImmediate() end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function HorizontalScrollSnapController:OnEndDrag(eventData) end
+
+---@class ScrollRectDragForwarder : UnityEngine.MonoBehaviour
+ScrollRectDragForwarder = {}
+---@alias CS.ScrollRectDragForwarder ScrollRectDragForwarder
+CS.ScrollRectDragForwarder = ScrollRectDragForwarder
+
+---@param scrollRect UnityEngine.UI.ScrollRect
+function ScrollRectDragForwarder:SetTarget(scrollRect) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function ScrollRectDragForwarder:OnInitializePotentialDrag(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function ScrollRectDragForwarder:OnBeginDrag(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function ScrollRectDragForwarder:OnDrag(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function ScrollRectDragForwarder:OnEndDrag(eventData) end
+
+---@class AnimatedHorizontalLayout : AnimatedLayout
+AnimatedHorizontalLayout = {}
+---@alias CS.AnimatedHorizontalLayout AnimatedHorizontalLayout
+CS.AnimatedHorizontalLayout = AnimatedHorizontalLayout
+
+---@param rectTransform UnityEngine.RectTransform
+---@param pos number
+---@param duration number
+function AnimatedHorizontalLayout:SetLayout(rectTransform, pos, duration) end
+
+---@class AnimatedLayout : UnityEngine.MonoBehaviour
+---@field duration number
+---@field ease DG.Tweening.Ease
+---@field spacing number
+---@field useScaleX boolean
+---@field useScaleY boolean
+AnimatedLayout = {}
+---@alias CS.AnimatedLayout AnimatedLayout
+CS.AnimatedLayout = AnimatedLayout
+
+function AnimatedLayout:Start() end
+function AnimatedLayout:OnTransformChildrenChanged() end
+---@param duration number
+function AnimatedLayout:LayoutChildren(duration) end
+---@param rectTransform UnityEngine.RectTransform
+---@param pos number
+---@param duration number
+function AnimatedLayout:SetLayout(rectTransform, pos, duration) end
+function AnimatedLayout:Update() end
+
+---@class AnimatedLayout.EnableListener : UnityEngine.MonoBehaviour
+---@field layout AnimatedLayout
+AnimatedLayout.EnableListener = {}
+---@alias CS.AnimatedLayout.EnableListener AnimatedLayout.EnableListener
+CS.AnimatedLayout.EnableListener = AnimatedLayout.EnableListener
+
+function AnimatedLayout.EnableListener:OnEnable() end
+function AnimatedLayout.EnableListener:OnDisable() end
+function AnimatedLayout.EnableListener:OnDestroy() end
+
+---@class TextWithKeyword : UnityEngine.MonoBehaviour
+---@field tooltip UnityEngine.RectTransform
+---@field maxDistance number
+TextWithKeyword = {}
+---@alias CS.TextWithKeyword TextWithKeyword
+CS.TextWithKeyword = TextWithKeyword
+
+function TextWithKeyword:Init() end
+---@param pos UnityEngine.Vector2
+---@param keyword string
+---@param text string
+---@param icon UnityEngine.Sprite
+---@param type string
+function TextWithKeyword:ShowTooltip(pos, keyword, text, icon, type) end
+function TextWithKeyword:HideTooltip() end
+
+---@class TMPFontFallbackManager : System.Object
+TMPFontFallbackManager = {}
+---@alias CS.TMPFontFallbackManager TMPFontFallbackManager
+CS.TMPFontFallbackManager = TMPFontFallbackManager
+
+---@param language string
+function TMPFontFallbackManager.ApplyForLanguage(language) end
+
+---@class BuffItem : UnityEngine.MonoBehaviour
+---@field buffBarUI Witch.UI.Window.BuffBarUI
+---@field keywordDisplay Witch.UI.KeywordDisplay
+---@field HasClear boolean
+---@field buffConfig IBuffItemConfig
+---@field status IStatusManager
+---@field effectList System.Collections.ObjectModel.ObservableCollection
+---@field scriptExecutor IScriptExecutor
+BuffItem = {}
+---@alias CS.BuffItem BuffItem
+CS.BuffItem = BuffItem
+
+---@param config BuffItemConfig
+---@param Status StatusManager
+---@param buffBarUI Witch.UI.Window.BuffBarUI
+function BuffItem:Init(config, Status, buffBarUI) end
+---@param isacting boolean
+function BuffItem:BuffProcess(isacting) end
+function BuffItem:EffectAnimation() end
+function BuffItem:UpdateMsg() end
+---@param index number
+function BuffItem:UpdateSorting(index) end
+function BuffItem:UpdateTooltip() end
+function BuffItem:ApplyBuff() end
+---@param way string
+function BuffItem:DurationCheck(way) end
+function BuffItem:ClearBuff() end
+---@param fromId string
+---@param needAnnounce boolean
+function BuffItem:ClearDynamicVar(fromId, needAnnounce) end
+
+---@class TextUse : UnityEngine.MonoBehaviour
+---@field oddLineOffset number
+TextUse = {}
+---@alias CS.TextUse TextUse
+CS.TextUse = TextUse
+
+---@param raw string
+function TextUse:SetText(raw) end
+
+---@class HouseItem : UnityEngine.MonoBehaviour
+---@field houseManager Witch.UI.Window.HouseManager
+---@field TargetCount number
+---@field oriStr string
+---@field houseItemType HouseItem.HouseItemType
+HouseItem = {}
+---@alias CS.HouseItem HouseItem
+CS.HouseItem = HouseItem
+
+function HouseItem:RegisterEvent() end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function HouseItem:OnPointerClick(eventData) end
+
+---@class HouseItem.HouseItemType
+---@field CardEditor HouseItem.HouseItemType
+---@field OutsiderShop HouseItem.HouseItemType
+---@field ModManager HouseItem.HouseItemType
+---@field GameMenu HouseItem.HouseItemType
+---@field crystalBall HouseItem.HouseItemType
+---@field store HouseItem.HouseItemType
+---@field Dictionary HouseItem.HouseItemType
+---@field shadow HouseItem.HouseItemType
+---@field announcement HouseItem.HouseItemType
+---@field task HouseItem.HouseItemType
+---@field cardShop HouseItem.HouseItemType
+---@field rollShop HouseItem.HouseItemType
+---@field Achievement HouseItem.HouseItemType
+HouseItem.HouseItemType = {}
+---@alias CS.HouseItem.HouseItemType HouseItem.HouseItemType
+CS.HouseItem.HouseItemType = HouseItem.HouseItemType
+
+
+---@class MapFrame : UnityEngine.MonoBehaviour
+MapFrame = {}
+---@alias CS.MapFrame MapFrame
+CS.MapFrame = MapFrame
+
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function MapFrame:OnPointerEnter(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function MapFrame:OnPointerExit(eventData) end
+
+---@class MapItem : Witch.UI.Window.Item
+---@field node MapTree.Node
+---@field animationController CardAnimationController
+---@field hasSelected boolean
+---@field des boolean
+---@field ignore boolean
+---@field isReverse boolean
+---@field initPosition UnityEngine.Vector2
+---@field initAngle UnityEngine.Vector3
+---@field draging boolean
+---@field index number
+---@field initScale number
+---@field selectScale number
+MapItem = {}
+---@alias CS.MapItem MapItem
+CS.MapItem = MapItem
+
+function MapItem:Awake() end
+---@param node1 MapTree.Node
+function MapItem:Init(node1) end
+function MapItem:DataUpdate() end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function MapItem:OnPointerEnter(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function MapItem:OnPointerExit(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function MapItem:OnPointerClick(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function MapItem:OnPointerDown(eventData) end
+---@return Cysharp.Threading.Tasks.UniTask
+function MapItem:StartLine() end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function MapItem:OnEndDrag(eventData) end
+function MapItem:OnDestroy() end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function MapItem:OnDrag(eventData) end
+function MapItem:RayCheck() end
+function MapItem:RemoveFromParent() end
+function MapItem:OnTransformParentChanged() end
+---@param item SwapContentIdentity
+function MapItem:AddToList(item) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function MapItem:OnBeginDrag(eventData) end
+---@param Index number
+function MapItem:SetIndex(Index) end
+
+---@class MapTree : System.Object
+---@field root MapTree.Node
+---@field currentNode MapTree.Node
+---@field treedice Dice
+---@field SelectNode System.Collections.Generic.List
+---@field DefaultNode System.Collections.Generic.List
+---@field hasUsed System.Collections.Generic.List
+MapTree = {}
+---@alias CS.MapTree MapTree
+CS.MapTree = MapTree
+
+---@return MapTree
+function MapTree.New() end
+---@param type string
+---@return MapTree.Node
+function MapTree:TypeGenerate(type) end
+---@param nodeId string
+---@return MapTree.Node
+function MapTree:GetNodeByNodeId(nodeId) end
+
+---@class MapTree.Node : System.Object
+---@field depth number
+---@field type string
+---@field data System.Collections.Generic.Dictionary
+---@field NodeDice Dice
+---@field childrens MapTree.Node[]
+MapTree.Node = {}
+---@alias CS.MapTree.Node MapTree.Node
+CS.MapTree.Node = MapTree.Node
+
+---@param type string
+---@return MapTree.Node
+function MapTree.Node.New(type) end
+---@param index number
+---@param child MapTree.Node
+---@return MapTree.Node
+function MapTree.Node:SetChild(index, child) end
+---@param index number
+---@return MapTree.Node
+function MapTree.Node:GetChild(index) end
+
+---@class SettingMapper : UnityEngine.MonoBehaviour
+SettingMapper = {}
+---@alias CS.SettingMapper SettingMapper
+CS.SettingMapper = SettingMapper
+
+
+---@class DialogueBox : UnityEngine.MonoBehaviour
+DialogueBox = {}
+---@alias CS.DialogueBox DialogueBox
+CS.DialogueBox = DialogueBox
+
+---@param dataConfig DataConfig
+function DialogueBox:ShowDialogue(dataConfig) end
+---@param id string
+---@param emoji GifAsset
+function DialogueBox:ShowEmoji(id, emoji) end
+function DialogueBox:Close() end
+function DialogueBox:PlayTalkEffect() end
+
+---@class DialogueBoxIdentity : UnityEngine.MonoBehaviour
+---@field Name string
+DialogueBoxIdentity = {}
+---@alias CS.DialogueBoxIdentity DialogueBoxIdentity
+CS.DialogueBoxIdentity = DialogueBoxIdentity
+
+function DialogueBoxIdentity:Start() end
+function DialogueBoxIdentity:OnDestroy() end
+---@param id string
+function DialogueBoxIdentity:SetInstanceId(id) end
+
+---@class DiceIcon : UnityEngine.MonoBehaviour
+---@field result TMPro.TextMeshProUGUI
+---@field bonusText TMPro.TextMeshProUGUI
+---@field range TMPro.TextMeshProUGUI
+---@field Target string
+---@field canvasGroup UnityEngine.CanvasGroup
+---@field rollDuration number
+---@field value number
+---@field bonus number
+---@field rangeValue System.Nullable
+DiceIcon = {}
+---@alias CS.DiceIcon DiceIcon
+CS.DiceIcon = DiceIcon
+
+---@param title string
+function DiceIcon:Roll(title) end
+
+---@class FightLine : UnityEngine.MonoBehaviour
+---@field curvature number
+---@field arrowLength number
+---@field show boolean
+FightLine = {}
+---@alias CS.FightLine FightLine
+CS.FightLine = FightLine
+
+---@param localPos UnityEngine.Vector3
+function FightLine:SetStartPos(localPos) end
+function FightLine:OnEnable() end
+---@param uiObject UnityEngine.Transform
+function FightLine:Combine(uiObject) end
+---@param uiWorldPos UnityEngine.Vector3
+function FightLine:SetEndPos(uiWorldPos) end
+---@param start UnityEngine.Vector3
+---@param control UnityEngine.Vector3
+---@param _end UnityEngine.Vector3
+---@param t number
+---@return UnityEngine.Vector3
+function FightLine:GetBezier(start, control, _end, t) end
+
+---@class FloatingWindow : UnityEngine.MonoBehaviour
+---@field buttons System.Collections.Generic.List
+---@field showItem UnityEngine.Transform
+---@field subitemContent UnityEngine.Transform
+FloatingWindow = {}
+---@alias CS.FloatingWindow FloatingWindow
+CS.FloatingWindow = FloatingWindow
+
+---@overload fun(self: FloatingWindow, obj: UnityEngine.Transform)
+---@param pos UnityEngine.Vector3
+function FloatingWindow:Show(pos) end
+function FloatingWindow:Hide() end
+---@overload fun(self: FloatingWindow, basename: string, action: UnityEngine.Events.UnityAction, subItems: System.Collections.Generic.List) : FloatingWindow
+---@param button1 FloatingWindow.button
+function FloatingWindow:AddButton(button1) end
+---@return FloatingWindow
+function FloatingWindow:Clear() end
+---@return FloatingWindow
+function FloatingWindow:ResetWindow() end
+
+---@class FloatingWindow.button : System.Object
+---@field name string
+---@field action UnityEngine.Events.UnityAction
+---@field subButtons System.Collections.Generic.List
+FloatingWindow.button = {}
+---@alias CS.FloatingWindow.button FloatingWindow.button
+CS.FloatingWindow.button = FloatingWindow.button
+
+---@return FloatingWindow.button
+function FloatingWindow.button.New() end
+
+---@class SelectMessage : UnityEngine.MonoBehaviour
+---@field msg string
+---@field ClickAction System.Action | function
+SelectMessage = {}
+---@alias CS.SelectMessage SelectMessage
+CS.SelectMessage = SelectMessage
+
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function SelectMessage:OnPointerEnter(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function SelectMessage:OnPointerExit(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function SelectMessage:OnPointerClick(eventData) end
+
+---@class SelectOutline : UnityEngine.MonoBehaviour
+SelectOutline = {}
+---@alias CS.SelectOutline SelectOutline
+CS.SelectOutline = SelectOutline
+
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function SelectOutline:OnPointerEnter(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function SelectOutline:OnPointerExit(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function SelectOutline:OnPointerClick(eventData) end
+
+---@class SwapContentIdentity : UnityEngine.MonoBehaviour
+---@field ItemName string
+---@field Content UnityEngine.Transform
+---@field CheckType boolean
+SwapContentIdentity = {}
+---@alias CS.SwapContentIdentity SwapContentIdentity
+CS.SwapContentIdentity = SwapContentIdentity
+
+
+---@class Tooltip : UnityEngine.MonoBehaviour
+---@field spacingX number
+---@field spacingY number
+---@field subWidth number
+---@field subHeight number
+---@field transitionTime number
+Tooltip = {}
+---@alias CS.Tooltip Tooltip
+CS.Tooltip = Tooltip
+
+---@param obj UnityEngine.Transform
+---@param title string
+---@param text string
+---@param keywords System.Collections.Generic.List
+---@param msg string
+---@param icon UnityEngine.Sprite
+---@param type string
+---@param Main boolean
+---@param Sub boolean
+function Tooltip:Show(obj, title, text, keywords, msg, icon, type, Main, Sub) end
+function Tooltip:Hide() end
+
+---@class XluaEventVarUse : System.Object
+---@field XLua_CSharpCallLua_Delegates System.Collections.Generic.List
+XluaEventVarUse = {}
+---@alias CS.XluaEventVarUse XluaEventVarUse
+CS.XluaEventVarUse = XluaEventVarUse
+
+
+---@class ExampleGenConfig : System.Object
+---@field LuaCallCSharp System.Collections.Generic.List
+---@field CSharpCallLua System.Collections.Generic.List
+---@field BlackList System.Collections.Generic.List
+---@field BlackGenericTypeList System.Collections.Generic.List
+---@field GenericTypeFilter System.Func
+ExampleGenConfig = {}
+---@alias CS.ExampleGenConfig ExampleGenConfig
+CS.ExampleGenConfig = ExampleGenConfig
+
+
+---@class LuaCallCs : UnityEngine.MonoBehaviour
+LuaCallCs = {}
+---@alias CS.LuaCallCs LuaCallCs
+CS.LuaCallCs = LuaCallCs
+
+
+---@class UnitySourceGeneratedAssemblyMonoScriptTypes_v1 : System.Object
+UnitySourceGeneratedAssemblyMonoScriptTypes_v1 = {}
+---@alias CS.UnitySourceGeneratedAssemblyMonoScriptTypes_v1 UnitySourceGeneratedAssemblyMonoScriptTypes_v1
+CS.UnitySourceGeneratedAssemblyMonoScriptTypes_v1 = UnitySourceGeneratedAssemblyMonoScriptTypes_v1
+
+---@return UnitySourceGeneratedAssemblyMonoScriptTypes_v1
+function UnitySourceGeneratedAssemblyMonoScriptTypes_v1.New() end
+
+---@class UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData : System.ValueType
+---@field FilePathsData System.Byte[]
+---@field TypesData System.Byte[]
+---@field TotalTypes number
+---@field TotalFiles number
+---@field IsEditorOnly boolean
+UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData = {}
+---@alias CS.UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData
+CS.UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData = UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData
+
+
+---@class Tutorial.CSCallLua : UnityEngine.MonoBehaviour
+Tutorial.CSCallLua = {}
+---@alias CS.Tutorial.CSCallLua Tutorial.CSCallLua
+CS.Tutorial.CSCallLua = Tutorial.CSCallLua
+
+
+---@class Tutorial.CSCallLua.DClass : System.Object
+---@field f1 number
+---@field f2 number
+Tutorial.CSCallLua.DClass = {}
+---@alias CS.Tutorial.CSCallLua.DClass Tutorial.CSCallLua.DClass
+CS.Tutorial.CSCallLua.DClass = Tutorial.CSCallLua.DClass
+
+---@return Tutorial.CSCallLua.DClass
+function Tutorial.CSCallLua.DClass.New() end
+
+---@class Tutorial.CSCallLua.ItfD
+---@field f1 number
+---@field f2 number
+Tutorial.CSCallLua.ItfD = {}
+---@alias CS.Tutorial.CSCallLua.ItfD Tutorial.CSCallLua.ItfD
+CS.Tutorial.CSCallLua.ItfD = Tutorial.CSCallLua.ItfD
+
+---@param a number
+---@param b number
+---@return number
+function Tutorial.CSCallLua.ItfD:add(a, b) end
+
+---@class Tutorial.CSCallLua.FDelegate : System.MulticastDelegate
+Tutorial.CSCallLua.FDelegate = {}
+---@alias CS.Tutorial.CSCallLua.FDelegate Tutorial.CSCallLua.FDelegate
+CS.Tutorial.CSCallLua.FDelegate = Tutorial.CSCallLua.FDelegate
+
+---@param object System.Object
+---@param method System.IntPtr
+---@return Tutorial.CSCallLua.FDelegate
+function Tutorial.CSCallLua.FDelegate.New(object, method) end
+---@param a number
+---@param b string
+---@param out_c Tutorial.CSCallLua.DClass
+---@return number,Tutorial.CSCallLua.DClass
+function Tutorial.CSCallLua.FDelegate:Invoke(a, b, out_c) end
+---@param a number
+---@param b string
+---@param out_c Tutorial.CSCallLua.DClass
+---@param callback System.AsyncCallback
+---@param object System.Object
+---@return System.IAsyncResult,Tutorial.CSCallLua.DClass
+function Tutorial.CSCallLua.FDelegate:BeginInvoke(a, b, out_c, callback, object) end
+---@param out_c Tutorial.CSCallLua.DClass
+---@param result System.IAsyncResult
+---@return number,Tutorial.CSCallLua.DClass
+function Tutorial.CSCallLua.FDelegate:EndInvoke(out_c, result) end
+
+---@class Tutorial.CSCallLua.GetE : System.MulticastDelegate
+Tutorial.CSCallLua.GetE = {}
+---@alias CS.Tutorial.CSCallLua.GetE Tutorial.CSCallLua.GetE
+CS.Tutorial.CSCallLua.GetE = Tutorial.CSCallLua.GetE
+
+---@param object System.Object
+---@param method System.IntPtr
+---@return Tutorial.CSCallLua.GetE
+function Tutorial.CSCallLua.GetE.New(object, method) end
+---@return System.Action | function
+function Tutorial.CSCallLua.GetE:Invoke() end
+---@param callback System.AsyncCallback
+---@param object System.Object
+---@return System.IAsyncResult
+function Tutorial.CSCallLua.GetE:BeginInvoke(callback, object) end
+---@param result System.IAsyncResult
+---@return System.Action | function
+function Tutorial.CSCallLua.GetE:EndInvoke(result) end
+
+---@class Tutorial.ByFile : UnityEngine.MonoBehaviour
+Tutorial.ByFile = {}
+---@alias CS.Tutorial.ByFile Tutorial.ByFile
+CS.Tutorial.ByFile = Tutorial.ByFile
+
+
+---@class Tutorial.ByString : UnityEngine.MonoBehaviour
+Tutorial.ByString = {}
+---@alias CS.Tutorial.ByString Tutorial.ByString
+CS.Tutorial.ByString = Tutorial.ByString
+
+
+---@class Tutorial.CustomLoader : UnityEngine.MonoBehaviour
+Tutorial.CustomLoader = {}
+---@alias CS.Tutorial.CustomLoader Tutorial.CustomLoader
+CS.Tutorial.CustomLoader = Tutorial.CustomLoader
+
+
+---@class Tutorial.BaseClass : System.Object
+---@field BSF number
+---@field BMF number
+Tutorial.BaseClass = {}
+---@alias CS.Tutorial.BaseClass Tutorial.BaseClass
+CS.Tutorial.BaseClass = Tutorial.BaseClass
+
+---@return Tutorial.BaseClass
+function Tutorial.BaseClass.New() end
+function Tutorial.BaseClass.BSFunc() end
+function Tutorial.BaseClass:BMFunc() end
+---@return number
+function Tutorial.BaseClass:GetSomeBaseData() end
+
+---@class Tutorial.Param1 : System.ValueType
+---@field x number
+---@field y string
+Tutorial.Param1 = {}
+---@alias CS.Tutorial.Param1 Tutorial.Param1
+CS.Tutorial.Param1 = Tutorial.Param1
+
+
+---@class Tutorial.TestEnum
+---@field E1 Tutorial.TestEnum
+---@field E2 Tutorial.TestEnum
+Tutorial.TestEnum = {}
+---@alias CS.Tutorial.TestEnum Tutorial.TestEnum
+CS.Tutorial.TestEnum = Tutorial.TestEnum
+
+
+---@class Tutorial.DerivedClass : Tutorial.BaseClass
+---@field TestDelegate System.Action | function
+---@field DMF number
+Tutorial.DerivedClass = {}
+---@alias CS.Tutorial.DerivedClass Tutorial.DerivedClass
+CS.Tutorial.DerivedClass = Tutorial.DerivedClass
+
+---@return Tutorial.DerivedClass
+function Tutorial.DerivedClass.New() end
+function Tutorial.DerivedClass:DMFunc() end
+---@param p1 Tutorial.Param1
+---@param ref_p2 number
+---@param out_p3 string
+---@param luafunc System.Action | function
+---@param out_csfunc System.Action | function
+---@return number,number,string,System.Action
+function Tutorial.DerivedClass:ComplexFunc(p1, ref_p2, out_p3, luafunc, out_csfunc) end
+---@overload fun(self: Tutorial.DerivedClass, i: number)
+---@param i string
+function Tutorial.DerivedClass:TestFunc(i) end
+---@param a number
+---@param b string
+---@param c string
+function Tutorial.DerivedClass:DefaultValueFunc(a, b, c) end
+---@param a number
+---@param strs System.String[]
+function Tutorial.DerivedClass:VariableParamsFunc(a, strs) end
+---@param e Tutorial.TestEnum
+---@return Tutorial.TestEnum
+function Tutorial.DerivedClass:EnumTestFunc(e) end
+function Tutorial.DerivedClass:CallEvent() end
+---@param n number
+---@return number
+function Tutorial.DerivedClass:TestLong(n) end
+---@return Tutorial.ICalc
+function Tutorial.DerivedClass:GetCalc() end
+---@return number
+function Tutorial.DerivedClass:GetSomeData() end
+function Tutorial.DerivedClass:GenericMethodOfString() end
+
+---@class Tutorial.DerivedClass.TestEnumInner
+---@field E3 Tutorial.DerivedClass.TestEnumInner
+---@field E4 Tutorial.DerivedClass.TestEnumInner
+Tutorial.DerivedClass.TestEnumInner = {}
+---@alias CS.Tutorial.DerivedClass.TestEnumInner Tutorial.DerivedClass.TestEnumInner
+CS.Tutorial.DerivedClass.TestEnumInner = Tutorial.DerivedClass.TestEnumInner
+
+
+---@class Tutorial.DerivedClass.InnerCalc : System.Object
+---@field id number
+Tutorial.DerivedClass.InnerCalc = {}
+---@alias CS.Tutorial.DerivedClass.InnerCalc Tutorial.DerivedClass.InnerCalc
+CS.Tutorial.DerivedClass.InnerCalc = Tutorial.DerivedClass.InnerCalc
+
+---@return Tutorial.DerivedClass.InnerCalc
+function Tutorial.DerivedClass.InnerCalc.New() end
+---@param a number
+---@param b number
+---@return number
+function Tutorial.DerivedClass.InnerCalc:add(a, b) end
+
+---@class Tutorial.ICalc
+Tutorial.ICalc = {}
+---@alias CS.Tutorial.ICalc Tutorial.ICalc
+CS.Tutorial.ICalc = Tutorial.ICalc
+
+---@param a number
+---@param b number
+---@return number
+function Tutorial.ICalc:add(a, b) end
+
+---@class Tutorial.DerivedClassExtensions : System.Object
+Tutorial.DerivedClassExtensions = {}
+---@alias CS.Tutorial.DerivedClassExtensions Tutorial.DerivedClassExtensions
+CS.Tutorial.DerivedClassExtensions = Tutorial.DerivedClassExtensions
+
+---@param obj Tutorial.DerivedClass
+---@return number
+function Tutorial.DerivedClassExtensions.GetSomeData(obj) end
+---@param obj Tutorial.BaseClass
+---@return number
+function Tutorial.DerivedClassExtensions.GetSomeBaseData(obj) end
+---@param obj Tutorial.DerivedClass
+function Tutorial.DerivedClassExtensions.GenericMethodOfString(obj) end
+
+---@class UI.ScreenEffect.ScreenEffectBase : UnityEngine.MonoBehaviour
+---@field delay number
+UI.ScreenEffect.ScreenEffectBase = {}
+---@alias CS.UI.ScreenEffect.ScreenEffectBase UI.ScreenEffect.ScreenEffectBase
+CS.UI.ScreenEffect.ScreenEffectBase = UI.ScreenEffect.ScreenEffectBase
+
+function UI.ScreenEffect.ScreenEffectBase:Play() end
+
+---@class UI.ScreenEffect.ShakeScreenEffect : UI.ScreenEffect.ScreenEffectBase
+---@field count number
+---@field duration number
+---@field intensity number
+UI.ScreenEffect.ShakeScreenEffect = {}
+---@alias CS.UI.ScreenEffect.ShakeScreenEffect UI.ScreenEffect.ShakeScreenEffect
+CS.UI.ScreenEffect.ShakeScreenEffect = UI.ScreenEffect.ShakeScreenEffect
+
+function UI.ScreenEffect.ShakeScreenEffect:Play() end
+
+---@class UnityEngine.UI.ScrollRectNonDrag : UnityEngine.EventSystems.UIBehaviour
+---@field content UnityEngine.RectTransform
+---@field horizontal boolean
+---@field vertical boolean
+---@field movementType UnityEngine.UI.ScrollRectNonDrag.MovementType
+---@field elasticity number
+---@field inertia boolean
+---@field decelerationRate number
+---@field scrollSensitivity number
+---@field viewport UnityEngine.RectTransform
+---@field horizontalScrollbar UnityEngine.UI.Scrollbar
+---@field verticalScrollbar UnityEngine.UI.Scrollbar
+---@field horizontalScrollbarVisibility UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
+---@field verticalScrollbarVisibility UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
+---@field horizontalScrollbarSpacing number
+---@field verticalScrollbarSpacing number
+---@field onValueChanged UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent
+---@field velocity UnityEngine.Vector2
+---@field normalizedPosition UnityEngine.Vector2
+---@field horizontalNormalizedPosition number
+---@field verticalNormalizedPosition number
+---@field minWidth number
+---@field preferredWidth number
+---@field flexibleWidth number
+---@field minHeight number
+---@field preferredHeight number
+---@field flexibleHeight number
+---@field layoutPriority number
+UnityEngine.UI.ScrollRectNonDrag = {}
+---@alias CS.UnityEngine.UI.ScrollRectNonDrag UnityEngine.UI.ScrollRectNonDrag
+CS.UnityEngine.UI.ScrollRectNonDrag = UnityEngine.UI.ScrollRectNonDrag
+
+---@param executing UnityEngine.UI.CanvasUpdate
+function UnityEngine.UI.ScrollRectNonDrag:Rebuild(executing) end
+function UnityEngine.UI.ScrollRectNonDrag:LayoutComplete() end
+function UnityEngine.UI.ScrollRectNonDrag:GraphicUpdateComplete() end
+---@return boolean
+function UnityEngine.UI.ScrollRectNonDrag:IsActive() end
+function UnityEngine.UI.ScrollRectNonDrag:StopMovement() end
+---@param data UnityEngine.EventSystems.PointerEventData
+function UnityEngine.UI.ScrollRectNonDrag:OnScroll(data) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function UnityEngine.UI.ScrollRectNonDrag:OnInitializePotentialDrag(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function UnityEngine.UI.ScrollRectNonDrag:OnBeginDrag(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function UnityEngine.UI.ScrollRectNonDrag:OnEndDrag(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function UnityEngine.UI.ScrollRectNonDrag:OnDrag(eventData) end
+function UnityEngine.UI.ScrollRectNonDrag:CalculateLayoutInputHorizontal() end
+function UnityEngine.UI.ScrollRectNonDrag:CalculateLayoutInputVertical() end
+function UnityEngine.UI.ScrollRectNonDrag:SetLayoutHorizontal() end
+function UnityEngine.UI.ScrollRectNonDrag:SetLayoutVertical() end
+
+---@class UnityEngine.UI.ScrollRectNonDrag.MovementType
+---@field Unrestricted UnityEngine.UI.ScrollRectNonDrag.MovementType
+---@field Elastic UnityEngine.UI.ScrollRectNonDrag.MovementType
+---@field Clamped UnityEngine.UI.ScrollRectNonDrag.MovementType
+UnityEngine.UI.ScrollRectNonDrag.MovementType = {}
+---@alias CS.UnityEngine.UI.ScrollRectNonDrag.MovementType UnityEngine.UI.ScrollRectNonDrag.MovementType
+CS.UnityEngine.UI.ScrollRectNonDrag.MovementType = UnityEngine.UI.ScrollRectNonDrag.MovementType
+
+
+---@class UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
+---@field Permanent UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
+---@field AutoHide UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
+---@field AutoHideAndExpandViewport UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
+UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility = {}
+---@alias CS.UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
+CS.UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility = UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
+
+
+---@class UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent : UnityEngine.Events.UnityEvent
+UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent = {}
+---@alias CS.UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent
+CS.UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent = UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent
+
+---@return UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent
+function UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent.New() end
+
+---@class Component.UI.Animation.ClockAnimator : UnityEngine.MonoBehaviour
+---@field clockHand UnityEngine.Transform
+---@field clockBoard UnityEngine.Transform
+---@field rotateSound UnityEngine.AudioClip
+---@field rotationDuration number
+---@field fullRotationEase DG.Tweening.Ease
+---@field rotateCount number
+Component.UI.Animation.ClockAnimator = {}
+---@alias CS.Component.UI.Animation.ClockAnimator Component.UI.Animation.ClockAnimator
+CS.Component.UI.Animation.ClockAnimator = Component.UI.Animation.ClockAnimator
+
+function Component.UI.Animation.ClockAnimator:Awake() end
+---@param rotateType Component.UI.Animation.ClockAnimator.RotatePos
+function Component.UI.Animation.ClockAnimator:RotateToAngle(rotateType) end
+function Component.UI.Animation.ClockAnimator:RotateToSelf() end
+function Component.UI.Animation.ClockAnimator:RotateToFriend() end
+function Component.UI.Animation.ClockAnimator:RotateToEnemy() end
+function Component.UI.Animation.ClockAnimator:RotateToNeutral() end
+
+---@class Component.UI.Animation.ClockAnimator.RotatePos
+---@field Default Component.UI.Animation.ClockAnimator.RotatePos
+---@field Self Component.UI.Animation.ClockAnimator.RotatePos
+---@field Enemy Component.UI.Animation.ClockAnimator.RotatePos
+---@field Friend Component.UI.Animation.ClockAnimator.RotatePos
+---@field Neutral Component.UI.Animation.ClockAnimator.RotatePos
+Component.UI.Animation.ClockAnimator.RotatePos = {}
+---@alias CS.Component.UI.Animation.ClockAnimator.RotatePos Component.UI.Animation.ClockAnimator.RotatePos
+CS.Component.UI.Animation.ClockAnimator.RotatePos = Component.UI.Animation.ClockAnimator.RotatePos
+
+
+---@class Network.SupabaseUpload.SupabaseUploadAuthService : System.Object
+Network.SupabaseUpload.SupabaseUploadAuthService = {}
+---@alias CS.Network.SupabaseUpload.SupabaseUploadAuthService Network.SupabaseUpload.SupabaseUploadAuthService
+CS.Network.SupabaseUpload.SupabaseUploadAuthService = Network.SupabaseUpload.SupabaseUploadAuthService
+
+---@param purpose string
+---@return Cysharp.Threading.Tasks.UniTask
+function Network.SupabaseUpload.SupabaseUploadAuthService.GetVerifiedSupabaseClientAsync(purpose) end
+---@return boolean
+function Network.SupabaseUpload.SupabaseUploadAuthService.CanUpload() end
+function Network.SupabaseUpload.SupabaseUploadAuthService.Invalidate() end
+---@param exception System.Exception
+---@return boolean
+function Network.SupabaseUpload.SupabaseUploadAuthService.HandleAuthorizationFailure(exception) end
+---@param exception System.Exception
+---@return boolean
+function Network.SupabaseUpload.SupabaseUploadAuthService.IsAuthorizationFailure(exception) end
+
+---@class Network.SupabaseUpload.SupabaseUploadAuthService.SteamTicketResult : System.Object
+---@field TicketHandle Steamworks.HAuthTicket
+---@field TicketBytes System.Byte[]
+Network.SupabaseUpload.SupabaseUploadAuthService.SteamTicketResult = {}
+---@alias CS.Network.SupabaseUpload.SupabaseUploadAuthService.SteamTicketResult Network.SupabaseUpload.SupabaseUploadAuthService.SteamTicketResult
+CS.Network.SupabaseUpload.SupabaseUploadAuthService.SteamTicketResult = Network.SupabaseUpload.SupabaseUploadAuthService.SteamTicketResult
+
+---@param ticketHandle Steamworks.HAuthTicket
+---@param ticketBytes System.Byte[]
+---@return Network.SupabaseUpload.SupabaseUploadAuthService.SteamTicketResult
+function Network.SupabaseUpload.SupabaseUploadAuthService.SteamTicketResult.New(ticketHandle, ticketBytes) end
+
+---@class Network.SupabaseUpload.SupabaseUploadAuthService.VerifiedUploadSession : System.Object
+---@field UploadJwt string
+---@field ExpiresAt string
+---@field ExpiresAtUtc System.DateTimeOffset
+Network.SupabaseUpload.SupabaseUploadAuthService.VerifiedUploadSession = {}
+---@alias CS.Network.SupabaseUpload.SupabaseUploadAuthService.VerifiedUploadSession Network.SupabaseUpload.SupabaseUploadAuthService.VerifiedUploadSession
+CS.Network.SupabaseUpload.SupabaseUploadAuthService.VerifiedUploadSession = Network.SupabaseUpload.SupabaseUploadAuthService.VerifiedUploadSession
+
+---@return Network.SupabaseUpload.SupabaseUploadAuthService.VerifiedUploadSession
+function Network.SupabaseUpload.SupabaseUploadAuthService.VerifiedUploadSession.New() end
+
+---@class Network.SupabaseUpload.SupabaseUploadAuthService.IPostgrestTableProvider
+Network.SupabaseUpload.SupabaseUploadAuthService.IPostgrestTableProvider = {}
+---@alias CS.Network.SupabaseUpload.SupabaseUploadAuthService.IPostgrestTableProvider Network.SupabaseUpload.SupabaseUploadAuthService.IPostgrestTableProvider
+CS.Network.SupabaseUpload.SupabaseUploadAuthService.IPostgrestTableProvider = Network.SupabaseUpload.SupabaseUploadAuthService.IPostgrestTableProvider
+
+
+---@class Network.SupabaseUpload.SupabaseUploadAuthService.StatelessPostgrestTableProvider : System.Object
+Network.SupabaseUpload.SupabaseUploadAuthService.StatelessPostgrestTableProvider = {}
+---@alias CS.Network.SupabaseUpload.SupabaseUploadAuthService.StatelessPostgrestTableProvider Network.SupabaseUpload.SupabaseUploadAuthService.StatelessPostgrestTableProvider
+CS.Network.SupabaseUpload.SupabaseUploadAuthService.StatelessPostgrestTableProvider = Network.SupabaseUpload.SupabaseUploadAuthService.StatelessPostgrestTableProvider
+
+---@param supabaseUrl string
+---@param supabasePublishableKey string
+---@param uploadJwt string
+---@return Network.SupabaseUpload.SupabaseUploadAuthService.StatelessPostgrestTableProvider
+function Network.SupabaseUpload.SupabaseUploadAuthService.StatelessPostgrestTableProvider.New(supabaseUrl, supabasePublishableKey, uploadJwt) end
+
+---@class Network.SupabaseUpload.SupabaseUploadConfig : System.Object
+---@field SupabaseUrl string
+---@field SupabasePublishableKey string
+---@field SupabaseLegacyAnonJwt string
+---@field VerifySteamUploadFunctionName string
+---@field SteamTicketIdentity string
+---@field UploadRole string
+Network.SupabaseUpload.SupabaseUploadConfig = {}
+---@alias CS.Network.SupabaseUpload.SupabaseUploadConfig Network.SupabaseUpload.SupabaseUploadConfig
+CS.Network.SupabaseUpload.SupabaseUploadConfig = Network.SupabaseUpload.SupabaseUploadConfig
+
+---@return System.Collections.Generic.Dictionary
+function Network.SupabaseUpload.SupabaseUploadConfig.CreateFunctionHeaders() end
+---@param accessToken string
+---@return System.Collections.Generic.Dictionary
+function Network.SupabaseUpload.SupabaseUploadConfig.CreatePostgrestHeaders(accessToken) end
+
+---@class Network.Query.QueryBase : System.Object
+---@field QueryId number
+Network.Query.QueryBase = {}
+---@alias CS.Network.Query.QueryBase Network.Query.QueryBase
+CS.Network.Query.QueryBase = Network.Query.QueryBase
+
+function Network.Query.QueryBase:CmdExecute() end
+---@param response Network.Query.QueryBase
+function Network.Query.QueryBase:OnResponse(response) end
+
+---@class Network.Query.QueryBase : Network.Query.QueryBase
+---@field Result T
+---@field Callback System.Action[T]
+Network.Query.QueryBase = {}
+---@alias CS.Network.Query.QueryBase Network.Query.QueryBase
+CS.Network.Query.QueryBase = Network.Query.QueryBase
+
+---@param response Network.Query.QueryBase
+function Network.Query.QueryBase:OnResponse(response) end
+
+---@class Network.Query.QueryBaseSerializer : System.Object
+Network.Query.QueryBaseSerializer = {}
+---@alias CS.Network.Query.QueryBaseSerializer Network.Query.QueryBaseSerializer
+CS.Network.Query.QueryBaseSerializer = Network.Query.QueryBaseSerializer
+
+---@param writer Mirror.NetworkWriter
+---@param value Network.Query.QueryBase
+function Network.Query.QueryBaseSerializer.Write(writer, value) end
+---@param reader Mirror.NetworkReader
+---@return Network.Query.QueryBase
+function Network.Query.QueryBaseSerializer.Read(reader) end
+
+---@class Network.Query.QueryCareers : Network.Query.QueryBase
+---@field Result Network.Query.QueryCareers -- infered from Network.Query.QueryBase`1[System.ValueTuple`2[System.String,DataConfig][]]
+Network.Query.QueryCareers = {}
+---@alias CS.Network.Query.QueryCareers Network.Query.QueryCareers
+CS.Network.Query.QueryCareers = Network.Query.QueryCareers
+
+---@return Network.Query.QueryCareers
+function Network.Query.QueryCareers.New() end
+function Network.Query.QueryCareers:CmdExecute() end
+
+---@class Network.Query.QueryDeck : Network.Query.QueryBase
+---@field instanceId string
+---@field Result Network.Query.QueryDeck -- infered from Network.Query.QueryBase`1[Witch.UI.Window.OutDeckUIData]
+Network.Query.QueryDeck = {}
+---@alias CS.Network.Query.QueryDeck Network.Query.QueryDeck
+CS.Network.Query.QueryDeck = Network.Query.QueryDeck
+
+---@param instanceId string
+---@return Network.Query.QueryDeck
+function Network.Query.QueryDeck.New(instanceId) end
+function Network.Query.QueryDeck:CmdExecute() end
+
+---@class Network.Query.QueryFood : Network.Query.QueryBase
+---@field Result Network.Query.QueryFood -- infered from Network.Query.QueryBase`1[System.Collections.Generic.List`1[DataConfig]]
+Network.Query.QueryFood = {}
+---@alias CS.Network.Query.QueryFood Network.Query.QueryFood
+CS.Network.Query.QueryFood = Network.Query.QueryFood
+
+---@return Network.Query.QueryFood
+function Network.Query.QueryFood.New() end
+function Network.Query.QueryFood:CmdExecute() end
+
+---@class Network.Query.QueryRelic : Network.Query.QueryBase
+---@field instanceId string
+---@field Result Network.Query.QueryRelic -- infered from Network.Query.QueryBase`1[Witch.UI.Window.RelicData]
+Network.Query.QueryRelic = {}
+---@alias CS.Network.Query.QueryRelic Network.Query.QueryRelic
+CS.Network.Query.QueryRelic = Network.Query.QueryRelic
+
+---@param instanceId string
+---@return Network.Query.QueryRelic
+function Network.Query.QueryRelic.New(instanceId) end
+function Network.Query.QueryRelic:CmdExecute() end
+
+---@class Network.Query.QueryStatus : Network.Query.QueryBase
+---@field instanceId string
+---@field Result Network.Query.QueryStatus -- infered from Network.Query.QueryBase`1[Witch.UI.Window.StatusUIData]
+Network.Query.QueryStatus = {}
+---@alias CS.Network.Query.QueryStatus Network.Query.QueryStatus
+CS.Network.Query.QueryStatus = Network.Query.QueryStatus
+
+---@param instanceId string
+---@return Network.Query.QueryStatus
+function Network.Query.QueryStatus.New(instanceId) end
+function Network.Query.QueryStatus:CmdExecute() end
+
+---@class Network.Command.RpcCommandBase : System.Object
+Network.Command.RpcCommandBase = {}
+---@alias CS.Network.Command.RpcCommandBase Network.Command.RpcCommandBase
+CS.Network.Command.RpcCommandBase = Network.Command.RpcCommandBase
+
+---@return Network.Command.RpcCommandBase
+function Network.Command.RpcCommandBase.New() end
+function Network.Command.RpcCommandBase:CmdExecute() end
+function Network.Command.RpcCommandBase:RpcExecute() end
+
+---@class Network.Command.RpcCommandBaseSerializer : System.Object
+Network.Command.RpcCommandBaseSerializer = {}
+---@alias CS.Network.Command.RpcCommandBaseSerializer Network.Command.RpcCommandBaseSerializer
+CS.Network.Command.RpcCommandBaseSerializer = Network.Command.RpcCommandBaseSerializer
+
+---@param writer Mirror.NetworkWriter
+---@param value Network.Command.RpcCommandBase
+function Network.Command.RpcCommandBaseSerializer.Write(writer, value) end
+---@param reader Mirror.NetworkReader
+---@return Network.Command.RpcCommandBase
+function Network.Command.RpcCommandBaseSerializer.Read(reader) end
+
+---@class Network.Command.RpcEatFood : Network.Command.RpcCommandBase
+---@field dataConfig DataConfig
+---@field getId string
+---@field isEat boolean
+Network.Command.RpcEatFood = {}
+---@alias CS.Network.Command.RpcEatFood Network.Command.RpcEatFood
+CS.Network.Command.RpcEatFood = Network.Command.RpcEatFood
+
+---@param dataConfig DataConfig
+---@param getId string
+---@return Network.Command.RpcEatFood
+function Network.Command.RpcEatFood.New(dataConfig, getId) end
+function Network.Command.RpcEatFood:CmdExecute() end
+function Network.Command.RpcEatFood:RpcExecute() end
+
+---@class Network.Command.RpcGetItem : Network.Command.RpcCommandBase
+---@field itemType string
+---@field dataConfig DataConfig
+---@field getId string
+---@field isGet boolean
+Network.Command.RpcGetItem = {}
+---@alias CS.Network.Command.RpcGetItem Network.Command.RpcGetItem
+CS.Network.Command.RpcGetItem = Network.Command.RpcGetItem
+
+---@param itemType string
+---@param dataConfig DataConfig
+---@param getId string
+---@return Network.Command.RpcGetItem
+function Network.Command.RpcGetItem.New(itemType, dataConfig, getId) end
+function Network.Command.RpcGetItem:CmdExecute() end
+function Network.Command.RpcGetItem:RpcExecute() end
+
+---@class Network.Command.RpcSendChat : Network.Command.RpcCommandBase
+---@field name string
+---@field message string
+Network.Command.RpcSendChat = {}
+---@alias CS.Network.Command.RpcSendChat Network.Command.RpcSendChat
+CS.Network.Command.RpcSendChat = Network.Command.RpcSendChat
+
+---@param name string
+---@param message string
+---@return Network.Command.RpcSendChat
+function Network.Command.RpcSendChat.New(name, message) end
+function Network.Command.RpcSendChat:RpcExecute() end
+
+---@class Network.Command.RpcSendEmoji : Network.Command.RpcCommandBase
+---@field instanceid string
+---@field emoji GifAsset
+Network.Command.RpcSendEmoji = {}
+---@alias CS.Network.Command.RpcSendEmoji Network.Command.RpcSendEmoji
+CS.Network.Command.RpcSendEmoji = Network.Command.RpcSendEmoji
+
+---@param instanceid string
+---@param emoji GifAsset
+---@return Network.Command.RpcSendEmoji
+function Network.Command.RpcSendEmoji.New(instanceid, emoji) end
+function Network.Command.RpcSendEmoji:RpcExecute() end
+
+---@class Network.Command.RpcSendItem : Network.Command.RpcCommandBase
+---@field dataConfig DataConfig
+---@field itemType string
+Network.Command.RpcSendItem = {}
+---@alias CS.Network.Command.RpcSendItem Network.Command.RpcSendItem
+CS.Network.Command.RpcSendItem = Network.Command.RpcSendItem
+
+---@param itemType string
+---@param dataConfig DataConfig
+---@return Network.Command.RpcSendItem
+function Network.Command.RpcSendItem.New(itemType, dataConfig) end
+function Network.Command.RpcSendItem:CmdExecute() end
+function Network.Command.RpcSendItem:RpcExecute() end
+
+---@class Network.Command.RpcUpdateWareShow : Network.Command.RpcCommandBase
+Network.Command.RpcUpdateWareShow = {}
+---@alias CS.Network.Command.RpcUpdateWareShow Network.Command.RpcUpdateWareShow
+CS.Network.Command.RpcUpdateWareShow = Network.Command.RpcUpdateWareShow
+
+---@return Network.Command.RpcUpdateWareShow
+function Network.Command.RpcUpdateWareShow.New() end
+function Network.Command.RpcUpdateWareShow:RpcExecute() end
+
+---@class Fight.StatusCommand.ClientCommandBase : System.Object
+---@field Type string
+---@field Value number
+---@field InstanceId string
+---@field From string
+Fight.StatusCommand.ClientCommandBase = {}
+---@alias CS.Fight.StatusCommand.ClientCommandBase Fight.StatusCommand.ClientCommandBase
+CS.Fight.StatusCommand.ClientCommandBase = Fight.StatusCommand.ClientCommandBase
+
+function Fight.StatusCommand.ClientCommandBase.RegisterFormatter() end
+function Fight.StatusCommand.ClientCommandBase:Validate() end
+---@param value number
+---@param instanceId string
+---@return Fight.StatusCommand.ClientCommandBase
+function Fight.StatusCommand.ClientCommandBase:Create(value, instanceId) end
+function Fight.StatusCommand.ClientCommandBase:Execute() end
+---@param origin Fight.StatusCommand.ClientCommandBase
+---@return Fight.StatusCommand.ClientCommandBase
+function Fight.StatusCommand.ClientCommandBase:CopyFrom(origin) end
+
+---@class Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter : MemoryPack.MemoryPackFormatter
+Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter = {}
+---@alias CS.Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter
+CS.Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter = Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter
+
+---@return Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter
+function Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.StatusCommand.ClientCommandBase
+---@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.ClientCommandBase
+function Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.StatusCommand.ClientCommandBaseReaderWriter : System.Object
+Fight.StatusCommand.ClientCommandBaseReaderWriter = {}
+---@alias CS.Fight.StatusCommand.ClientCommandBaseReaderWriter Fight.StatusCommand.ClientCommandBaseReaderWriter
+CS.Fight.StatusCommand.ClientCommandBaseReaderWriter = Fight.StatusCommand.ClientCommandBaseReaderWriter
+
+---@param writer Mirror.NetworkWriter
+---@param command Fight.StatusCommand.ClientCommandBase
+function Fight.StatusCommand.ClientCommandBaseReaderWriter.Write(writer, command) end
+---@param reader Mirror.NetworkReader
+---@return Fight.StatusCommand.ClientCommandBase
+function Fight.StatusCommand.ClientCommandBaseReaderWriter.Read(reader) end
+
+---@class Fight.StatusCommand.CurHp : Fight.StatusCommand.ClientCommandBase
+Fight.StatusCommand.CurHp = {}
+---@alias CS.Fight.StatusCommand.CurHp Fight.StatusCommand.CurHp
+CS.Fight.StatusCommand.CurHp = Fight.StatusCommand.CurHp
+
+---@return Fight.StatusCommand.CurHp
+function Fight.StatusCommand.CurHp.New() end
+function Fight.StatusCommand.CurHp.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.StatusCommand.CurHp
+---@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.CurHp
+function Fight.StatusCommand.CurHp.Deserialize(ref_reader, ref_value) end
+
+---@class Fight.StatusCommand.CurHp.CurHpFormatter : MemoryPack.MemoryPackFormatter
+Fight.StatusCommand.CurHp.CurHpFormatter = {}
+---@alias CS.Fight.StatusCommand.CurHp.CurHpFormatter Fight.StatusCommand.CurHp.CurHpFormatter
+CS.Fight.StatusCommand.CurHp.CurHpFormatter = Fight.StatusCommand.CurHp.CurHpFormatter
+
+---@return Fight.StatusCommand.CurHp.CurHpFormatter
+function Fight.StatusCommand.CurHp.CurHpFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.StatusCommand.CurHp
+---@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.CurHp
+function Fight.StatusCommand.CurHp.CurHpFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.StatusCommand.Defend : Fight.StatusCommand.ClientCommandBase
+Fight.StatusCommand.Defend = {}
+---@alias CS.Fight.StatusCommand.Defend Fight.StatusCommand.Defend
+CS.Fight.StatusCommand.Defend = Fight.StatusCommand.Defend
+
+---@return Fight.StatusCommand.Defend
+function Fight.StatusCommand.Defend.New() end
+function Fight.StatusCommand.Defend.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.StatusCommand.Defend
+---@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.Defend
+function Fight.StatusCommand.Defend.Deserialize(ref_reader, ref_value) end
+
+---@class Fight.StatusCommand.Defend.DefendFormatter : MemoryPack.MemoryPackFormatter
+Fight.StatusCommand.Defend.DefendFormatter = {}
+---@alias CS.Fight.StatusCommand.Defend.DefendFormatter Fight.StatusCommand.Defend.DefendFormatter
+CS.Fight.StatusCommand.Defend.DefendFormatter = Fight.StatusCommand.Defend.DefendFormatter
+
+---@return Fight.StatusCommand.Defend.DefendFormatter
+function Fight.StatusCommand.Defend.DefendFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.StatusCommand.Defend
+---@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.Defend
+function Fight.StatusCommand.Defend.DefendFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.StatusCommand.MaxHp : Fight.StatusCommand.ClientCommandBase
+Fight.StatusCommand.MaxHp = {}
+---@alias CS.Fight.StatusCommand.MaxHp Fight.StatusCommand.MaxHp
+CS.Fight.StatusCommand.MaxHp = Fight.StatusCommand.MaxHp
+
+---@return Fight.StatusCommand.MaxHp
+function Fight.StatusCommand.MaxHp.New() end
+function Fight.StatusCommand.MaxHp.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.StatusCommand.MaxHp
+---@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.MaxHp
+function Fight.StatusCommand.MaxHp.Deserialize(ref_reader, ref_value) end
+
+---@class Fight.StatusCommand.MaxHp.MaxHpFormatter : MemoryPack.MemoryPackFormatter
+Fight.StatusCommand.MaxHp.MaxHpFormatter = {}
+---@alias CS.Fight.StatusCommand.MaxHp.MaxHpFormatter Fight.StatusCommand.MaxHp.MaxHpFormatter
+CS.Fight.StatusCommand.MaxHp.MaxHpFormatter = Fight.StatusCommand.MaxHp.MaxHpFormatter
+
+---@return Fight.StatusCommand.MaxHp.MaxHpFormatter
+function Fight.StatusCommand.MaxHp.MaxHpFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.StatusCommand.MaxHp
+---@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.MaxHp
+function Fight.StatusCommand.MaxHp.MaxHpFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ObjTarget.ObjTargetAction : Fight.ObjTarget.ObjTargetBase
+Fight.ObjTarget.ObjTargetAction = {}
+---@alias CS.Fight.ObjTarget.ObjTargetAction Fight.ObjTarget.ObjTargetAction
+CS.Fight.ObjTarget.ObjTargetAction = Fight.ObjTarget.ObjTargetAction
+
+---@return Fight.ObjTarget.ObjTargetAction
+function Fight.ObjTarget.ObjTargetAction.New() end
+function Fight.ObjTarget.ObjTargetAction.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ObjTarget.ObjTargetAction
+---@return ,MemoryPack.MemoryPackReader,Fight.ObjTarget.ObjTargetAction
+function Fight.ObjTarget.ObjTargetAction.Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter : MemoryPack.MemoryPackFormatter
+Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter = {}
+---@alias CS.Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter
+CS.Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter = Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter
+
+---@return Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter
+function Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ObjTarget.ObjTargetAction
+---@return ,MemoryPack.MemoryPackReader,Fight.ObjTarget.ObjTargetAction
+function Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ObjTarget.ObjTargetBase : System.Object
+---@field Type string
+---@field FromDataConfigId string
+---@field ToAction string
+---@field theData System.Byte[]
+---@field ThisVars System.String[]
+---@field Value string
+---@field InstanceId string
+---@field SourceInstanceId string
+---@field From string
+Fight.ObjTarget.ObjTargetBase = {}
+---@alias CS.Fight.ObjTarget.ObjTargetBase Fight.ObjTarget.ObjTargetBase
+CS.Fight.ObjTarget.ObjTargetBase = Fight.ObjTarget.ObjTargetBase
+
+---@param data System.Collections.Generic.IDictionary
+---@return System.Byte[]
+function Fight.ObjTarget.ObjTargetBase.SerializeConfigData(data) end
+---@param data System.Byte[]
+---@return System.Collections.Generic.Dictionary
+function Fight.ObjTarget.ObjTargetBase.DeserializeConfigData(data) end
+function Fight.ObjTarget.ObjTargetBase.RegisterFormatter() end
+function Fight.ObjTarget.ObjTargetBase:Validate() end
+---@param instanceId string
+---@param sourceInstanceId string
+---@param ObjAction string
+---@param fromId string
+---@param theData System.Byte[]
+---@param Vars System.String[]
+---@return Fight.ObjTarget.ObjTargetBase
+function Fight.ObjTarget.ObjTargetBase:Create(instanceId, sourceInstanceId, ObjAction, fromId, theData, Vars) end
+function Fight.ObjTarget.ObjTargetBase:Execute() end
+---@param origin Fight.ObjTarget.ObjTargetBase
+---@return Fight.ObjTarget.ObjTargetBase
+function Fight.ObjTarget.ObjTargetBase:CopyFrom(origin) end
+
+---@class Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter : MemoryPack.MemoryPackFormatter
+Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter = {}
+---@alias CS.Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter
+CS.Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter = Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter
+
+---@return Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter
+function Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ObjTarget.ObjTargetBase
+---@return ,MemoryPack.MemoryPackReader,Fight.ObjTarget.ObjTargetBase
+function Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ObjTarget.ObjTargetBaseReaderWriter : System.Object
+Fight.ObjTarget.ObjTargetBaseReaderWriter = {}
+---@alias CS.Fight.ObjTarget.ObjTargetBaseReaderWriter Fight.ObjTarget.ObjTargetBaseReaderWriter
+CS.Fight.ObjTarget.ObjTargetBaseReaderWriter = Fight.ObjTarget.ObjTargetBaseReaderWriter
+
+---@param writer Mirror.NetworkWriter
+---@param command Fight.ObjTarget.ObjTargetBase
+function Fight.ObjTarget.ObjTargetBaseReaderWriter.Write(writer, command) end
+---@param reader Mirror.NetworkReader
+---@return Fight.ObjTarget.ObjTargetBase
+function Fight.ObjTarget.ObjTargetBaseReaderWriter.Read(reader) end
+
+---@class Fight.ActionCommand.ActionAnimation : Fight.ActionCommand.ActionCommandBase
+Fight.ActionCommand.ActionAnimation = {}
+---@alias CS.Fight.ActionCommand.ActionAnimation Fight.ActionCommand.ActionAnimation
+CS.Fight.ActionCommand.ActionAnimation = Fight.ActionCommand.ActionAnimation
+
+---@return Fight.ActionCommand.ActionAnimation
+function Fight.ActionCommand.ActionAnimation.New() end
+function Fight.ActionCommand.ActionAnimation.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.ActionAnimation
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.ActionAnimation
+function Fight.ActionCommand.ActionAnimation.Deserialize(ref_reader, ref_value) end
+---@param State Witch.UI.Window.FightUI.AnimationData
+---@return Fight.ActionCommand.ActionCommandBase
+function Fight.ActionCommand.ActionAnimation:Create(State) end
+
+---@class Fight.ActionCommand.ActionAnimation.AnimationData : System.ValueType
+---@field status System.String[]
+---@field animationState IStatusManager.AnimatedState[]
+---@field effectName string
+Fight.ActionCommand.ActionAnimation.AnimationData = {}
+---@alias CS.Fight.ActionCommand.ActionAnimation.AnimationData Fight.ActionCommand.ActionAnimation.AnimationData
+CS.Fight.ActionCommand.ActionAnimation.AnimationData = Fight.ActionCommand.ActionAnimation.AnimationData
+
+function Fight.ActionCommand.ActionAnimation.AnimationData.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.ActionAnimation.AnimationData
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.ActionAnimation.AnimationData
+function Fight.ActionCommand.ActionAnimation.AnimationData.Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter : MemoryPack.MemoryPackFormatter
+Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter = {}
+---@alias CS.Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter
+CS.Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter = Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter
+
+---@return Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter
+function Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.ActionAnimation.AnimationData
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.ActionAnimation.AnimationData
+function Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter : MemoryPack.MemoryPackFormatter
+Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter = {}
+---@alias CS.Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter
+CS.Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter = Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter
+
+---@return Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter
+function Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.ActionAnimation
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.ActionAnimation
+function Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.ActionCommandBase : System.Object
+---@field Type string
+---@field Value System.Byte[]
+---@field From string
+---@field Reliable boolean
+Fight.ActionCommand.ActionCommandBase = {}
+---@alias CS.Fight.ActionCommand.ActionCommandBase Fight.ActionCommand.ActionCommandBase
+CS.Fight.ActionCommand.ActionCommandBase = Fight.ActionCommand.ActionCommandBase
+
+function Fight.ActionCommand.ActionCommandBase.RegisterFormatter() end
+function Fight.ActionCommand.ActionCommandBase:Execute() end
+---@param origin Fight.ActionCommand.ActionCommandBase
+---@return Fight.ActionCommand.ActionCommandBase
+function Fight.ActionCommand.ActionCommandBase:CopyFrom(origin) end
+
+---@class Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter : MemoryPack.MemoryPackFormatter
+Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter = {}
+---@alias CS.Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter
+CS.Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter = Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter
+
+---@return Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter
+function Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.ActionCommandBase
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.ActionCommandBase
+function Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.DynamicVariableSync : Fight.ActionCommand.ActionCommandBase
+Fight.ActionCommand.DynamicVariableSync = {}
+---@alias CS.Fight.ActionCommand.DynamicVariableSync Fight.ActionCommand.DynamicVariableSync
+CS.Fight.ActionCommand.DynamicVariableSync = Fight.ActionCommand.DynamicVariableSync
+
+---@return Fight.ActionCommand.DynamicVariableSync
+function Fight.ActionCommand.DynamicVariableSync.New() end
+function Fight.ActionCommand.DynamicVariableSync.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.DynamicVariableSync
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DynamicVariableSync
+function Fight.ActionCommand.DynamicVariableSync.Deserialize(ref_reader, ref_value) end
+---@param instanceId string
+---@param key string
+---@param value number
+---@return Fight.ActionCommand.ActionCommandBase
+function Fight.ActionCommand.DynamicVariableSync:Create(instanceId, key, value) end
+
+---@class Fight.ActionCommand.DynamicVariableSync.DynamicVariableData : System.ValueType
+---@field InstanceId string
+---@field Key string
+---@field Value number
+Fight.ActionCommand.DynamicVariableSync.DynamicVariableData = {}
+---@alias CS.Fight.ActionCommand.DynamicVariableSync.DynamicVariableData Fight.ActionCommand.DynamicVariableSync.DynamicVariableData
+CS.Fight.ActionCommand.DynamicVariableSync.DynamicVariableData = Fight.ActionCommand.DynamicVariableSync.DynamicVariableData
+
+function Fight.ActionCommand.DynamicVariableSync.DynamicVariableData.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.DynamicVariableSync.DynamicVariableData
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DynamicVariableSync.DynamicVariableData
+function Fight.ActionCommand.DynamicVariableSync.DynamicVariableData.Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.DynamicVariableSync.DynamicVariableData.DynamicVariableDataFormatter : MemoryPack.MemoryPackFormatter
+Fight.ActionCommand.DynamicVariableSync.DynamicVariableData.DynamicVariableDataFormatter = {}
+---@alias CS.Fight.ActionCommand.DynamicVariableSync.DynamicVariableData.DynamicVariableDataFormatter Fight.ActionCommand.DynamicVariableSync.DynamicVariableData.DynamicVariableDataFormatter
+CS.Fight.ActionCommand.DynamicVariableSync.DynamicVariableData.DynamicVariableDataFormatter = Fight.ActionCommand.DynamicVariableSync.DynamicVariableData.DynamicVariableDataFormatter
+
+---@return Fight.ActionCommand.DynamicVariableSync.DynamicVariableData.DynamicVariableDataFormatter
+function Fight.ActionCommand.DynamicVariableSync.DynamicVariableData.DynamicVariableDataFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.DynamicVariableSync.DynamicVariableData
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DynamicVariableSync.DynamicVariableData
+function Fight.ActionCommand.DynamicVariableSync.DynamicVariableData.DynamicVariableDataFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.DynamicVariableSync.DynamicVariableSyncFormatter : MemoryPack.MemoryPackFormatter
+Fight.ActionCommand.DynamicVariableSync.DynamicVariableSyncFormatter = {}
+---@alias CS.Fight.ActionCommand.DynamicVariableSync.DynamicVariableSyncFormatter Fight.ActionCommand.DynamicVariableSync.DynamicVariableSyncFormatter
+CS.Fight.ActionCommand.DynamicVariableSync.DynamicVariableSyncFormatter = Fight.ActionCommand.DynamicVariableSync.DynamicVariableSyncFormatter
+
+---@return Fight.ActionCommand.DynamicVariableSync.DynamicVariableSyncFormatter
+function Fight.ActionCommand.DynamicVariableSync.DynamicVariableSyncFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.DynamicVariableSync
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DynamicVariableSync
+function Fight.ActionCommand.DynamicVariableSync.DynamicVariableSyncFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.DamageFilterSync : Fight.ActionCommand.ActionCommandBase
+Fight.ActionCommand.DamageFilterSync = {}
+---@alias CS.Fight.ActionCommand.DamageFilterSync Fight.ActionCommand.DamageFilterSync
+CS.Fight.ActionCommand.DamageFilterSync = Fight.ActionCommand.DamageFilterSync
+
+---@return Fight.ActionCommand.DamageFilterSync
+function Fight.ActionCommand.DamageFilterSync.New() end
+function Fight.ActionCommand.DamageFilterSync.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.DamageFilterSync
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DamageFilterSync
+function Fight.ActionCommand.DamageFilterSync.Deserialize(ref_reader, ref_value) end
+---@param instanceId string
+---@param key string
+---@param value number
+---@return Fight.ActionCommand.ActionCommandBase
+function Fight.ActionCommand.DamageFilterSync:CreateSet(instanceId, key, value) end
+---@param instanceId string
+---@param key string
+---@return Fight.ActionCommand.ActionCommandBase
+function Fight.ActionCommand.DamageFilterSync:CreateRemove(instanceId, key) end
+---@param instanceId string
+---@return Fight.ActionCommand.ActionCommandBase
+function Fight.ActionCommand.DamageFilterSync:CreateClear(instanceId) end
+
+---@class Fight.ActionCommand.DamageFilterSync.DamageFilterOperation
+---@field Set Fight.ActionCommand.DamageFilterSync.DamageFilterOperation
+---@field Remove Fight.ActionCommand.DamageFilterSync.DamageFilterOperation
+---@field Clear Fight.ActionCommand.DamageFilterSync.DamageFilterOperation
+Fight.ActionCommand.DamageFilterSync.DamageFilterOperation = {}
+---@alias CS.Fight.ActionCommand.DamageFilterSync.DamageFilterOperation Fight.ActionCommand.DamageFilterSync.DamageFilterOperation
+CS.Fight.ActionCommand.DamageFilterSync.DamageFilterOperation = Fight.ActionCommand.DamageFilterSync.DamageFilterOperation
+
+
+---@class Fight.ActionCommand.DamageFilterSync.DamageFilterData : System.ValueType
+---@field InstanceId string
+---@field Key string
+---@field Value number
+---@field Operation Fight.ActionCommand.DamageFilterSync.DamageFilterOperation
+Fight.ActionCommand.DamageFilterSync.DamageFilterData = {}
+---@alias CS.Fight.ActionCommand.DamageFilterSync.DamageFilterData Fight.ActionCommand.DamageFilterSync.DamageFilterData
+CS.Fight.ActionCommand.DamageFilterSync.DamageFilterData = Fight.ActionCommand.DamageFilterSync.DamageFilterData
+
+function Fight.ActionCommand.DamageFilterSync.DamageFilterData.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.DamageFilterSync.DamageFilterData
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DamageFilterSync.DamageFilterData
+function Fight.ActionCommand.DamageFilterSync.DamageFilterData.Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.DamageFilterSync.DamageFilterData.DamageFilterDataFormatter : MemoryPack.MemoryPackFormatter
+Fight.ActionCommand.DamageFilterSync.DamageFilterData.DamageFilterDataFormatter = {}
+---@alias CS.Fight.ActionCommand.DamageFilterSync.DamageFilterData.DamageFilterDataFormatter Fight.ActionCommand.DamageFilterSync.DamageFilterData.DamageFilterDataFormatter
+CS.Fight.ActionCommand.DamageFilterSync.DamageFilterData.DamageFilterDataFormatter = Fight.ActionCommand.DamageFilterSync.DamageFilterData.DamageFilterDataFormatter
+
+---@return Fight.ActionCommand.DamageFilterSync.DamageFilterData.DamageFilterDataFormatter
+function Fight.ActionCommand.DamageFilterSync.DamageFilterData.DamageFilterDataFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.DamageFilterSync.DamageFilterData
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DamageFilterSync.DamageFilterData
+function Fight.ActionCommand.DamageFilterSync.DamageFilterData.DamageFilterDataFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.DamageFilterSync.DamageFilterSyncFormatter : MemoryPack.MemoryPackFormatter
+Fight.ActionCommand.DamageFilterSync.DamageFilterSyncFormatter = {}
+---@alias CS.Fight.ActionCommand.DamageFilterSync.DamageFilterSyncFormatter Fight.ActionCommand.DamageFilterSync.DamageFilterSyncFormatter
+CS.Fight.ActionCommand.DamageFilterSync.DamageFilterSyncFormatter = Fight.ActionCommand.DamageFilterSync.DamageFilterSyncFormatter
+
+---@return Fight.ActionCommand.DamageFilterSync.DamageFilterSyncFormatter
+function Fight.ActionCommand.DamageFilterSync.DamageFilterSyncFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.DamageFilterSync
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DamageFilterSync
+function Fight.ActionCommand.DamageFilterSync.DamageFilterSyncFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.ActionCommandBaseReaderWriter : System.Object
+Fight.ActionCommand.ActionCommandBaseReaderWriter = {}
+---@alias CS.Fight.ActionCommand.ActionCommandBaseReaderWriter Fight.ActionCommand.ActionCommandBaseReaderWriter
+CS.Fight.ActionCommand.ActionCommandBaseReaderWriter = Fight.ActionCommand.ActionCommandBaseReaderWriter
+
+---@param writer Mirror.NetworkWriter
+---@param command Fight.ActionCommand.ActionCommandBase
+function Fight.ActionCommand.ActionCommandBaseReaderWriter.Write(writer, command) end
+---@param reader Mirror.NetworkReader
+---@return Fight.ActionCommand.ActionCommandBase
+function Fight.ActionCommand.ActionCommandBaseReaderWriter.Read(reader) end
+
+---@class Fight.ActionCommand.ClearBuffVar : Fight.ActionCommand.ActionCommandBase
+---@field Reliable boolean
+Fight.ActionCommand.ClearBuffVar = {}
+---@alias CS.Fight.ActionCommand.ClearBuffVar Fight.ActionCommand.ClearBuffVar
+CS.Fight.ActionCommand.ClearBuffVar = Fight.ActionCommand.ClearBuffVar
+
+---@return Fight.ActionCommand.ClearBuffVar
+function Fight.ActionCommand.ClearBuffVar.New() end
+function Fight.ActionCommand.ClearBuffVar.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.ClearBuffVar
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.ClearBuffVar
+function Fight.ActionCommand.ClearBuffVar.Deserialize(ref_reader, ref_value) end
+---@param Id string
+---@return Fight.ActionCommand.ActionCommandBase
+function Fight.ActionCommand.ClearBuffVar:Create(Id) end
+
+---@class Fight.ActionCommand.ClearBuffVar.ClearBuffData : System.ValueType
+---@field TotalId string
+Fight.ActionCommand.ClearBuffVar.ClearBuffData = {}
+---@alias CS.Fight.ActionCommand.ClearBuffVar.ClearBuffData Fight.ActionCommand.ClearBuffVar.ClearBuffData
+CS.Fight.ActionCommand.ClearBuffVar.ClearBuffData = Fight.ActionCommand.ClearBuffVar.ClearBuffData
+
+function Fight.ActionCommand.ClearBuffVar.ClearBuffData.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.ClearBuffVar.ClearBuffData
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.ClearBuffVar.ClearBuffData
+function Fight.ActionCommand.ClearBuffVar.ClearBuffData.Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.ClearBuffVar.ClearBuffData.ClearBuffDataFormatter : MemoryPack.MemoryPackFormatter
+Fight.ActionCommand.ClearBuffVar.ClearBuffData.ClearBuffDataFormatter = {}
+---@alias CS.Fight.ActionCommand.ClearBuffVar.ClearBuffData.ClearBuffDataFormatter Fight.ActionCommand.ClearBuffVar.ClearBuffData.ClearBuffDataFormatter
+CS.Fight.ActionCommand.ClearBuffVar.ClearBuffData.ClearBuffDataFormatter = Fight.ActionCommand.ClearBuffVar.ClearBuffData.ClearBuffDataFormatter
+
+---@return Fight.ActionCommand.ClearBuffVar.ClearBuffData.ClearBuffDataFormatter
+function Fight.ActionCommand.ClearBuffVar.ClearBuffData.ClearBuffDataFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.ClearBuffVar.ClearBuffData
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.ClearBuffVar.ClearBuffData
+function Fight.ActionCommand.ClearBuffVar.ClearBuffData.ClearBuffDataFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.ClearBuffVar.ClearBuffVarFormatter : MemoryPack.MemoryPackFormatter
+Fight.ActionCommand.ClearBuffVar.ClearBuffVarFormatter = {}
+---@alias CS.Fight.ActionCommand.ClearBuffVar.ClearBuffVarFormatter Fight.ActionCommand.ClearBuffVar.ClearBuffVarFormatter
+CS.Fight.ActionCommand.ClearBuffVar.ClearBuffVarFormatter = Fight.ActionCommand.ClearBuffVar.ClearBuffVarFormatter
+
+---@return Fight.ActionCommand.ClearBuffVar.ClearBuffVarFormatter
+function Fight.ActionCommand.ClearBuffVar.ClearBuffVarFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.ClearBuffVar
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.ClearBuffVar
+function Fight.ActionCommand.ClearBuffVar.ClearBuffVarFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.DamageText : Fight.ActionCommand.ActionCommandBase
+Fight.ActionCommand.DamageText = {}
+---@alias CS.Fight.ActionCommand.DamageText Fight.ActionCommand.DamageText
+CS.Fight.ActionCommand.DamageText = Fight.ActionCommand.DamageText
+
+---@return Fight.ActionCommand.DamageText
+function Fight.ActionCommand.DamageText.New() end
+function Fight.ActionCommand.DamageText.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.DamageText
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DamageText
+function Fight.ActionCommand.DamageText.Deserialize(ref_reader, ref_value) end
+---@param value Fight.ActionCommand.DamageText.DamageTextData
+---@return Fight.ActionCommand.ActionCommandBase
+function Fight.ActionCommand.DamageText:Create(value) end
+
+---@class Fight.ActionCommand.DamageText.DamageTextData : System.ValueType
+---@field from string
+---@field to string
+---@field hit number
+---@field originalVal number
+---@field x number
+---@field y number
+---@field damageType string
+Fight.ActionCommand.DamageText.DamageTextData = {}
+---@alias CS.Fight.ActionCommand.DamageText.DamageTextData Fight.ActionCommand.DamageText.DamageTextData
+CS.Fight.ActionCommand.DamageText.DamageTextData = Fight.ActionCommand.DamageText.DamageTextData
+
+function Fight.ActionCommand.DamageText.DamageTextData.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.DamageText.DamageTextData
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DamageText.DamageTextData
+function Fight.ActionCommand.DamageText.DamageTextData.Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter : MemoryPack.MemoryPackFormatter
+Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter = {}
+---@alias CS.Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter
+CS.Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter = Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter
+
+---@return Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter
+function Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.DamageText.DamageTextData
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DamageText.DamageTextData
+function Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.DamageText.DamageTextFormatter : MemoryPack.MemoryPackFormatter
+Fight.ActionCommand.DamageText.DamageTextFormatter = {}
+---@alias CS.Fight.ActionCommand.DamageText.DamageTextFormatter Fight.ActionCommand.DamageText.DamageTextFormatter
+CS.Fight.ActionCommand.DamageText.DamageTextFormatter = Fight.ActionCommand.DamageText.DamageTextFormatter
+
+---@return Fight.ActionCommand.DamageText.DamageTextFormatter
+function Fight.ActionCommand.DamageText.DamageTextFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.DamageText
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DamageText
+function Fight.ActionCommand.DamageText.DamageTextFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.Effect : Fight.ActionCommand.ActionCommandBase
+Fight.ActionCommand.Effect = {}
+---@alias CS.Fight.ActionCommand.Effect Fight.ActionCommand.Effect
+CS.Fight.ActionCommand.Effect = Fight.ActionCommand.Effect
+
+---@return Fight.ActionCommand.Effect
+function Fight.ActionCommand.Effect.New() end
+function Fight.ActionCommand.Effect.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.Effect
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.Effect
+function Fight.ActionCommand.Effect.Deserialize(ref_reader, ref_value) end
+---@param value Fight.ActionCommand.Effect.EffectData
+---@return Fight.ActionCommand.ActionCommandBase
+function Fight.ActionCommand.Effect:Create(value) end
+
 ---@class Fight.ActionCommand.Effect.EffectData : System.ValueType
 ---@field effectName string
 ---@field Self string
@@ -37,6 +2372,63 @@ function Fight.ActionCommand.Effect.EffectFormatter.New() end
 ---@param ref_value Fight.ActionCommand.Effect
 ---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.Effect
 function Fight.ActionCommand.Effect.EffectFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.EventTriggerSync : Fight.ActionCommand.ActionCommandBase
+---@field Reliable boolean
+Fight.ActionCommand.EventTriggerSync = {}
+---@alias CS.Fight.ActionCommand.EventTriggerSync Fight.ActionCommand.EventTriggerSync
+CS.Fight.ActionCommand.EventTriggerSync = Fight.ActionCommand.EventTriggerSync
+
+---@return Fight.ActionCommand.EventTriggerSync
+function Fight.ActionCommand.EventTriggerSync.New() end
+function Fight.ActionCommand.EventTriggerSync.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.EventTriggerSync
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.EventTriggerSync
+function Fight.ActionCommand.EventTriggerSync.Deserialize(ref_reader, ref_value) end
+---@overload fun(self: Fight.ActionCommand.EventTriggerSync, eventName: string) : Fight.ActionCommand.EventTriggerSync
+---@param eventName string
+---@param param ISourceData
+---@return Fight.ActionCommand.EventTriggerSync
+function Fight.ActionCommand.EventTriggerSync:Create(eventName, param) end
+
+---@class Fight.ActionCommand.EventTriggerSync.EventTriggerData : System.ValueType
+---@field EventName string
+---@field ParamTypeName string
+---@field ParamBytes System.Byte[]
+Fight.ActionCommand.EventTriggerSync.EventTriggerData = {}
+---@alias CS.Fight.ActionCommand.EventTriggerSync.EventTriggerData Fight.ActionCommand.EventTriggerSync.EventTriggerData
+CS.Fight.ActionCommand.EventTriggerSync.EventTriggerData = Fight.ActionCommand.EventTriggerSync.EventTriggerData
+
+function Fight.ActionCommand.EventTriggerSync.EventTriggerData.RegisterFormatter() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.EventTriggerSync.EventTriggerData
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.EventTriggerSync.EventTriggerData
+function Fight.ActionCommand.EventTriggerSync.EventTriggerData.Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.EventTriggerSync.EventTriggerData.EventTriggerDataFormatter : MemoryPack.MemoryPackFormatter
+Fight.ActionCommand.EventTriggerSync.EventTriggerData.EventTriggerDataFormatter = {}
+---@alias CS.Fight.ActionCommand.EventTriggerSync.EventTriggerData.EventTriggerDataFormatter Fight.ActionCommand.EventTriggerSync.EventTriggerData.EventTriggerDataFormatter
+CS.Fight.ActionCommand.EventTriggerSync.EventTriggerData.EventTriggerDataFormatter = Fight.ActionCommand.EventTriggerSync.EventTriggerData.EventTriggerDataFormatter
+
+---@return Fight.ActionCommand.EventTriggerSync.EventTriggerData.EventTriggerDataFormatter
+function Fight.ActionCommand.EventTriggerSync.EventTriggerData.EventTriggerDataFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.EventTriggerSync.EventTriggerData
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.EventTriggerSync.EventTriggerData
+function Fight.ActionCommand.EventTriggerSync.EventTriggerData.EventTriggerDataFormatter:Deserialize(ref_reader, ref_value) end
+
+---@class Fight.ActionCommand.EventTriggerSync.EventTriggerSyncFormatter : MemoryPack.MemoryPackFormatter
+Fight.ActionCommand.EventTriggerSync.EventTriggerSyncFormatter = {}
+---@alias CS.Fight.ActionCommand.EventTriggerSync.EventTriggerSyncFormatter Fight.ActionCommand.EventTriggerSync.EventTriggerSyncFormatter
+CS.Fight.ActionCommand.EventTriggerSync.EventTriggerSyncFormatter = Fight.ActionCommand.EventTriggerSync.EventTriggerSyncFormatter
+
+---@return Fight.ActionCommand.EventTriggerSync.EventTriggerSyncFormatter
+function Fight.ActionCommand.EventTriggerSync.EventTriggerSyncFormatter.New() end
+---@param ref_reader MemoryPack.MemoryPackReader
+---@param ref_value Fight.ActionCommand.EventTriggerSync
+---@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.EventTriggerSync
+function Fight.ActionCommand.EventTriggerSync.EventTriggerSyncFormatter:Deserialize(ref_reader, ref_value) end
 
 ---@class Fight.ActionCommand.RemoveBuff : Fight.ActionCommand.ActionCommandBase
 ---@field Reliable boolean
@@ -599,8 +2991,9 @@ function Data.Save.GameSaveAnalyser.New() end
 ---@param itemType Data.Save.OperObj
 ---@param operType Data.Save.OperType
 function Data.Save.GameSaveAnalyser:TryPush(name, itemType, operType) end
+---@param fromSave Data.Save.GameOperInfo
 ---@return Cysharp.Threading.Tasks.UniTask
-function Data.Save.GameSaveAnalyser:UpdateToSupabase() end
+function Data.Save.GameSaveAnalyser:UpdateToSupabase(fromSave) end
 
 ---@class Data.Save.GameSaveAnalyser.SaveSelection : Supabase.Postgrest.Models.BaseModel
 ---@field data string
@@ -633,6 +3026,8 @@ function Data.Save.GameSaveManager.GetSaveType() end
 function Data.Save.GameSaveManager.UpdateRoles(roleTable) end
 ---@return System.Collections.Generic.List
 function Data.Save.GameSaveManager.GetHardTags() end
+---@return System.Collections.Generic.List
+function Data.Save.GameSaveManager.GetSlotTags() end
 ---@param eventId string
 function Data.Save.GameSaveManager.AddEventRecord(eventId) end
 ---@return number
@@ -674,13 +3069,43 @@ function Data.Save.GameSaveManager.SetValue(key, value) end
 ---@field PriceMul Data.Save.GameVar
 ---@field EXEnemyHp Data.Save.GameVar
 ---@field EXEnemyAtk Data.Save.GameVar
----@field LimitTime Data.Save.GameVar
----@field ToughMul Data.Save.GameVar
 ---@field Difficulty Data.Save.GameVar
----@field MapScene1 Data.Save.GameVar
----@field MapScene2 Data.Save.GameVar
----@field MapScene3 Data.Save.GameVar
----@field IsKing Data.Save.GameVar
+---@field EndBoss Data.Save.GameVar
+---@field LateThrow Data.Save.GameVar
+---@field UselessWis Data.Save.GameVar
+---@field ExpensiveCard Data.Save.GameVar
+---@field SlotDraftTurnCount Data.Save.GameVar
+---@field SlotDraftEnemyCount Data.Save.GameVar
+---@field SlotLuckyCoin Data.Save.GameVar
+---@field SlotMisfortuneCoin Data.Save.GameVar
+---@field SlotNormalCoin Data.Save.GameVar
+---@field SlotCoinUseCount Data.Save.GameVar
+---@field SlotMultiplierCoin Data.Save.GameVar
+---@field SlotBonusRewardCoin Data.Save.GameVar
+---@field SlotExtraRewardCoin Data.Save.GameVar
+---@field SlotEnemyRewriteCoin Data.Save.GameVar
+---@field SlotTempRemoveCoin Data.Save.GameVar
+---@field SlotPendingBonusRewardDraw Data.Save.GameVar
+---@field SlotMapCal Data.Save.GameVar
+---@field SlotEnemyAffixCount Data.Save.GameVar
+---@field SlotTempRemovedCardIds Data.Save.GameVar
+---@field SlotDayBattleCount Data.Save.GameVar
+---@field SlotDayNightIsNight Data.Save.GameVar
+---@field SlotChipReserve Data.Save.GameVar
+---@field SlotChipInvested Data.Save.GameVar
+---@field SlotChipTotalEarned Data.Save.GameVar
+---@field SlotChipRoundIndex Data.Save.GameVar
+---@field SlotChipBaseStake Data.Save.GameVar
+---@field SlotChipStakeStep Data.Save.GameVar
+---@field SlotChipAutoInvest Data.Save.GameVar
+---@field HasSix Data.Save.GameVar
+---@field TombUse Data.Save.GameVar
+---@field ExCardBottom Data.Save.GameVar
+---@field Branch Data.Save.GameVar
+---@field SlotAccumulatedSelectionCards Data.Save.GameVar
+---@field SlotPendingDraftDiceSnapshot Data.Save.GameVar
+---@field HighExHp Data.Save.GameVar
+---@field ExBless Data.Save.GameVar
 Data.Save.GameVar = {}
 ---@alias CS.Data.Save.GameVar Data.Save.GameVar
 CS.Data.Save.GameVar = Data.Save.GameVar
@@ -704,6 +3129,7 @@ CS.Data.Save.GameVar = Data.Save.GameVar
 ---@field EventRecord System.Collections.Generic.List
 ---@field ItemOpers Data.Save.GameOperInfo
 ---@field HardTags System.Collections.Generic.List
+---@field SlotTags System.Collections.Generic.List
 ---@field ShareCards System.Collections.Generic.List
 ---@field ShareRelics System.Collections.Generic.List
 ---@field SavePath string
@@ -769,6 +3195,15 @@ CS.Witch.PointUse = Witch.PointUse
 ---@param Icon UnityEngine.Sprite
 function Witch.PointUse:Init(Name, Description, Icon) end
 
+---@class Witch.ModeMultiplayerPolicy : System.Object
+Witch.ModeMultiplayerPolicy = {}
+---@alias CS.Witch.ModeMultiplayerPolicy Witch.ModeMultiplayerPolicy
+CS.Witch.ModeMultiplayerPolicy = Witch.ModeMultiplayerPolicy
+
+---@param modeType string
+---@return boolean
+function Witch.ModeMultiplayerPolicy.IsModeMultiplayerEnabled(modeType) end
+
 ---@class Witch.IModeManager
 ---@field lazyLoad boolean
 ---@field NowDice Dice
@@ -779,6 +3214,8 @@ Witch.IModeManager = {}
 CS.Witch.IModeManager = Witch.IModeManager
 
 function Witch.IModeManager.ResetCount() end
+---@return boolean
+function Witch.IModeManager:CanMultiplayer() end
 function Witch.IModeManager:ReadyToChangeMap() end
 function Witch.IModeManager:GeneratrMap() end
 function Witch.IModeManager:ShowMapSelect() end
@@ -799,6 +3236,12 @@ function Witch.IModeManager:MapUIStart(mapSelectUI) end
 function Witch.IModeManager:CloseMapUI() end
 ---@param rewardType string
 function Witch.IModeManager:SetRewardType(rewardType) end
+---@return number
+function Witch.IModeManager:GetCurrentEnemyPositiveMultiplier() end
+---@return number
+function Witch.IModeManager:GetCurrentSettlementScoreBonus() end
+---@return boolean
+function Witch.IModeManager:EnableWheelBattleForMultiEnemy() end
 ---@param roleTable RoleTable
 function Witch.IModeManager:CardCountSet(roleTable) end
 
@@ -820,6 +3263,8 @@ function Witch.NormalMapManager:ShowMapSelect() end
 ---@param type string
 ---@param id string
 function Witch.NormalMapManager:RpcLoadMap(type, id) end
+---@param mapSelectUI Witch.UI.Window.MapSelectUI
+function Witch.NormalMapManager:SetSpeciaMap(mapSelectUI) end
 ---@param mapSelectUI Witch.UI.Window.MapSelectUI
 function Witch.NormalMapManager:MapItemInit(mapSelectUI) end
 ---@param battleRewardsUI Witch.UI.Window.BattleRewardsUI
@@ -845,44 +3290,130 @@ function Witch.NormalMapManager:SerializeSyncVars(writer, forceAll) end
 function Witch.NormalMapManager:DeserializeSyncVars(reader, initialState) end
 
 ---@class Witch.SlotMachineManager : Mirror.NetworkBehaviour
+---@field CanStandTurnThreshold number
+---@field ForceStandTurnThreshold number
+---@field relicList System.Collections.Generic.List
+---@field cardList System.Collections.Generic.List
+---@field enemyList System.Collections.Generic.List
 ---@field canuse boolean
----@field LuckyCoin number
----@field MisfortuneCoin number
----@field NormalCoin number
----@field CoinUseCount number
 ---@field nowRewardType string
 ---@field lazyLoad boolean
 ---@field NowDice Dice
 ---@field Level number
+---@field DraftTurnCount number
+---@field DraftEnemyCount number
+---@field MisfortuneCoin number
+---@field CoinUseCount number
+---@field MultiplierCoin number
+---@field BonusRewardCoin number
+---@field ExtraRewardCoin number
+---@field DayBattleCount number
+---@field IsNightPhase boolean
+---@field ChipReserve number
+---@field ChipInvested number
+---@field ChipTotalEarned number
+---@field ChipRoundIndex number
+---@field ChipBaseStake number
+---@field ChipStakeStep number
+---@field ChipAutoInvest number
+---@field CurrentRoundRequiredStake number
+---@field MapCal number
+---@field EnemyAffixCount number
 ---@field MapTree MapTree
 Witch.SlotMachineManager = {}
 ---@alias CS.Witch.SlotMachineManager Witch.SlotMachineManager
 CS.Witch.SlotMachineManager = Witch.SlotMachineManager
 
+function Witch.SlotMachineManager.InitList() end
 ---@param rewardType string
 function Witch.SlotMachineManager:SetRewardType(rewardType) end
+function Witch.SlotMachineManager:EnsureChipStateInitializedForSlotRun() end
+---@param outsiderStakeChips number
+function Witch.SlotMachineManager:InitializeChipStateForNewRun(outsiderStakeChips) end
+---@param n number
+---@return boolean
+function Witch.SlotMachineManager:TryApplyOutsiderStakeFromTruthOnce(n) end
+---@param truthCost number
+---@return boolean
+function Witch.SlotMachineManager:TryApplyOutsiderStakeFromTruth(truthCost) end
+---@return number
+function Witch.SlotMachineManager:TryGrantRealtimeChipsByScore() end
+---@return boolean
+function Witch.SlotMachineManager:TryAutoInvestBeforeDraw() end
+---@return boolean
+function Witch.SlotMachineManager:TryCommitBattleStake() end
+---@return boolean
+function Witch.SlotMachineManager:HandleBattleLossByChip() end
+---@param status StatusManager
+---@return boolean
+function Witch.SlotMachineManager:TryHandlePlayerDefeatInFight(status) end
+---@param reason string
+---@return boolean
+function Witch.SlotMachineManager:TryOpenChipSettlementIfCannotContinue(reason) end
+---@param reason string
+function Witch.SlotMachineManager:OpenChipSettlement(reason) end
+---@return number
+function Witch.SlotMachineManager:GetSettlementTruthReward() end
+---@return number
+function Witch.SlotMachineManager:GetCurrentSettlementBaseScore() end
+---@return number
+function Witch.SlotMachineManager:GetCurrentSettlementAbyssBonusScore() end
+---@return string
+function Witch.SlotMachineManager:GetChipStatusSummary() end
 function Witch.SlotMachineManager:ReadyToChangeMap() end
 ---@return System.Collections.Generic.List
 function Witch.SlotMachineManager:GeneratrMap() end
+function Witch.SlotMachineManager:RandomAddCoin() end
+---@return System.Collections.Generic.List
+function Witch.SlotMachineManager:BuildCoinDisplayConfigs() end
 ---@return System.Collections.Generic.List
 function Witch.SlotMachineManager:RandomGenerate() end
 function Witch.SlotMachineManager:ShowMapSelect() end
+function Witch.SlotMachineManager:ResetDraftProgress() end
+function Witch.SlotMachineManager:BeginForcedSettlementAfterQueuedBattles() end
+---@return boolean
+function Witch.SlotMachineManager:IsForcedSettlementAfterQueuedBattles() end
+function Witch.SlotMachineManager:ClearForcedSettlementAfterQueuedBattles() end
+function Witch.SlotMachineManager:RecordBattleCompleted() end
+---@return boolean
+function Witch.SlotMachineManager:NeedsMoreBattlesBeforeDayBoss() end
+---@param resetDraftProgress boolean
+function Witch.SlotMachineManager:BeginNightPhase(resetDraftProgress) end
+function Witch.SlotMachineManager:RecordDraftPickProgress() end
+---@return boolean
+function Witch.SlotMachineManager:ConsumeDraftEnemyAndHasMore() end
+---@return boolean
+function Witch.SlotMachineManager:TryResolveQueuedBattleCompletion() end
+function Witch.SlotMachineManager:AdvanceDraftTurn() end
+---@return boolean
+function Witch.SlotMachineManager:CanStandNow() end
+---@param fromData DataConfig
+function Witch.SlotMachineManager:AddEnemyAffix(fromData) end
+---@return boolean
+function Witch.SlotMachineManager:ShouldForceStandNow() end
+---@param factor number
+---@return boolean
+function Witch.SlotMachineManager:TryConsumeMultiplierCoin(factor) end
+---@return boolean
+function Witch.SlotMachineManager:TryConsumeBonusRewardCoin() end
+---@return boolean
+function Witch.SlotMachineManager:TryConsumeExtraRewardCoin() end
+---@param count number
+---@param dice Dice
+---@return System.Collections.Generic.List
+function Witch.SlotMachineManager:DrawEnemyCalOptions(count, dice) end
 ---@param type string
 ---@param id string
 function Witch.SlotMachineManager:RpcLoadMap(type, id) end
----@param slotMachUI Witch.SlotMachUI
+---@param slotMachUI Witch.UI.Window.SlotMachUI
 function Witch.SlotMachineManager:MapItemInit(slotMachUI) end
+---@param enemyData DataConfig
+function Witch.SlotMachineManager:AddEnemy(enemyData) end
 ---@param battleRewardsUI Witch.UI.Window.BattleRewardsUI
 function Witch.SlotMachineManager:SetReward(battleRewardsUI) end
 ---@param battleRewardsUI Witch.UI.Window.BattleRewardsUI
 function Witch.SlotMachineManager:RandomSetReward(battleRewardsUI) end
 function Witch.SlotMachineManager:CloseMapUI() end
----@param result System.Collections.Generic.List
----@param count number
-function Witch.SlotMachineManager:ResultUse(result, count) end
----@param result System.Collections.Generic.List
----@param count number
-function Witch.SlotMachineManager:RpcUse(result, count) end
 ---@param battleRewardsUI Witch.UI.Window.BattleRewardsUI
 function Witch.SlotMachineManager:LowReward(battleRewardsUI) end
 ---@param battleRewardsUI Witch.UI.Window.BattleRewardsUI
@@ -901,6 +3432,15 @@ function Witch.SlotMachineManager:CmdLoadMap(type, id) end
 ---@param roleTable RoleTable
 ---@return RoleTable
 function Witch.SlotMachineManager:InitRoleTable(roleTable) end
+---@param roleTable RoleTable
+---@return RoleTable
+function Witch.SlotMachineManager:ResetRole(roleTable) end
+---@return number
+function Witch.SlotMachineManager:GetCurrentEnemyPositiveMultiplier() end
+---@return number
+function Witch.SlotMachineManager:GetCurrentSettlementScoreBonus() end
+---@return boolean
+function Witch.SlotMachineManager:EnableWheelBattleForMultiEnemy() end
 ---@param roleTable RoleTable
 function Witch.SlotMachineManager:CardCountSet(roleTable) end
 ---@return boolean
@@ -951,6 +3491,8 @@ Witch.TeachMapManager = {}
 ---@alias CS.Witch.TeachMapManager Witch.TeachMapManager
 CS.Witch.TeachMapManager = Witch.TeachMapManager
 
+---@return boolean
+function Witch.TeachMapManager:CanMultiplayer() end
 function Witch.TeachMapManager:ReadyToChangeMap() end
 function Witch.TeachMapManager:GeneratrMap() end
 function Witch.TeachMapManager:ShowMapSelect() end
@@ -991,6 +3533,14 @@ CS.Witch.QueryCareer = Witch.QueryCareer
 function Witch.QueryCareer.New(instanceId) end
 function Witch.QueryCareer:CmdExecute() end
 
+---@class Witch.ChildHeight : UnityEngine.MonoBehaviour
+---@field target UnityEngine.RectTransform
+---@field BottomDis number
+Witch.ChildHeight = {}
+---@alias CS.Witch.ChildHeight Witch.ChildHeight
+CS.Witch.ChildHeight = Witch.ChildHeight
+
+
 ---@class Witch.AffectionItem : UnityEngine.MonoBehaviour
 ---@field dataConfig DataConfig
 ---@field affectionUI Witch.UI.Window.AffectionUI
@@ -1025,6 +3575,93 @@ function Witch.TopStatusItem:HideDefend() end
 ---@param type string
 function Witch.TopStatusItem:OtherChangeShow(value, type) end
 
+---@class Witch.ArrowUse : UnityEngine.MonoBehaviour
+Witch.ArrowUse = {}
+---@alias CS.Witch.ArrowUse Witch.ArrowUse
+CS.Witch.ArrowUse = Witch.ArrowUse
+
+
+---@class Witch.InputWIndow : UnityEngine.MonoBehaviour
+---@field windowIcon UnityEngine.UI.Image
+---@field windowTitle TMPro.TextMeshProUGUI
+---@field windowDescription TMPro.TextMeshProUGUI
+---@field confirmButton Michsky.MUIP.ButtonManager
+---@field cancelButton Michsky.MUIP.ButtonManager
+---@field mwAnimator UnityEngine.Animator
+---@field icon UnityEngine.Sprite
+---@field titleText string
+---@field descriptionText string
+---@field onOpen UnityEngine.Events.UnityEvent
+---@field onClose UnityEngine.Events.UnityEvent
+---@field onConfirm UnityEngine.Events.UnityEvent
+---@field onCancel UnityEngine.Events.UnityEvent
+---@field useCustomContent boolean
+---@field isOn boolean
+---@field closeOnCancel boolean
+---@field closeOnConfirm boolean
+---@field showCancelButton boolean
+---@field showConfirmButton boolean
+---@field startBehaviour Witch.InputWIndow.StartBehaviour
+---@field closeBehaviour Witch.InputWIndow.CloseBehaviour
+---@field onEnableBehaviour Witch.InputWIndow.OnEnableBehaviour
+---@field inputField TMPro.TMP_InputField
+---@field mustChoose boolean
+Witch.InputWIndow = {}
+---@alias CS.Witch.InputWIndow Witch.InputWIndow
+CS.Witch.InputWIndow = Witch.InputWIndow
+
+function Witch.InputWIndow:TryClose() end
+function Witch.InputWIndow:UpdateUI() end
+function Witch.InputWIndow:OpenTarget() end
+function Witch.InputWIndow:Open() end
+function Witch.InputWIndow:Close() end
+function Witch.InputWIndow:OpenWindow() end
+function Witch.InputWIndow:CloseWindow() end
+function Witch.InputWIndow:AnimateWindow() end
+
+---@class Witch.InputWIndow.StartBehaviour
+---@field None Witch.InputWIndow.StartBehaviour
+---@field Disable Witch.InputWIndow.StartBehaviour
+---@field Enable Witch.InputWIndow.StartBehaviour
+Witch.InputWIndow.StartBehaviour = {}
+---@alias CS.Witch.InputWIndow.StartBehaviour Witch.InputWIndow.StartBehaviour
+CS.Witch.InputWIndow.StartBehaviour = Witch.InputWIndow.StartBehaviour
+
+
+---@class Witch.InputWIndow.CloseBehaviour
+---@field None Witch.InputWIndow.CloseBehaviour
+---@field Disable Witch.InputWIndow.CloseBehaviour
+---@field Destroy Witch.InputWIndow.CloseBehaviour
+Witch.InputWIndow.CloseBehaviour = {}
+---@alias CS.Witch.InputWIndow.CloseBehaviour Witch.InputWIndow.CloseBehaviour
+CS.Witch.InputWIndow.CloseBehaviour = Witch.InputWIndow.CloseBehaviour
+
+
+---@class Witch.InputWIndow.OnEnableBehaviour
+---@field None Witch.InputWIndow.OnEnableBehaviour
+---@field Restore Witch.InputWIndow.OnEnableBehaviour
+Witch.InputWIndow.OnEnableBehaviour = {}
+---@alias CS.Witch.InputWIndow.OnEnableBehaviour Witch.InputWIndow.OnEnableBehaviour
+CS.Witch.InputWIndow.OnEnableBehaviour = Witch.InputWIndow.OnEnableBehaviour
+
+
+---@class Witch.FightVarItem : UnityEngine.MonoBehaviour
+---@field gameEntryUI Witch.UI.Window.GameEntryUI
+Witch.FightVarItem = {}
+---@alias CS.Witch.FightVarItem Witch.FightVarItem
+CS.Witch.FightVarItem = Witch.FightVarItem
+
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function Witch.FightVarItem:OnPointerClick(eventData) end
+
+---@class Witch.VarBless : Witch.UI.Window.ItemNonDrag
+Witch.VarBless = {}
+---@alias CS.Witch.VarBless Witch.VarBless
+CS.Witch.VarBless = Witch.VarBless
+
+---@param item DataConfig
+function Witch.VarBless:Init(item) end
+
 ---@class Witch.DollItem : UnityEngine.MonoBehaviour
 ---@field waitTime number
 ---@field mul number
@@ -1035,6 +3672,21 @@ CS.Witch.DollItem = Witch.DollItem
 
 function Witch.DollItem:Running() end
 function Witch.DollItem:EndRunning() end
+
+---@class Witch.HouseDialogueManager : UnityEngine.MonoBehaviour
+---@field Type string
+---@field ItemParent UnityEngine.Transform
+---@field MyItem UnityEngine.Transform
+---@field OtherItem UnityEngine.Transform
+---@field nowData DataConfig
+---@field DialogueScrollRect UnityEngine.UI.ScrollRect
+Witch.HouseDialogueManager = {}
+---@alias CS.Witch.HouseDialogueManager Witch.HouseDialogueManager
+CS.Witch.HouseDialogueManager = Witch.HouseDialogueManager
+
+function Witch.HouseDialogueManager:OnEnable() end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function Witch.HouseDialogueManager:OnPointerClick(eventData) end
 
 ---@class Witch.KeyItem : UnityEngine.MonoBehaviour
 ---@field msg string
@@ -1048,48 +3700,124 @@ function Witch.KeyItem:OnPointerEnter(eventData) end
 ---@param eventData UnityEngine.EventSystems.PointerEventData
 function Witch.KeyItem:OnPointerExit(eventData) end
 
----@class Witch.CoinItem : MapItem
+---@class Witch.CoinItem : Witch.UI.Window.Item
+---@field animationController CardAnimationController
+---@field index number
+---@field initPosition UnityEngine.Vector2
+---@field initAngle UnityEngine.Vector3
+---@field draging boolean
+---@field initScale number
+---@field selectScale number
+---@field isReverse boolean
+---@field ignore boolean
 Witch.CoinItem = {}
 ---@alias CS.Witch.CoinItem Witch.CoinItem
 CS.Witch.CoinItem = Witch.CoinItem
 
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.CoinItem:OnPointerDown(eventData) end
----@return Cysharp.Threading.Tasks.UniTask
-function Witch.CoinItem:StartLine() end
----@param node1 MapTree.Node
-function Witch.CoinItem:Init(node1) end
+function Witch.CoinItem:Awake() end
+---@param data DataConfig
+function Witch.CoinItem:Init(data) end
 function Witch.CoinItem:DataUpdate() end
-function Witch.CoinItem:RayCheck() end
-
----@class Witch.SlotMachUI : Witch.UI.Window.MapSelectUI
-Witch.SlotMachUI = {}
----@alias CS.Witch.SlotMachUI Witch.SlotMachUI
-CS.Witch.SlotMachUI = Witch.SlotMachUI
-
-function Witch.SlotMachUI:FadeIn() end
-function Witch.SlotMachUI:DataUpdate() end
-function Witch.SlotMachUI:ReadyToSelect() end
----@param nodes System.Collections.Generic.List
-function Witch.SlotMachUI:CreateMapItem(nodes) end
-function Witch.SlotMachUI:RandomAgain() end
-function Witch.SlotMachUI:GenerateCoinItem() end
-function Witch.SlotMachUI:MapAnimation() end
-function Witch.SlotMachUI:SendNode() end
-function Witch.SlotMachUI:SaveMap() end
----@param useCard MapTree.Node
-function Witch.SlotMachUI:CoinUse(useCard) end
----@param useCard MapTree.Node
-function Witch.SlotMachUI:SlotUse(useCard) end
-
----@class Witch.SlotRod : UnityEngine.MonoBehaviour
----@field slotMachUI Witch.SlotMachUI
-Witch.SlotRod = {}
----@alias CS.Witch.SlotRod Witch.SlotRod
-CS.Witch.SlotRod = Witch.SlotRod
-
 ---@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.SlotRod:OnPointerClick(eventData) end
+function Witch.CoinItem:OnPointerEnter(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function Witch.CoinItem:OnPointerExit(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function Witch.CoinItem:OnPointerClick(eventData) end
+function Witch.CoinItem:UseSc() end
+---@param index number
+function Witch.CoinItem:SetIndex(index) end
+
+---@class Witch.SlotMachSlotItem : UnityEngine.MonoBehaviour
+---@field type string
+---@field canClick boolean
+---@field itemicon UnityEngine.Sprite
+---@field backgroundRoot UnityEngine.GameObject
+Witch.SlotMachSlotItem = {}
+---@alias CS.Witch.SlotMachSlotItem Witch.SlotMachSlotItem
+CS.Witch.SlotMachSlotItem = Witch.SlotMachSlotItem
+
+---@param ui Witch.UI.Window.SlotMachUI
+---@param hazardLane boolean
+function Witch.SlotMachSlotItem:BindLane(ui, hazardLane) end
+function Witch.SlotMachSlotItem:ResetVisual() end
+---@param ui Witch.UI.Window.SlotMachUI
+---@param hazardLane boolean
+function Witch.SlotMachSlotItem:ShowBackgroundOnly(ui, hazardLane) end
+---@param delay number
+function Witch.SlotMachSlotItem:PlayEnter(delay) end
+---@param enabled boolean
+function Witch.SlotMachSlotItem:SetClickEnabled(enabled) end
+---@param ui Witch.UI.Window.SlotMachUI
+---@param item System.Collections.Generic.Dictionary
+---@param isSelfLane boolean
+---@param hazardLane boolean
+---@param draftDice Dice
+function Witch.SlotMachSlotItem:InitializeFromRule(ui, item, isSelfLane, hazardLane, draftDice) end
+---@param ui Witch.UI.Window.SlotMachUI
+---@param config DataConfig
+---@param hazardLane boolean
+function Witch.SlotMachSlotItem:InitializeFromDataConfig(ui, config, hazardLane) end
+function Witch.SlotMachSlotItem:OnClicked() end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function Witch.SlotMachSlotItem:OnPointerClick(eventData) end
+---@return DataConfig
+function Witch.SlotMachSlotItem:GetDataConfig() end
+---@return boolean
+function Witch.SlotMachSlotItem:IsHazardLane() end
+---@param delay number
+function Witch.SlotMachSlotItem:FadeOut(delay) end
+---@param stagingParent UnityEngine.RectTransform
+function Witch.SlotMachSlotItem:PrepareForHandCarry(stagingParent) end
+---@param handCarryAnchor UnityEngine.RectTransform
+---@param anchoredOffset UnityEngine.Vector2
+---@param rotationZ number
+---@param duration number
+---@param ease DG.Tweening.Ease
+---@return DG.Tweening.Tween
+function Witch.SlotMachSlotItem:AttachToHand(handCarryAnchor, anchoredOffset, rotationZ, duration, ease) end
+---@overload fun(self: Witch.SlotMachSlotItem, targetParent: UnityEngine.RectTransform, targetAnchoredPosition: UnityEngine.Vector2, onComplete: System.Action | function, duration: number, ease: DG.Tweening.Ease) : DG.Tweening.Tween
+---@param targetParent UnityEngine.RectTransform
+---@param onComplete System.Action | function
+---@param duration number
+---@param ease DG.Tweening.Ease
+---@return DG.Tweening.Tween
+function Witch.SlotMachSlotItem:SettleToAccumulated(targetParent, onComplete, duration, ease) end
+---@param targetParent UnityEngine.RectTransform
+---@param targetAnchoredPosition UnityEngine.Vector2
+---@param onComplete System.Action | function
+---@param duration number
+---@param ease DG.Tweening.Ease
+---@return DG.Tweening.Tween
+function Witch.SlotMachSlotItem:ReleaseFromHandToTarget(targetParent, targetAnchoredPosition, onComplete, duration, ease) end
+---@param targetParent UnityEngine.RectTransform
+---@param onComplete System.Action | function
+function Witch.SlotMachSlotItem:MoveToAccumulated(targetParent, onComplete) end
+
+---@class Witch.ModItem : UnityEngine.MonoBehaviour
+---@field modManager Witch.UI.Window.ModManagerUI
+---@field data Witch.UI.Window.SteamWorkshopModInfo
+---@field mainSprite UnityEngine.Sprite
+---@field DownButton Michsky.MUIP.ButtonManager
+---@field LocalEnableToggle UnityEngine.UI.Toggle
+---@field InShopList boolean
+Witch.ModItem = {}
+---@alias CS.Witch.ModItem Witch.ModItem
+CS.Witch.ModItem = Witch.ModItem
+
+---@param info Witch.UI.Window.SteamWorkshopModInfo
+---@param out_displayText string
+---@return boolean,string
+function Witch.ModItem.TryGetConfigurationDisplayText(info, out_displayText) end
+---@param fromdata Witch.UI.Window.SteamWorkshopModInfo
+---@param inShopList boolean
+function Witch.ModItem:Init(fromdata, inShopList) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function Witch.ModItem:OnPointerClick(eventData) end
+function Witch.ModItem:OnClickDownloadButton() end
+function Witch.ModItem:RefreshActionButtonText() end
+---@param isOn boolean
+function Witch.ModItem:OnLocalEnableToggleChanged(isOn) end
 
 ---@class Witch.ModeManager : Mirror.NetworkBehaviour
 ---@field ModeMapManager Witch.IModeManager
@@ -1118,10 +3846,12 @@ function Witch.ModeUseButton:OnPointerExit(eventData) end
 ---@field button UnityEngine.UI.Button
 ---@field SceneItem UnityEngine.GameObject
 ---@field dataConfig DataConfig
+---@field BaseId string
 Witch.FoodItem = {}
 ---@alias CS.Witch.FoodItem Witch.FoodItem
 CS.Witch.FoodItem = Witch.FoodItem
 
+function Witch.FoodItem:Start() end
 ---@param fromData DataConfig
 function Witch.FoodItem:Init(fromData) end
 ---@param pos UnityEngine.Vector3
@@ -1155,97 +3885,6 @@ CS.Witch.SceneRole = Witch.SceneRole
 function Witch.SceneRole:Init(index, fromData, instanceId, needDialogueBox) end
 ---@param pos UnityEngine.Vector3
 function Witch.SceneRole:Setposition(pos) end
-
----@class Witch.ImageSelectorWindow : UnityEngine.MonoBehaviour
----@field prefabItem UnityEngine.GameObject
----@field gridParent UnityEngine.Transform
----@field closeButton UnityEngine.UI.Button
-Witch.ImageSelectorWindow = {}
----@alias CS.Witch.ImageSelectorWindow Witch.ImageSelectorWindow
-CS.Witch.ImageSelectorWindow = Witch.ImageSelectorWindow
-
----@param callback System.Action | function
-function Witch.ImageSelectorWindow.Show(callback) end
-function Witch.ImageSelectorWindow:Hide() end
-
----@class Witch.StoryDetailPanel : UnityEngine.MonoBehaviour
----@field panelRoot UnityEngine.GameObject
----@field actorField UnityEngine.UI.InputField
----@field textField UnityEngine.UI.InputField
----@field backgroundField UnityEngine.UI.InputField
----@field sfxField UnityEngine.UI.InputField
----@field closeButton UnityEngine.UI.Button
----@field applyButton UnityEngine.UI.Button
-Witch.StoryDetailPanel = {}
----@alias CS.Witch.StoryDetailPanel Witch.StoryDetailPanel
-CS.Witch.StoryDetailPanel = Witch.StoryDetailPanel
-
----@param line Witch.StoryLine
-function Witch.StoryDetailPanel:Show(line) end
-function Witch.StoryDetailPanel:Hide() end
-
----@class Witch.StoryEditorManager : UnityEngine.MonoBehaviour
----@field contentParent UnityEngine.RectTransform
----@field rowPrefab UnityEngine.GameObject
----@field addButton UnityEngine.UI.Button
----@field saveButton UnityEngine.UI.Button
----@field nameInputField TMPro.TMP_InputField
-Witch.StoryEditorManager = {}
----@alias CS.Witch.StoryEditorManager Witch.StoryEditorManager
-CS.Witch.StoryEditorManager = Witch.StoryEditorManager
-
-function Witch.StoryEditorManager:OnAddClicked() end
-function Witch.StoryEditorManager:AddLine() end
----@param line Witch.StoryLine
-function Witch.StoryEditorManager:RemoveLine(line) end
----@param line Witch.StoryLine
-function Witch.StoryEditorManager:MoveLineUp(line) end
----@param line Witch.StoryLine
-function Witch.StoryEditorManager:MoveLineDown(line) end
-
----@class Witch.StoryLine : System.Object
----@field id number
----@field actor string
----@field text string
----@field endTime string
----@field triTime string
-Witch.StoryLine = {}
----@alias CS.Witch.StoryLine Witch.StoryLine
-CS.Witch.StoryLine = Witch.StoryLine
-
----@return Witch.StoryLine
-function Witch.StoryLine.New() end
-
----@class Witch.StoryEditorUI : Witch.UI.UIBase
----@field characterImage UnityEngine.UI.Image
----@field changeImageButton UnityEngine.UI.Button
----@field ImagePrefab UnityEngine.GameObject
----@field ImageParent UnityEngine.Transform
----@field LanguageCode string
-Witch.StoryEditorUI = {}
----@alias CS.Witch.StoryEditorUI Witch.StoryEditorUI
-CS.Witch.StoryEditorUI = Witch.StoryEditorUI
-
-function Witch.StoryEditorUI:ChangeImageShow() end
----@param image UnityEngine.UI.Image
-function Witch.StoryEditorUI:SetImage(image) end
-
----@class Witch.StoryRowUI : UnityEngine.MonoBehaviour
----@field indexText TMPro.TMP_Text
----@field actorField TMPro.TMP_InputField
----@field textField TMPro.TMP_InputField
----@field upButton UnityEngine.UI.Button
----@field downButton UnityEngine.UI.Button
----@field deleteButton UnityEngine.UI.Button
----@field enableToggle UnityEngine.UI.Toggle
----@field storyEditorUI Witch.StoryEditorUI
-Witch.StoryRowUI = {}
----@alias CS.Witch.StoryRowUI Witch.StoryRowUI
-CS.Witch.StoryRowUI = Witch.StoryRowUI
-
----@param line Witch.StoryLine
----@param mgr Witch.StoryEditorManager
-function Witch.StoryRowUI:Initialize(line, mgr) end
 
 ---@class Witch.TaskItem : Witch.UI.Window.ItemNonDrag
 ---@field taskUI Witch.TaskUI
@@ -1282,23 +3921,144 @@ CS.Witch.TypeItem = Witch.TypeItem
 ---@param eventData UnityEngine.EventSystems.PointerEventData
 function Witch.TypeItem:OnPointerClick(eventData) end
 
----@class Witch.Mod.IModifiable
-Witch.Mod.IModifiable = {}
----@alias CS.Witch.Mod.IModifiable Witch.Mod.IModifiable
-CS.Witch.Mod.IModifiable = Witch.Mod.IModifiable
+---@class Witch.Mod.ModHookAttribute : System.Attribute
+---@field TypeName string
+---@field MethodName string
+Witch.Mod.ModHookAttribute = {}
+---@alias CS.Witch.Mod.ModHookAttribute Witch.Mod.ModHookAttribute
+CS.Witch.Mod.ModHookAttribute = Witch.Mod.ModHookAttribute
 
+
+---@class Witch.Mod.HookBeforeAttribute : Witch.Mod.ModHookAttribute
+Witch.Mod.HookBeforeAttribute = {}
+---@alias CS.Witch.Mod.HookBeforeAttribute Witch.Mod.HookBeforeAttribute
+CS.Witch.Mod.HookBeforeAttribute = Witch.Mod.HookBeforeAttribute
+
+---@param type System.Type
+---@param methodName string
+---@return Witch.Mod.HookBeforeAttribute
+function Witch.Mod.HookBeforeAttribute.New(type, methodName) end
+
+---@class Witch.Mod.HookAfterAttribute : Witch.Mod.ModHookAttribute
+Witch.Mod.HookAfterAttribute = {}
+---@alias CS.Witch.Mod.HookAfterAttribute Witch.Mod.HookAfterAttribute
+CS.Witch.Mod.HookAfterAttribute = Witch.Mod.HookAfterAttribute
+
+---@param type System.Type
+---@param methodName string
+---@return Witch.Mod.HookAfterAttribute
+function Witch.Mod.HookAfterAttribute.New(type, methodName) end
 
 ---@class Witch.Mod.LuaModHookAdapter : System.Object
 Witch.Mod.LuaModHookAdapter = {}
 ---@alias CS.Witch.Mod.LuaModHookAdapter Witch.Mod.LuaModHookAdapter
 CS.Witch.Mod.LuaModHookAdapter = Witch.Mod.LuaModHookAdapter
 
----@param fn XLua.LuaFunction
+---@overload fun(fn: XLua.LuaFunction) : System.Action
+---@param fn System.Reflection.MethodInfo
 ---@return System.Action | function
-function Witch.Mod.LuaModHookAdapter.ToBeforeAction(fn) end
----@param fn XLua.LuaFunction
----@return System.Action | function
-function Witch.Mod.LuaModHookAdapter.ToAfterAction(fn) end
+function Witch.Mod.LuaModHookAdapter.ToAction(fn) end
+
+---@class Witch.Mod.ModConfig : System.Object
+---@field DirectoryName string
+---@field ModName string
+---@field ModVersion string
+---@field ModAuthor string
+---@field ModDescription string
+---@field IconPath string
+---@field Enabled boolean
+---@field Dependencies System.Collections.Generic.List
+---@field MustSame boolean
+---@field ModId string
+Witch.Mod.ModConfig = {}
+---@alias CS.Witch.Mod.ModConfig Witch.Mod.ModConfig
+CS.Witch.Mod.ModConfig = Witch.Mod.ModConfig
+
+---@return Witch.Mod.ModConfig
+function Witch.Mod.ModConfig.New() end
+---@param id string
+---@param newData System.Collections.Generic.Dictionary
+function Witch.Mod.ModConfig:SetDataConfig(id, newData) end
+---@param id string
+---@param key string
+---@param value string
+function Witch.Mod.ModConfig:ModifyDataConfig(id, key, value) end
+---@param source string
+---@param target string
+function Witch.Mod.ModConfig:MergeDataConfig(source, target) end
+---@param originalPath string
+---@param newPath string
+function Witch.Mod.ModConfig:RedirectSourcePath(originalPath, newPath) end
+---@param methodName string
+---@param _function XLua.LuaFunction
+function Witch.Mod.ModConfig:AddDynamicMethod(methodName, _function) end
+---@overload fun(self: Witch.Mod.ModConfig, typeDotMethod: string, _function: XLua.LuaFunction)
+---@overload fun(self: Witch.Mod.ModConfig, typeDotMethod: string, context: System.Action | function)
+---@overload fun(self: Witch.Mod.ModConfig, typeName: string, methodName: string, context: System.Action | function)
+---@param type System.Type
+---@param methodName string
+---@param context System.Action | function
+function Witch.Mod.ModConfig:AddMethodHookBefore(type, methodName, context) end
+---@overload fun(self: Witch.Mod.ModConfig, typeDotMethod: string, _function: XLua.LuaFunction)
+---@overload fun(self: Witch.Mod.ModConfig, typeDotMethod: string, context: System.Action | function)
+---@overload fun(self: Witch.Mod.ModConfig, typeName: string, methodName: string, context: System.Action | function)
+---@param type System.Type
+---@param methodName string
+---@param context System.Action | function
+function Witch.Mod.ModConfig:AddMethodHookAfter(type, methodName, context) end
+
+---@class Witch.Mod.ModConfigurationData : System.Object
+---@field Readme string
+---@field ExampleBool System.Nullable
+---@field ExampleNumber System.Nullable
+---@field ExampleString string
+---@field ExtensionData System.Collections.Generic.Dictionary
+Witch.Mod.ModConfigurationData = {}
+---@alias CS.Witch.Mod.ModConfigurationData Witch.Mod.ModConfigurationData
+CS.Witch.Mod.ModConfigurationData = Witch.Mod.ModConfigurationData
+
+---@return Witch.Mod.ModConfigurationData
+function Witch.Mod.ModConfigurationData.New() end
+
+---@class Witch.Mod.ModConfigurationFile : System.Object
+---@field FileName string
+Witch.Mod.ModConfigurationFile = {}
+---@alias CS.Witch.Mod.ModConfigurationFile Witch.Mod.ModConfigurationFile
+CS.Witch.Mod.ModConfigurationFile = Witch.Mod.ModConfigurationFile
+
+---@param modRootDirectory string
+---@return string
+function Witch.Mod.ModConfigurationFile.GetPath(modRootDirectory) end
+---@param modRootDirectory string
+---@return boolean
+function Witch.Mod.ModConfigurationFile.Exists(modRootDirectory) end
+---@param modRootDirectory string
+---@param out_data Witch.Mod.ModConfigurationData
+---@param out_error string
+---@return boolean,Witch.Mod.ModConfigurationData,string
+function Witch.Mod.ModConfigurationFile.TryRead(modRootDirectory, out_data, out_error) end
+---@param modRootDirectory string
+---@param data Witch.Mod.ModConfigurationData
+---@param out_error string
+---@return boolean,string
+function Witch.Mod.ModConfigurationFile.TrySave(modRootDirectory, data, out_error) end
+---@param modRootDirectory string
+---@param out_displayText string
+---@return boolean,string
+function Witch.Mod.ModConfigurationFile.TryGetDisplayText(modRootDirectory, out_displayText) end
+---@param modRootDirectory string
+---@param out_json Newtonsoft.Json.Linq.JObject
+---@param out_error string
+---@return boolean,Newtonsoft.Json.Linq.JObject,string
+function Witch.Mod.ModConfigurationFile.TryLoadJsonObject(modRootDirectory, out_json, out_error) end
+
+---@class Witch.Mod.ModInitializeAttribute : System.Attribute
+Witch.Mod.ModInitializeAttribute = {}
+---@alias CS.Witch.Mod.ModInitializeAttribute Witch.Mod.ModInitializeAttribute
+CS.Witch.Mod.ModInitializeAttribute = Witch.Mod.ModInitializeAttribute
+
+---@return Witch.Mod.ModInitializeAttribute
+function Witch.Mod.ModInitializeAttribute.New() end
 
 ---@class Witch.UI.ConsoleUI : Witch.UI.UIBase
 ---@field Instance Witch.UI.ConsoleUI
@@ -1318,6 +4078,7 @@ function Witch.UI.ConsoleUI:Output(outputer, output) end
 ---@field upperCanvasTf UnityEngine.Transform
 ---@field effectContent UnityEngine.Transform
 ---@field WindowObj UnityEngine.GameObject
+---@field InputObj UnityEngine.GameObject
 Witch.UI.UIManager = {}
 ---@alias CS.Witch.UI.UIManager Witch.UI.UIManager
 CS.Witch.UI.UIManager = Witch.UI.UIManager
@@ -1390,9 +4151,27 @@ function Witch.UI.UIManager:DoWithTurn(action) end
 function Witch.UI.UIManager:ShowModalWindow(title, text, onConfirm, typeSpeed, onCancel, hasConfirm, hasCancel, confirmText, cancelText, mustChoose) end
 ---@param title string
 ---@param text string
+---@param onConfirm UnityEngine.Events.UnityAction
+---@param typeSpeed number
+---@param onCancel UnityEngine.Events.UnityAction
+---@param hasConfirm boolean
+---@param hasCancel boolean
+---@param confirmText string
+---@param cancelText string
+---@param mustChoose boolean
+---@return Witch.InputWIndow
+function Witch.UI.UIManager:ShowInputWindow(title, text, onConfirm, typeSpeed, onCancel, hasConfirm, hasCancel, confirmText, cancelText, mustChoose) end
+---@param title string
+---@param text string
 ---@param cancelCondition System.Func
 ---@return Cysharp.Threading.Tasks.UniTask
 function Witch.UI.UIManager:ShowWaitingUI(title, text, cancelCondition) end
+---@param title string
+---@param text string
+---@param cancelCondition System.Func
+---@return Cysharp.Threading.Tasks.UniTask
+function Witch.UI.UIManager:ShowInputUI(title, text, cancelCondition) end
+---@overload fun(self: Witch.UI.UIManager, iconPath: string, title: string, description: string, tips: string)
 ---@param icon UnityEngine.Sprite
 ---@param title string
 ---@param description string
@@ -1413,9 +4192,20 @@ function Witch.UI.UIManager:GetFloatingWindow() end
 ---@return AnimationManager
 function Witch.UI.UIManager:GetAnimationManage() end
 
+---@class Witch.UI.UIManager.PopupDamageContext : System.Object
+---@field CurrentDamage number
+Witch.UI.UIManager.PopupDamageContext = {}
+---@alias CS.Witch.UI.UIManager.PopupDamageContext Witch.UI.UIManager.PopupDamageContext
+CS.Witch.UI.UIManager.PopupDamageContext = Witch.UI.UIManager.PopupDamageContext
+
+---@return Witch.UI.UIManager.PopupDamageContext
+function Witch.UI.UIManager.PopupDamageContext.New() end
+
 ---@class Witch.UI.ButtonSound : UnityEngine.MonoBehaviour
 ---@field metal boolean
 ---@field useDownSound boolean
+---@field enterSound boolean
+---@field isPure boolean
 Witch.UI.ButtonSound = {}
 ---@alias CS.Witch.UI.ButtonSound Witch.UI.ButtonSound
 CS.Witch.UI.ButtonSound = Witch.UI.ButtonSound
@@ -1424,6 +4214,16 @@ CS.Witch.UI.ButtonSound = Witch.UI.ButtonSound
 function Witch.UI.ButtonSound:OnPointerDown(eventData) end
 ---@param eventData UnityEngine.EventSystems.PointerEventData
 function Witch.UI.ButtonSound:OnPointerEnter(eventData) end
+
+---@class Witch.UI.HouseButtonUse : UnityEngine.MonoBehaviour
+Witch.UI.HouseButtonUse = {}
+---@alias CS.Witch.UI.HouseButtonUse Witch.UI.HouseButtonUse
+CS.Witch.UI.HouseButtonUse = Witch.UI.HouseButtonUse
+
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function Witch.UI.HouseButtonUse:OnPointerDown(eventData) end
+---@param eventData UnityEngine.EventSystems.PointerEventData
+function Witch.UI.HouseButtonUse:OnPointerEnter(eventData) end
 
 ---@class Witch.UI.ExitButton : UnityEngine.MonoBehaviour
 Witch.UI.ExitButton = {}
@@ -1468,16 +4268,11 @@ function Witch.UI.KeywordDisplay:SetLocalizedText(localiedTitle, localizedConten
 ---@field fadeOutAnim UnityEngine.AnimationClip
 ---@field IsUpperUI boolean
 ---@field isScene boolean
----@field NeedVideo boolean
----@field videoPlayer UnityEngine.Video.VideoPlayer
----@field backgroundRawImage UnityEngine.UI.RawImage
----@field videoPlayer2 UnityEngine.Video.VideoPlayer
 Witch.UI.UIBase = {}
 ---@alias CS.Witch.UI.UIBase Witch.UI.UIBase
 CS.Witch.UI.UIBase = Witch.UI.UIBase
 
 function Witch.UI.UIBase:Show() end
-function Witch.UI.UIBase:CheckVideo() end
 function Witch.UI.UIBase:UpperBlock() end
 function Witch.UI.UIBase:CancelUpperBlock() end
 function Witch.UI.UIBase:FadeIn() end
@@ -1544,10 +4339,141 @@ function Witch.UI.UpperCanvasController.ChildMonitor:Init(controller) end
 ---@field Forest Witch.UI.SceneType
 ---@field Chessboard Witch.UI.SceneType
 ---@field Courtyard Witch.UI.SceneType
+---@field SlotMachScene Witch.UI.SceneType
+---@field Curia Witch.UI.SceneType
+---@field DollFairyTale Witch.UI.SceneType
+---@field BalancedHolySee Witch.UI.SceneType
+---@field DemonKing Witch.UI.SceneType
 Witch.UI.SceneType = {}
 ---@alias CS.Witch.UI.SceneType Witch.UI.SceneType
 CS.Witch.UI.SceneType = Witch.UI.SceneType
 
+
+---@class Witch.UI.Component.RevealPlaybackMode
+---@field Manual Witch.UI.Component.RevealPlaybackMode
+---@field Loop Witch.UI.Component.RevealPlaybackMode
+---@field PingPong Witch.UI.Component.RevealPlaybackMode
+Witch.UI.Component.RevealPlaybackMode = {}
+---@alias CS.Witch.UI.Component.RevealPlaybackMode Witch.UI.Component.RevealPlaybackMode
+CS.Witch.UI.Component.RevealPlaybackMode = Witch.UI.Component.RevealPlaybackMode
+
+
+---@class Witch.UI.Component.DiagonalRevealMask : UnityEngine.UI.MaskableGraphic
+---@field Progress number
+---@field PlaybackMode Witch.UI.Component.RevealPlaybackMode
+---@field AutoPlay boolean
+---@field Duration number
+---@field StripeWidth number
+---@field StripeSoftness number
+---@field StripeIntensity number
+---@field StripeColor UnityEngine.Color
+---@field mainTexture UnityEngine.Texture
+Witch.UI.Component.DiagonalRevealMask = {}
+---@alias CS.Witch.UI.Component.DiagonalRevealMask Witch.UI.Component.DiagonalRevealMask
+CS.Witch.UI.Component.DiagonalRevealMask = Witch.UI.Component.DiagonalRevealMask
+
+---@param value number
+function Witch.UI.Component.DiagonalRevealMask:SetProgress(value) end
+function Witch.UI.Component.DiagonalRevealMask:Play() end
+function Witch.UI.Component.DiagonalRevealMask:Stop() end
+function Witch.UI.Component.DiagonalRevealMask:ResetProgress() end
+
+---@class Witch.UI.Component.DiagonalRevealStripeOverlay : UnityEngine.UI.MaskableGraphic
+---@field mainTexture UnityEngine.Texture
+Witch.UI.Component.DiagonalRevealStripeOverlay = {}
+---@alias CS.Witch.UI.Component.DiagonalRevealStripeOverlay Witch.UI.Component.DiagonalRevealStripeOverlay
+CS.Witch.UI.Component.DiagonalRevealStripeOverlay = Witch.UI.Component.DiagonalRevealStripeOverlay
+
+---@param revealMask Witch.UI.Component.DiagonalRevealMask
+function Witch.UI.Component.DiagonalRevealStripeOverlay:Initialize(revealMask) end
+function Witch.UI.Component.DiagonalRevealStripeOverlay:SyncRectTransform() end
+function Witch.UI.Component.DiagonalRevealStripeOverlay:EnsureDrawOrder() end
+---@param progress number
+---@param stripeColor UnityEngine.Color
+---@param stripeWidth number
+---@param stripeSoftness number
+---@param stripeIntensity number
+function Witch.UI.Component.DiagonalRevealStripeOverlay:ApplyState(progress, stripeColor, stripeWidth, stripeSoftness, stripeIntensity) end
+
+---@class Witch.UI.Component.LocalizedTMPFontSize : UnityEngine.MonoBehaviour
+---@field Rules System.Collections.Generic.IReadOnlyList
+---@field PreviewInEditMode boolean
+---@field PreviewLocaleCode string
+Witch.UI.Component.LocalizedTMPFontSize = {}
+---@alias CS.Witch.UI.Component.LocalizedTMPFontSize Witch.UI.Component.LocalizedTMPFontSize
+CS.Witch.UI.Component.LocalizedTMPFontSize = Witch.UI.Component.LocalizedTMPFontSize
+
+---@param expression string
+---@param out_error string
+---@return boolean,string
+function Witch.UI.Component.LocalizedTMPFontSize.IsValidFontSizeExpression(expression, out_error) end
+---@param expression string
+---@param out_tagExpression string
+---@param out_error string
+---@return boolean,string,string
+function Witch.UI.Component.LocalizedTMPFontSize.TryGetFontSizeTagExpression(expression, out_tagExpression, out_error) end
+---@return boolean
+function Witch.UI.Component.LocalizedTMPFontSize:AutoInjectTargets() end
+---@return boolean
+function Witch.UI.Component.LocalizedTMPFontSize:SyncLocaleRules() end
+function Witch.UI.Component.LocalizedTMPFontSize:ApplyCurrentLocale() end
+---@param localeCode string
+function Witch.UI.Component.LocalizedTMPFontSize:ApplyLocaleCode(localeCode) end
+function Witch.UI.Component.LocalizedTMPFontSize:RefreshSize() end
+---@param text string
+---@return string
+function Witch.UI.Component.LocalizedTMPFontSize:PreprocessText(text) end
+
+---@class Witch.UI.Component.LocalizedTMPFontSize.PreprocessorBinding : System.ValueType
+---@field Target TMPro.TMP_Text
+---@field Previous TMPro.ITextPreprocessor
+---@field Preprocessor TMPro.ITextPreprocessor
+Witch.UI.Component.LocalizedTMPFontSize.PreprocessorBinding = {}
+---@alias CS.Witch.UI.Component.LocalizedTMPFontSize.PreprocessorBinding Witch.UI.Component.LocalizedTMPFontSize.PreprocessorBinding
+CS.Witch.UI.Component.LocalizedTMPFontSize.PreprocessorBinding = Witch.UI.Component.LocalizedTMPFontSize.PreprocessorBinding
+
+---@param target TMPro.TMP_Text
+---@param previous TMPro.ITextPreprocessor
+---@param preprocessor TMPro.ITextPreprocessor
+---@return Witch.UI.Component.LocalizedTMPFontSize.PreprocessorBinding
+function Witch.UI.Component.LocalizedTMPFontSize.PreprocessorBinding.New(target, previous, preprocessor) end
+
+---@class Witch.UI.Component.LocalizedTMPFontSize.FontSizePreprocessor : System.Object
+Witch.UI.Component.LocalizedTMPFontSize.FontSizePreprocessor = {}
+---@alias CS.Witch.UI.Component.LocalizedTMPFontSize.FontSizePreprocessor Witch.UI.Component.LocalizedTMPFontSize.FontSizePreprocessor
+CS.Witch.UI.Component.LocalizedTMPFontSize.FontSizePreprocessor = Witch.UI.Component.LocalizedTMPFontSize.FontSizePreprocessor
+
+---@param owner Witch.UI.Component.LocalizedTMPFontSize
+---@param previous TMPro.ITextPreprocessor
+---@return Witch.UI.Component.LocalizedTMPFontSize.FontSizePreprocessor
+function Witch.UI.Component.LocalizedTMPFontSize.FontSizePreprocessor.New(owner, previous) end
+---@param text string
+---@return string
+function Witch.UI.Component.LocalizedTMPFontSize.FontSizePreprocessor:PreprocessText(text) end
+
+---@class Witch.UI.Component.LocalizedTMPFontSizeRule : System.Object
+---@field localeCode string
+---@field localeName string
+---@field fontSizeExpression string
+Witch.UI.Component.LocalizedTMPFontSizeRule = {}
+---@alias CS.Witch.UI.Component.LocalizedTMPFontSizeRule Witch.UI.Component.LocalizedTMPFontSizeRule
+CS.Witch.UI.Component.LocalizedTMPFontSizeRule = Witch.UI.Component.LocalizedTMPFontSizeRule
+
+---@overload fun() : Witch.UI.Component.LocalizedTMPFontSizeRule
+---@param localeCode string
+---@param localeName string
+---@param fontSizeExpression string
+---@return Witch.UI.Component.LocalizedTMPFontSizeRule
+function Witch.UI.Component.LocalizedTMPFontSizeRule.New(localeCode, localeName, fontSizeExpression) end
+
+---@class Witch.UI.Component.TMPAutoNumberShortener : UnityEngine.MonoBehaviour
+Witch.UI.Component.TMPAutoNumberShortener = {}
+---@alias CS.Witch.UI.Component.TMPAutoNumberShortener Witch.UI.Component.TMPAutoNumberShortener
+CS.Witch.UI.Component.TMPAutoNumberShortener = Witch.UI.Component.TMPAutoNumberShortener
+
+---@param text string
+---@return string
+function Witch.UI.Component.TMPAutoNumberShortener:PreprocessText(text) end
 
 ---@class Witch.UI.Component.TMPNumberToSprite : System.Object
 Witch.UI.Component.TMPNumberToSprite = {}
@@ -1557,1762 +4483,537 @@ CS.Witch.UI.Component.TMPNumberToSprite = Witch.UI.Component.TMPNumberToSprite
 ---@param tmp TMPro.TMP_Text
 ---@param text string
 function Witch.UI.Component.TMPNumberToSprite.SetDigitText(tmp, text) end
-
----@class Witch.UI.Window.DisplayCard : CardItem
----@field CurrentScale number
----@field NormalScale number
----@field isSelect boolean
----@field onClick UnityEngine.Events.UnityEvent
-Witch.UI.Window.DisplayCard = {}
----@alias CS.Witch.UI.Window.DisplayCard Witch.UI.Window.DisplayCard
-CS.Witch.UI.Window.DisplayCard = Witch.UI.Window.DisplayCard
-
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.DisplayCard:OnBeginDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.DisplayCard:OnEndDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.DisplayCard:OnDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.DisplayCard:OnPointerEnter(eventData) end
----@param dataConfig DataConfig
-function Witch.UI.Window.DisplayCard:Init(dataConfig) end
-function Witch.UI.Window.DisplayCard:DataUpdate() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.DisplayCard:OnPointerExit(eventData) end
-function Witch.UI.Window.DisplayCard:OnHover() end
-function Witch.UI.Window.DisplayCard:OnExit() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.DisplayCard:OnPointerClick(eventData) end
-function Witch.UI.Window.DisplayCard:OnSelect() end
-function Witch.UI.Window.DisplayCard:OnUnSelect() end
-
----@class Witch.UI.Window.BattleRewardsUI : Witch.UI.UIBase
----@field itemList UnityEngine.Transform
----@field RelicRewardList System.Collections.Generic.List
----@field cardIcon UnityEngine.Sprite
----@field moneyIcon UnityEngine.Sprite
----@field blessIcon UnityEngine.Sprite
----@field relicIcon UnityEngine.Sprite
----@field CardCount number
----@field item1 UnityEngine.GameObject
-Witch.UI.Window.BattleRewardsUI = {}
----@alias CS.Witch.UI.Window.BattleRewardsUI Witch.UI.Window.BattleRewardsUI
-CS.Witch.UI.Window.BattleRewardsUI = Witch.UI.Window.BattleRewardsUI
-
-function Witch.UI.Window.BattleRewardsUI:DataUpdate() end
-function Witch.UI.Window.BattleRewardsUI:ModeSetReward() end
----@param count number
-function Witch.UI.Window.BattleRewardsUI:SetMoney(count) end
-function Witch.UI.Window.BattleRewardsUI:OnDestroy() end
----@param lists System.Collections.Generic.List
-function Witch.UI.Window.BattleRewardsUI:RandomSetRelic(lists) end
-function Witch.UI.Window.BattleRewardsUI:RandomSetCard() end
-function Witch.UI.Window.BattleRewardsUI:RandomAddBless() end
-function Witch.UI.Window.BattleRewardsUI:GenerBlessing() end
----@param obj UnityEngine.GameObject
-function Witch.UI.Window.BattleRewardsUI:AnimationPlay(obj) end
-
----@class Witch.UI.Window.AchievementUI : Witch.UI.UIBase
----@field levelColor System.Collections.Generic.Dictionary
----@field statusMap System.Collections.Generic.Dictionary
-Witch.UI.Window.AchievementUI = {}
----@alias CS.Witch.UI.Window.AchievementUI Witch.UI.Window.AchievementUI
-CS.Witch.UI.Window.AchievementUI = Witch.UI.Window.AchievementUI
-
-function Witch.UI.Window.AchievementUI:Close() end
----@param type string
-function Witch.UI.Window.AchievementUI:SelectWindow(type) end
----@param type string
-function Witch.UI.Window.AchievementUI:UpdateCount(type) end
-
----@class Witch.UI.Window.AcknowledgmentsUI : Witch.UI.UIBase
-Witch.UI.Window.AcknowledgmentsUI = {}
----@alias CS.Witch.UI.Window.AcknowledgmentsUI Witch.UI.Window.AcknowledgmentsUI
-CS.Witch.UI.Window.AcknowledgmentsUI = Witch.UI.Window.AcknowledgmentsUI
-
-
----@class Witch.UI.Window.AffectionUI : Witch.UI.UIBase
----@field firstShow boolean
-Witch.UI.Window.AffectionUI = {}
----@alias CS.Witch.UI.Window.AffectionUI Witch.UI.Window.AffectionUI
-CS.Witch.UI.Window.AffectionUI = Witch.UI.Window.AffectionUI
-
-function Witch.UI.Window.AffectionUI:OnEnable() end
----@param dataConfig DataConfig
-function Witch.UI.Window.AffectionUI:AddReward(dataConfig) end
-function Witch.UI.Window.AffectionUI:ShowNowLevel() end
-
----@class Witch.UI.Window.AnnouncementUI : Witch.UI.Window.TutorialUI
-Witch.UI.Window.AnnouncementUI = {}
----@alias CS.Witch.UI.Window.AnnouncementUI Witch.UI.Window.AnnouncementUI
-CS.Witch.UI.Window.AnnouncementUI = Witch.UI.Window.AnnouncementUI
-
-function Witch.UI.Window.AnnouncementUI:ShowAnnouncement() end
-
----@class Witch.UI.Window.BackpackUI : Witch.UI.UIBase
----@field statusUI Witch.UI.Window.StatusUI
-Witch.UI.Window.BackpackUI = {}
----@alias CS.Witch.UI.Window.BackpackUI Witch.UI.Window.BackpackUI
-CS.Witch.UI.Window.BackpackUI = Witch.UI.Window.BackpackUI
-
----@param statusUIData Witch.UI.Window.StatusUIData
-function Witch.UI.Window.BackpackUI:ShowStatus(statusUIData) end
-function Witch.UI.Window.BackpackUI:DataUpdate() end
-function Witch.UI.Window.BackpackUI:Init() end
-function Witch.UI.Window.BackpackUI:OnEnable() end
-function Witch.UI.Window.BackpackUI:Close() end
-
----@class Witch.UI.Window.OutDeckUIData : System.ValueType
----@field Id string
----@field cardList System.Collections.Generic.ICollection
----@field UnCardList System.Collections.Generic.ICollection
----@field CardBottomCount number
----@field CardTopCount number
----@field MaxAlCardCount number
-Witch.UI.Window.OutDeckUIData = {}
----@alias CS.Witch.UI.Window.OutDeckUIData Witch.UI.Window.OutDeckUIData
-CS.Witch.UI.Window.OutDeckUIData = Witch.UI.Window.OutDeckUIData
-
----@param roleTable RoleTable
----@return Witch.UI.Window.OutDeckUIData
-function Witch.UI.Window.OutDeckUIData.New(roleTable) end
-
----@class Witch.UI.Window.OutDeckUI : Witch.UI.UIBase
----@field OutDeckUIData Witch.UI.Window.OutDeckUIData
----@field equipCardTransform UnityEngine.Transform
----@field unequipCardTransform UnityEngine.Transform
----@field shouldButton UnityEngine.GameObject
-Witch.UI.Window.OutDeckUI = {}
----@alias CS.Witch.UI.Window.OutDeckUI Witch.UI.Window.OutDeckUI
-CS.Witch.UI.Window.OutDeckUI = Witch.UI.Window.OutDeckUI
-
-function Witch.UI.Window.OutDeckUI:OnEnable() end
----@param data Witch.UI.Window.OutDeckUIData
-function Witch.UI.Window.OutDeckUI:SetRole(data) end
-function Witch.UI.Window.OutDeckUI:DataUpdate() end
-function Witch.UI.Window.OutDeckUI:ShowMsg() end
-function Witch.UI.Window.OutDeckUI:ChangeCardShow() end
----@param cardData DataConfig
----@param ifequipped boolean
-function Witch.UI.Window.OutDeckUI:CreateItem(cardData, ifequipped) end
-
----@class Witch.UI.Window.RelicSelectUI : Witch.UI.UIBase
----@field List2 UnityEngine.Transform
----@field UnArmeditem UnityEngine.GameObject
----@field relicList System.Collections.Generic.List
----@field List1 UnityEngine.Transform
----@field roleTable RoleTable
-Witch.UI.Window.RelicSelectUI = {}
----@alias CS.Witch.UI.Window.RelicSelectUI Witch.UI.Window.RelicSelectUI
-CS.Witch.UI.Window.RelicSelectUI = Witch.UI.Window.RelicSelectUI
-
-function Witch.UI.Window.RelicSelectUI:Init() end
-function Witch.UI.Window.RelicSelectUI:OnEnable() end
-
----@class Witch.UI.Window.StatusUIData : System.ValueType
----@field instanceId string
----@field VarsMap System.Collections.Generic.Dictionary
----@field blessingConfigs System.Collections.Generic.List
----@field career DataConfig
----@field San number
----@field MaxSan number
----@field Money number
----@field ChooseVars System.Collections.Generic.List
-Witch.UI.Window.StatusUIData = {}
----@alias CS.Witch.UI.Window.StatusUIData Witch.UI.Window.StatusUIData
-CS.Witch.UI.Window.StatusUIData = Witch.UI.Window.StatusUIData
-
----@param roleTable RoleTable
----@return Witch.UI.Window.StatusUIData
-function Witch.UI.Window.StatusUIData.New(roleTable) end
-
----@class Witch.UI.Window.StatusUI : UnityEngine.MonoBehaviour
----@field statusUIData Witch.UI.Window.StatusUIData
-Witch.UI.Window.StatusUI = {}
----@alias CS.Witch.UI.Window.StatusUI Witch.UI.Window.StatusUI
-CS.Witch.UI.Window.StatusUI = Witch.UI.Window.StatusUI
-
----@param backpackUI Witch.UI.Window.BackpackUI
-function Witch.UI.Window.StatusUI:Init(backpackUI) end
-function Witch.UI.Window.StatusUI:DataUpdate() end
----@param statusUIData Witch.UI.Window.StatusUIData
-function Witch.UI.Window.StatusUI:ShowMsg(statusUIData) end
-function Witch.UI.Window.StatusUI:ShowSan() end
-function Witch.UI.Window.StatusUI:ShowMoney() end
-function Witch.UI.Window.StatusUI:ShowVar() end
-function Witch.UI.Window.StatusUI:ShowBuff() end
-function Witch.UI.Window.StatusUI:ReleaseBuff() end
-function Witch.UI.Window.StatusUI:ShowBless() end
-function Witch.UI.Window.StatusUI:ShowRoleMsg() end
----@return System.Collections.Generic.List
-function Witch.UI.Window.StatusUI:GenerateThreeOptions() end
----@param blessings System.Collections.Generic.List
-function Witch.UI.Window.StatusUI:RewardGenerator(blessings) end
----@return System.Collections.Generic.List
-function Witch.UI.Window.StatusUI:GenerateHighOptions() end
-
----@class Witch.UI.Window.BuffShowItem : Witch.UI.Window.ItemNonDrag
-Witch.UI.Window.BuffShowItem = {}
----@alias CS.Witch.UI.Window.BuffShowItem Witch.UI.Window.BuffShowItem
-CS.Witch.UI.Window.BuffShowItem = Witch.UI.Window.BuffShowItem
-
----@param dataConfig DataConfig
-function Witch.UI.Window.BuffShowItem:Init(dataConfig) end
-
----@class Witch.UI.Window.CareerData : System.ValueType
----@field instanceId string
----@field career DataConfig
----@field San number
----@field MaxSan number
-Witch.UI.Window.CareerData = {}
----@alias CS.Witch.UI.Window.CareerData Witch.UI.Window.CareerData
-CS.Witch.UI.Window.CareerData = Witch.UI.Window.CareerData
-
----@param roleTable RoleTable
----@return Witch.UI.Window.CareerData
-function Witch.UI.Window.CareerData.New(roleTable) end
-
----@class Witch.UI.Window.TopBarUI : Witch.UI.UIBase
----@field RelicList UnityEngine.Transform
----@field varList UnityEngine.Transform
----@field relicSelectUI Witch.UI.Window.RelicSelectUI
----@field ConnectMode boolean
----@field statusPrefab UnityEngine.GameObject
----@field mainStatus UnityEngine.GameObject
----@field IdToStatusItem System.Collections.Generic.Dictionary
----@field roleTable RoleTable
-Witch.UI.Window.TopBarUI = {}
----@alias CS.Witch.UI.Window.TopBarUI Witch.UI.Window.TopBarUI
-CS.Witch.UI.Window.TopBarUI = Witch.UI.Window.TopBarUI
-
----@param players System.Collections.Generic.List
-function Witch.UI.Window.TopBarUI:CreateConnectPlayerStatus(players) end
-function Witch.UI.Window.TopBarUI:ChangeCareerAvator() end
-function Witch.UI.Window.TopBarUI:OnDestroy() end
-function Witch.UI.Window.TopBarUI:FadeIn() end
-function Witch.UI.Window.TopBarUI:FightHide() end
-function Witch.UI.Window.TopBarUI:HideLeftUp() end
-function Witch.UI.Window.TopBarUI:ShowLeftUp() end
----@param sender System.Object
----@param args System.ComponentModel.PropertyChangedEventArgs
-function Witch.UI.Window.TopBarUI:OnGameRuntimeDataChanged(sender, args) end
----@param sender System.Object
----@param args System.ComponentModel.PropertyChangedEventArgs
-function Witch.UI.Window.TopBarUI:OnRoleTableChanged(sender, args) end
-function Witch.UI.Window.TopBarUI:ChangeVar() end
-function Witch.UI.Window.TopBarUI:ShowSetting() end
-function Witch.UI.Window.TopBarUI:ShowDict() end
----@param value string
----@param fromId string
----@param type string
-function Witch.UI.Window.TopBarUI:OtherChangeShow(value, fromId, type) end
-function Witch.UI.Window.TopBarUI:TryReturn() end
-function Witch.UI.Window.TopBarUI:ReturnToMenu() end
-function Witch.UI.Window.TopBarUI:OpenBackpack() end
-function Witch.UI.Window.TopBarUI:ChangeCareer() end
----@param roleid string
-function Witch.UI.Window.TopBarUI:ChangeSan(roleid) end
----@param Defend string
-function Witch.UI.Window.TopBarUI:UpdateDefend(Defend) end
-function Witch.UI.Window.TopBarUI:HideDefend() end
-function Witch.UI.Window.TopBarUI:ChangeMoney() end
-function Witch.UI.Window.TopBarUI:ChangeTrue() end
-function Witch.UI.Window.TopBarUI:UpdateRelics() end
-function Witch.UI.Window.TopBarUI:SetRelicGlowEvent() end
-function Witch.UI.Window.TopBarUI:UpdateRelicCountShow() end
-function Witch.UI.Window.TopBarUI:ListenVars() end
-
----@class Witch.UI.Window.CardChoiceUI : Witch.UI.UIBase
-Witch.UI.Window.CardChoiceUI = {}
----@alias CS.Witch.UI.Window.CardChoiceUI Witch.UI.Window.CardChoiceUI
-CS.Witch.UI.Window.CardChoiceUI = Witch.UI.Window.CardChoiceUI
-
----@param obj UnityEngine.GameObject
----@param dataConfig DataConfig
-function Witch.UI.Window.CardChoiceUI:Select(obj, dataConfig) end
-function Witch.UI.Window.CardChoiceUI:Close() end
-
----@class Witch.UI.Window.BreaksUI : UnityEngine.MonoBehaviour
----@field startTime number
----@field foodList System.Collections.Generic.List
-Witch.UI.Window.BreaksUI = {}
----@alias CS.Witch.UI.Window.BreaksUI Witch.UI.Window.BreaksUI
-CS.Witch.UI.Window.BreaksUI = Witch.UI.Window.BreaksUI
-
----@param roleList System.ValueTuple
-function Witch.UI.Window.BreaksUI:CreateRole(roleList) end
-function Witch.UI.Window.BreaksUI:Close() end
-function Witch.UI.Window.BreaksUI:ShowWarehouse() end
-function Witch.UI.Window.BreaksUI:RelicBackPoint() end
-function Witch.UI.Window.BreaksUI:ReturnHome() end
-function Witch.UI.Window.BreaksUI:CreateFood() end
----@param foods System.Collections.Generic.List
-function Witch.UI.Window.BreaksUI:CreateFoodItem(foods) end
-
----@class Witch.UI.Window.CaptionStyle
----@field Bottom Witch.UI.Window.CaptionStyle
----@field Top Witch.UI.Window.CaptionStyle
----@field Center Witch.UI.Window.CaptionStyle
-Witch.UI.Window.CaptionStyle = {}
----@alias CS.Witch.UI.Window.CaptionStyle Witch.UI.Window.CaptionStyle
-CS.Witch.UI.Window.CaptionStyle = Witch.UI.Window.CaptionStyle
-
-
----@class Witch.UI.Window.CaptionUI : Witch.UI.UIBase
-Witch.UI.Window.CaptionUI = {}
----@alias CS.Witch.UI.Window.CaptionUI Witch.UI.Window.CaptionUI
-CS.Witch.UI.Window.CaptionUI = Witch.UI.Window.CaptionUI
-
+---@param tmp TMPro.TMP_Text
 ---@param text string
----@param style Witch.UI.Window.CaptionStyle
----@param animationTime number
----@param delay number
----@param animatonType number
-function Witch.UI.Window.CaptionUI:ShowCaption(text, style, animationTime, delay, animatonType) end
+function Witch.UI.Component.TMPNumberToSprite.SetCardCostText(tmp, text) end
 
----@class Witch.UI.Window.CardEditorUI : Witch.UI.UIBase
----@field IndexSprite System.Collections.Generic.Dictionary
----@field MethodCount System.Collections.Generic.Dictionary
----@field onEdited System.Action | function
----@field onepageCount number
----@field thisRatity number
----@field collection System.Collections.Generic.List
----@field itemPrefab1 UnityEngine.GameObject
----@field buttons System.Collections.Generic.List
----@field rarity string
----@field cost number
----@field total number
-Witch.UI.Window.CardEditorUI = {}
----@alias CS.Witch.UI.Window.CardEditorUI Witch.UI.Window.CardEditorUI
-CS.Witch.UI.Window.CardEditorUI = Witch.UI.Window.CardEditorUI
+---@class Witch.UI.Automation.RuntimePlayCardRequest : System.Object
+---@field CardInstanceId System.Nullable
+---@field CardId string
+---@field CardIndex System.Nullable
+---@field TargetInstanceId System.Nullable
+---@field TargetName string
+---@field TargetIndex System.Nullable
+Witch.UI.Automation.RuntimePlayCardRequest = {}
+---@alias CS.Witch.UI.Automation.RuntimePlayCardRequest Witch.UI.Automation.RuntimePlayCardRequest
+CS.Witch.UI.Automation.RuntimePlayCardRequest = Witch.UI.Automation.RuntimePlayCardRequest
 
-function Witch.UI.Window.CardEditorUI:UpdateTotal() end
-function Witch.UI.Window.CardEditorUI:UpdateSprite() end
-function Witch.UI.Window.CardEditorUI:OnEnable() end
-function Witch.UI.Window.CardEditorUI:UpdateBuff() end
-function Witch.UI.Window.CardEditorUI:InitTime() end
-function Witch.UI.Window.CardEditorUI:InitTimeAgain() end
----@param InitTime string
-function Witch.UI.Window.CardEditorUI:CreateTimeItem(InitTime) end
-function Witch.UI.Window.CardEditorUI:OnDestroy() end
+---@return Witch.UI.Automation.RuntimePlayCardRequest
+function Witch.UI.Automation.RuntimePlayCardRequest.New() end
 
----@class Witch.UI.Window.ChangeFloatWindow : UnityEngine.MonoBehaviour
-Witch.UI.Window.ChangeFloatWindow = {}
----@alias CS.Witch.UI.Window.ChangeFloatWindow Witch.UI.Window.ChangeFloatWindow
-CS.Witch.UI.Window.ChangeFloatWindow = Witch.UI.Window.ChangeFloatWindow
+---@class Witch.UI.Automation.RuntimePlayCardResult : System.Object
+---@field Success boolean
+---@field Message string
+---@field CardInstanceId System.Nullable
+---@field CardType string
+---@field CardId string
+---@field TargetInstanceId System.Nullable
+---@field TargetName string
+---@field TargetHpBefore System.Nullable
+---@field TargetHpAfter System.Nullable
+---@field HandCountBefore System.Nullable
+---@field HandCountAfter System.Nullable
+Witch.UI.Automation.RuntimePlayCardResult = {}
+---@alias CS.Witch.UI.Automation.RuntimePlayCardResult Witch.UI.Automation.RuntimePlayCardResult
+CS.Witch.UI.Automation.RuntimePlayCardResult = Witch.UI.Automation.RuntimePlayCardResult
 
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ChangeFloatWindow:OnPointerClick(eventData) end
+---@return Witch.UI.Automation.RuntimePlayCardResult
+function Witch.UI.Automation.RuntimePlayCardResult.New() end
 
----@class Witch.UI.Window.CardEffectBuff : UnityEngine.MonoBehaviour
----@field NowItem Witch.UI.Window.CardEffectItem
----@field data System.Collections.Generic.Dictionary
----@field buffdata DataEditor.CardEditor.BuffData
-Witch.UI.Window.CardEffectBuff = {}
----@alias CS.Witch.UI.Window.CardEffectBuff Witch.UI.Window.CardEffectBuff
-CS.Witch.UI.Window.CardEffectBuff = Witch.UI.Window.CardEffectBuff
+---@class Witch.UI.Automation.RuntimeBattleAutomationFacade : System.Object
+Witch.UI.Automation.RuntimeBattleAutomationFacade = {}
+---@alias CS.Witch.UI.Automation.RuntimeBattleAutomationFacade Witch.UI.Automation.RuntimeBattleAutomationFacade
+CS.Witch.UI.Automation.RuntimeBattleAutomationFacade = Witch.UI.Automation.RuntimeBattleAutomationFacade
 
-function Witch.UI.Window.CardEffectBuff:SetData() end
-
----@class Witch.UI.Window.CardEffectItem : UnityEngine.MonoBehaviour
----@field effectName string
----@field effectDes string
----@field isBuff boolean
----@field followEffectName string
----@field sourceName string
----@field methodName string
----@field effectCost number
----@field costMultiplier number
----@field cardEditorUI Witch.UI.Window.CardEditorUI
----@field vars System.Collections.Generic.Dictionary
----@field desValIndex number
----@field isMarkedForDestruction boolean
-Witch.UI.Window.CardEffectItem = {}
----@alias CS.Witch.UI.Window.CardEffectItem Witch.UI.Window.CardEffectItem
-CS.Witch.UI.Window.CardEffectItem = Witch.UI.Window.CardEffectItem
-
-function Witch.UI.Window.CardEffectItem:IsBuff() end
-function Witch.UI.Window.CardEffectItem:CalculateCost() end
-function Witch.UI.Window.CardEffectItem:CreateDescription() end
-function Witch.UI.Window.CardEffectItem:CreateTimeDes() end
----@return System.ValueTuple
-function Witch.UI.Window.CardEffectItem:RunMethod() end
-function Witch.UI.Window.CardEffectItem:UpdateAll() end
-function Witch.UI.Window.CardEffectItem:ShowChangeBuff() end
-function Witch.UI.Window.CardEffectItem:HideBuffList() end
----@param buffName string
-function Witch.UI.Window.CardEffectItem:ChangeBuff(buffName) end
-
----@class Witch.UI.Window.CareerChoiceUI : Witch.UI.UIBase
----@field career DataConfig
----@field Partner DataConfig
----@field houseUI Witch.UI.Window.HouseUI
----@field choiceWay string
-Witch.UI.Window.CareerChoiceUI = {}
----@alias CS.Witch.UI.Window.CareerChoiceUI Witch.UI.Window.CareerChoiceUI
-CS.Witch.UI.Window.CareerChoiceUI = Witch.UI.Window.CareerChoiceUI
-
----@param way string
-function Witch.UI.Window.CareerChoiceUI:Init(way) end
-function Witch.UI.Window.CareerChoiceUI:ChangeShow() end
-function Witch.UI.Window.CareerChoiceUI:UpdateCareer() end
-function Witch.UI.Window.CareerChoiceUI:ShowCareer() end
-function Witch.UI.Window.CareerChoiceUI:Hide() end
-function Witch.UI.Window.CareerChoiceUI:OnDisable() end
-function Witch.UI.Window.CareerChoiceUI:CancelCareer() end
----@param career Witch.UI.Window.ShowCareer
-function Witch.UI.Window.CareerChoiceUI:ShowDetail(career) end
-
----@class Witch.UI.Window.ShowCareer : Witch.UI.Window.ItemNonDrag
----@field isSelected boolean
----@field belong string
----@field gameEntryUI Witch.UI.Window.GameEntryUI
-Witch.UI.Window.ShowCareer = {}
----@alias CS.Witch.UI.Window.ShowCareer Witch.UI.Window.ShowCareer
-CS.Witch.UI.Window.ShowCareer = Witch.UI.Window.ShowCareer
-
----@param dataConfig DataConfig
-function Witch.UI.Window.ShowCareer:Init(dataConfig) end
-function Witch.UI.Window.ShowCareer:DataUpdate() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShowCareer:OnPointerClick(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShowCareer:OnPointerEnter(eventData) end
-
----@class Witch.UI.Window.ChatUI : Witch.UI.UIBase
----@field Instance Witch.UI.Window.ChatUI
----@field isOpen boolean
-Witch.UI.Window.ChatUI = {}
----@alias CS.Witch.UI.Window.ChatUI Witch.UI.Window.ChatUI
-CS.Witch.UI.Window.ChatUI = Witch.UI.Window.ChatUI
-
----@param text string
-function Witch.UI.Window.ChatUI:SendChatMessage(text) end
----@param text string
-function Witch.UI.Window.ChatUI:AddMessage(text) end
-
----@class Witch.UI.Window.DeckUI : Witch.UI.UIBase
-Witch.UI.Window.DeckUI = {}
----@alias CS.Witch.UI.Window.DeckUI Witch.UI.Window.DeckUI
-CS.Witch.UI.Window.DeckUI = Witch.UI.Window.DeckUI
-
-function Witch.UI.Window.DeckUI:OnEnable() end
-function Witch.UI.Window.DeckUI:CreateDeckMenu() end
-function Witch.UI.Window.DeckUI:CreateUsedDeckMenu() end
----@param count number
----@param DataConfigList System.Collections.Generic.List
----@param SourceList System.Collections.Generic.List
-function Witch.UI.Window.DeckUI:CreateDeckMenuForSelect(count, DataConfigList, SourceList) end
-
----@class Witch.UI.Window.DesItem : Witch.UI.Window.ItemNonDrag
----@field Claimed boolean
-Witch.UI.Window.DesItem = {}
----@alias CS.Witch.UI.Window.DesItem Witch.UI.Window.DesItem
-CS.Witch.UI.Window.DesItem = Witch.UI.Window.DesItem
-
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.DesItem:OnPointerClick(eventData) end
-
----@class Witch.UI.Window.DestinyTreeUI : Witch.UI.Window.ShopUI
----@field InitCost number
----@field Cost number
-Witch.UI.Window.DestinyTreeUI = {}
----@alias CS.Witch.UI.Window.DestinyTreeUI Witch.UI.Window.DestinyTreeUI
-CS.Witch.UI.Window.DestinyTreeUI = Witch.UI.Window.DestinyTreeUI
-
-function Witch.UI.Window.DestinyTreeUI:DataUpdate() end
-function Witch.UI.Window.DestinyTreeUI:Divination() end
-function Witch.UI.Window.DestinyTreeUI:GenerateBless() end
-function Witch.UI.Window.DestinyTreeUI:SetShopItems() end
-
----@class Witch.UI.Window.DialogueUI : Witch.UI.UIBase
----@field waitTime number
-Witch.UI.Window.DialogueUI = {}
----@alias CS.Witch.UI.Window.DialogueUI Witch.UI.Window.DialogueUI
-CS.Witch.UI.Window.DialogueUI = Witch.UI.Window.DialogueUI
-
-function Witch.UI.Window.DialogueUI:Awake() end
----@param dataConfig DataConfig
-function Witch.UI.Window.DialogueUI:ShowDialogue(dataConfig) end
-function Witch.UI.Window.DialogueUI:ShowChoice() end
----@param thisData DataConfig
----@return string
-function Witch.UI.Window.DialogueUI:GetText(thisData) end
-function Witch.UI.Window.DialogueUI:EndDialogue() end
----@return System.Collections.IEnumerator
-function Witch.UI.Window.DialogueUI:StartDia() end
----@return System.Collections.IEnumerator
-function Witch.UI.Window.DialogueUI:Skip() end
-function Witch.UI.Window.DialogueUI:ShowHistory() end
-function Witch.UI.Window.DialogueUI:OnDestroy() end
-
----@class Witch.UI.Window.OptionsUI : Witch.UI.UIBase
-Witch.UI.Window.OptionsUI = {}
----@alias CS.Witch.UI.Window.OptionsUI Witch.UI.Window.OptionsUI
-CS.Witch.UI.Window.OptionsUI = Witch.UI.Window.OptionsUI
-
-function Witch.UI.Window.OptionsUI:FadeIn() end
----@param text string
----@param action System.Action | function
-function Witch.UI.Window.OptionsUI:AddOption(text, action) end
-function Witch.UI.Window.OptionsUI:Close() end
-
----@class Witch.UI.Window.ButtonUse : UnityEngine.MonoBehaviour
----@field dictionaryUI Witch.UI.Window.DictionaryUI
----@field ItemType string
----@field belongs string
-Witch.UI.Window.ButtonUse = {}
----@alias CS.Witch.UI.Window.ButtonUse Witch.UI.Window.ButtonUse
-CS.Witch.UI.Window.ButtonUse = Witch.UI.Window.ButtonUse
-
-function Witch.UI.Window.ButtonUse:Awake() end
-function Witch.UI.Window.ButtonUse:ButtonUseSc() end
-function Witch.UI.Window.ButtonUse:DataUpdate() end
-
----@class Witch.UI.Window.DictionaryUI : Witch.UI.UIBase
----@field BlessList UnityEngine.Transform
----@field RelicList UnityEngine.Transform
----@field CardList UnityEngine.Transform
----@field EnemyList UnityEngine.Transform
----@field nowIndex number
----@field page number
----@field ChooseTags System.Collections.Generic.Dictionary
----@field CardItems System.Collections.Generic.List
----@field ChooseCardItems System.Collections.Generic.List
----@field BlessItems System.Collections.Generic.List
----@field RelicItems System.Collections.Generic.List
----@field EnemyItems System.Collections.Generic.List
----@field TypeNowRarity System.Collections.Generic.Dictionary
-Witch.UI.Window.DictionaryUI = {}
----@alias CS.Witch.UI.Window.DictionaryUI Witch.UI.Window.DictionaryUI
-CS.Witch.UI.Window.DictionaryUI = Witch.UI.Window.DictionaryUI
-
-function Witch.UI.Window.DictionaryUI:DataUpdate() end
-function Witch.UI.Window.DictionaryUI:Retrieve() end
-function Witch.UI.Window.DictionaryUI:ReturnList() end
----@return string
-function Witch.UI.Window.DictionaryUI:LastCommand() end
----@return string
-function Witch.UI.Window.DictionaryUI:NextCommand() end
-function Witch.UI.Window.DictionaryUI:Selected() end
----@param formList UnityEngine.Transform
-function Witch.UI.Window.DictionaryUI:ReleaseCardItem(formList) end
+---@param request Witch.UI.Automation.RuntimePlayCardRequest
 ---@return Cysharp.Threading.Tasks.UniTask
-function Witch.UI.Window.DictionaryUI:PreLoad() end
----@param datas System.Collections.Generic.List
-function Witch.UI.Window.DictionaryUI:ResetPage(datas) end
-function Witch.UI.Window.DictionaryUI:Init() end
-function Witch.UI.Window.DictionaryUI:OnEnable() end
-function Witch.UI.Window.DictionaryUI:Hide() end
-function Witch.UI.Window.DictionaryUI:Close() end
-function Witch.UI.Window.DictionaryUI:ReleaseItem() end
-function Witch.UI.Window.DictionaryUI:SortingBydefault() end
-function Witch.UI.Window.DictionaryUI:SelectCardByPage() end
-function Witch.UI.Window.DictionaryUI:TotalCreateItem() end
----@param dictionaryItem Witch.UI.Window.DictionaryItem
-function Witch.UI.Window.DictionaryUI:ShowInfo(dictionaryItem) end
-function Witch.UI.Window.DictionaryUI:CloseInfo() end
----@param datas System.Collections.Generic.List
----@param temp UnityEngine.Transform
-function Witch.UI.Window.DictionaryUI:MoveItem(datas, temp) end
----@param item Witch.UI.Window.BlessItem
----@param type string
-function Witch.UI.Window.DictionaryUI:SetRelicDes(item, type) end
----@param item Witch.UI.Window.EnemyItem
-function Witch.UI.Window.DictionaryUI:SetEnemyDes(item) end
-function Witch.UI.Window.DictionaryUI:CreateCardTag() end
-function Witch.UI.Window.DictionaryUI:ResetTag() end
-function Witch.UI.Window.DictionaryUI:OnDisable() end
+function Witch.UI.Automation.RuntimeBattleAutomationFacade:PlayCardAsync(request) end
 
----@class Witch.UI.Window.EnchCardItem : Witch.UI.Window.ItemNonDrag
----@field CardEnchUI Witch.UI.Window.CardEnchUI
-Witch.UI.Window.EnchCardItem = {}
----@alias CS.Witch.UI.Window.EnchCardItem Witch.UI.Window.EnchCardItem
-CS.Witch.UI.Window.EnchCardItem = Witch.UI.Window.EnchCardItem
+---@class Witch.UI.Automation.RuntimeBattleAutomationService : System.Object
+---@field Facade Witch.UI.Automation.RuntimeBattleAutomationFacade
+Witch.UI.Automation.RuntimeBattleAutomationService = {}
+---@alias CS.Witch.UI.Automation.RuntimeBattleAutomationService Witch.UI.Automation.RuntimeBattleAutomationService
+CS.Witch.UI.Automation.RuntimeBattleAutomationService = Witch.UI.Automation.RuntimeBattleAutomationService
 
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.EnchCardItem:OnPointerClick(eventData) end
-function Witch.UI.Window.EnchCardItem:ShowFloatingWindow() end
----@param dataConfig DataConfig
-function Witch.UI.Window.EnchCardItem:Init(dataConfig) end
-function Witch.UI.Window.EnchCardItem:Unload() end
-
----@class Witch.UI.Window.EventUI : Witch.UI.UIBase
----@field ClickClip UnityEngine.AudioClip
----@field ShowClip UnityEngine.AudioClip
-Witch.UI.Window.EventUI = {}
----@alias CS.Witch.UI.Window.EventUI Witch.UI.Window.EventUI
-CS.Witch.UI.Window.EventUI = Witch.UI.Window.EventUI
-
-function Witch.UI.Window.EventUI:FadeIn() end
----@param id string
-function Witch.UI.Window.EventUI:Init(id) end
----@param id string
-function Witch.UI.Window.EventUI:ContinueEvent(id) end
-function Witch.UI.Window.EventUI:Entry() end
-function Witch.UI.Window.EventUI:TryChangeMap() end
-function Witch.UI.Window.EventUI:AnnounceEventDone() end
----@param index string
-function Witch.UI.Window.EventUI:LockChoice(index) end
-function Witch.UI.Window.EventUI:EndEvent() end
----@param subtip string
-function Witch.UI.Window.EventUI:ChangeSubtip(subtip) end
-function Witch.UI.Window.EventUI:DataUpdate() end
-function Witch.UI.Window.EventUI:RegisterEvent() end
-function Witch.UI.Window.EventUI:ClearEvent() end
-function Witch.UI.Window.EventUI:OnDestroy() end
-
----@class Witch.UI.Window.BuffBarUI : Witch.UI.UIBase
----@field content UnityEngine.Transform
----@field status StatusManager
----@field BuffDic System.Collections.Generic.Dictionary
----@field isDirty boolean
----@field isDisplay boolean
-Witch.UI.Window.BuffBarUI = {}
----@alias CS.Witch.UI.Window.BuffBarUI Witch.UI.Window.BuffBarUI
-CS.Witch.UI.Window.BuffBarUI = Witch.UI.Window.BuffBarUI
-
----@param buffId string
----@param level number
-function Witch.UI.Window.BuffBarUI:CreateNewBuff(buffId, level) end
----@param buffId string
----@return Witch.UI.Window.BuffBarUI
-function Witch.UI.Window.BuffBarUI:RemoveBuff(buffId) end
----@overload fun(self: Witch.UI.Window.BuffBarUI, buffId: string, level: number) : Witch.UI.Window.BuffBarUI
----@param buffConfig IBuffItemConfig
----@return Witch.UI.Window.BuffBarUI
-function Witch.UI.Window.BuffBarUI:AddBuff(buffConfig) end
----@param buffId string
----@return BuffItem
-function Witch.UI.Window.BuffBarUI:GetBuff(buffId) end
----@return BuffItem[]
-function Witch.UI.Window.BuffBarUI:GetBuffs() end
----@param way string
----@return Witch.UI.Window.BuffBarUI
-function Witch.UI.Window.BuffBarUI:CheckAllBuff(way) end
-function Witch.UI.Window.BuffBarUI:UpdateAllBuff() end
-function Witch.UI.Window.BuffBarUI:ClearAllBuff() end
-
----@class Witch.UI.Window.FightUI : Witch.UI.UIBase
----@field LastCard DataConfig
----@field cardItemList System.Collections.Generic.List
----@field SelectedCard System.Collections.Generic.List
----@field IsReset boolean
----@field SpecialCount number
----@field InIEn boolean
----@field SelectType string
----@field Card_y_position number
----@field started boolean
----@field chest UnityEngine.GameObject
----@field ShouldCard number
----@field cardContainer CardContainer
----@field selectCardContainer CardContainer
----@field StatusList System.Collections.Generic.List
----@field totalDamageText System.Collections.Generic.Dictionary
----@field hasTime number
----@field autoCard boolean
----@field transform1 UnityEngine.Transform
----@field endfight UnityEngine.Transform
----@field FightAgain UnityEngine.Transform
----@field UsedCardList UnityEngine.Transform
----@field turnButton Michsky.MUIP.ButtonManager
----@field instance UnityEngine.GameObject
----@field animationQueue System.Collections.Generic.Queue
----@field blurReturn boolean
----@field NowAnimation boolean
----@field CardTopCount number
-Witch.UI.Window.FightUI = {}
----@alias CS.Witch.UI.Window.FightUI Witch.UI.Window.FightUI
-CS.Witch.UI.Window.FightUI = Witch.UI.Window.FightUI
-
-function Witch.UI.Window.FightUI:OnDestroy() end
-function Witch.UI.Window.FightUI:Close() end
----@param text string
----@param position UnityEngine.Vector3
----@param popUpType1 string
----@param status StatusManager
----@param to StatusManager
----@param realDamage string
-function Witch.UI.Window.FightUI:EnqueueDamageText(text, position, popUpType1, status, to, realDamage) end
-function Witch.UI.Window.FightUI:StartClock() end
-function Witch.UI.Window.FightUI:StopClock() end
----@param obj FightObject
----@param index number
----@param count number
-function Witch.UI.Window.FightUI:SetTurn(obj, index, count) end
-function Witch.UI.Window.FightUI:ShowChest() end
-function Witch.UI.Window.FightUI:AutoUseCard() end
-function Witch.UI.Window.FightUI:ShowTitle() end
-function Witch.UI.Window.FightUI:Init() end
-function Witch.UI.Window.FightUI:InitSkill() end
----@param tempItem UnityEngine.Transform
----@param index number
-function Witch.UI.Window.FightUI:CreateSkillItem(tempItem, index) end
-function Witch.UI.Window.FightUI:CreateDeckMenu() end
-function Witch.UI.Window.FightUI:CreateUsedCardList() end
-function Witch.UI.Window.FightUI:UpdatePower() end
-function Witch.UI.Window.FightUI:FightAgainBtn() end
-function Witch.UI.Window.FightUI:Reset() end
-function Witch.UI.Window.FightUI:onChangeTurnBtn() end
----@overload fun(self: Witch.UI.Window.FightUI, Count: number)
----@param dataConfig DataConfig
-function Witch.UI.Window.FightUI:CreateCardItem(dataConfig) end
----@param OnComplete DG.Tweening.TweenCallback
----@param from CardContainer
-function Witch.UI.Window.FightUI:UpdateCardItemPos(OnComplete, from) end
-function Witch.UI.Window.FightUI:ShuffleCardItems() end
-function Witch.UI.Window.FightUI:UpdateCardMsg() end
-function Witch.UI.Window.FightUI:UpdateCardsShow() end
----@return number
-function Witch.UI.Window.FightUI:RemoveAllCards() end
----@param val string
----@param Type string
-function Witch.UI.Window.FightUI:ThrowCardScript(val, Type) end
----@param val string
----@param Type string
-function Witch.UI.Window.FightUI:Burning(val, Type) end
----@return number
-function Witch.UI.Window.FightUI:BurnAndThrowCheck() end
+---@param out_fightUi Witch.UI.Window.FightUI
+---@param out_error string
+---@return boolean,Witch.UI.Window.FightUI,string
+function Witch.UI.Automation.RuntimeBattleAutomationService.TryGetContext(out_fightUi, out_error) end
+---@param request Witch.UI.Automation.RuntimePlayCardRequest
+---@return Cysharp.Threading.Tasks.UniTask
+function Witch.UI.Automation.RuntimeBattleAutomationService.PlayCardAsync(request) end
 ---@param cardItem CardItem
-function Witch.UI.Window.FightUI:BurnCard(cardItem) end
----@param uitype string
-function Witch.UI.Window.FightUI:SelectInit(uitype) end
-function Witch.UI.Window.FightUI:ShowBattleReward() end
-function Witch.UI.Window.FightUI:CanWin() end
-function Witch.UI.Window.FightUI:EndInstance() end
-function Witch.UI.Window.FightUI:Yes() end
----@return boolean
-function Witch.UI.Window.FightUI:AllCannotUse() end
----@param scriptExecutor IScriptExecutor
-function Witch.UI.Window.FightUI:CallActionAnimation(scriptExecutor) end
-function Witch.UI.Window.FightUI:DOActionAnimation() end
----@param cardUseData Fight.ActionCommand.UseCard.CardUseData
-function Witch.UI.Window.FightUI:DoCardUseAnimation(cardUseData) end
-
----@class Witch.UI.Window.FightUI.DamageTextInfo : System.Object
----@field text string
----@field position UnityEngine.Vector2
----@field popUpType string
----@field status StatusManager
----@field to StatusManager
----@field realDamage string
-Witch.UI.Window.FightUI.DamageTextInfo = {}
----@alias CS.Witch.UI.Window.FightUI.DamageTextInfo Witch.UI.Window.FightUI.DamageTextInfo
-CS.Witch.UI.Window.FightUI.DamageTextInfo = Witch.UI.Window.FightUI.DamageTextInfo
-
----@return Witch.UI.Window.FightUI.DamageTextInfo
-function Witch.UI.Window.FightUI.DamageTextInfo.New() end
-
----@class Witch.UI.Window.FightUI.AnimationData : System.ValueType
----@field status StatusManager[]
----@field animationState IStatusManager.AnimatedState[]
----@field effectName string
-Witch.UI.Window.FightUI.AnimationData = {}
----@alias CS.Witch.UI.Window.FightUI.AnimationData Witch.UI.Window.FightUI.AnimationData
-CS.Witch.UI.Window.FightUI.AnimationData = Witch.UI.Window.FightUI.AnimationData
-
----@param data Fight.ActionCommand.ActionAnimation.AnimationData
----@return Witch.UI.Window.FightUI.AnimationData
-function Witch.UI.Window.FightUI.AnimationData.New(data) end
-
----@class Witch.UI.Window.LineUI : Witch.UI.UIBase
----@field arcLengthSamples number
-Witch.UI.Window.LineUI = {}
----@alias CS.Witch.UI.Window.LineUI Witch.UI.Window.LineUI
-CS.Witch.UI.Window.LineUI = Witch.UI.Window.LineUI
-
----@param pos UnityEngine.Vector3
-function Witch.UI.Window.LineUI:SetStartPos(pos) end
----@param pos System.Nullable
-function Witch.UI.Window.LineUI:SetEndPos(pos) end
----@param start UnityEngine.Vector3
----@param mid UnityEngine.Vector3
----@param _end UnityEngine.Vector3
----@param t number
----@return UnityEngine.Vector3
-function Witch.UI.Window.LineUI:GetBezier(start, mid, _end, t) end
-function Witch.UI.Window.LineUI:FadeIn() end
----@param callback System.Action | function
-function Witch.UI.Window.LineUI:FadeOut(callback) end
-function Witch.UI.Window.LineUI:OnDestroy() end
-
----@class Witch.UI.Window.PopUpTextUI : UnityEngine.MonoBehaviour
----@field x_position_curve UnityEngine.AnimationCurve
----@field y_position_curve UnityEngine.AnimationCurve
----@field fontsize_curve UnityEngine.AnimationCurve
----@field colors UnityEngine.Gradient
----@field val string
----@field isDestroy boolean
----@field TotalTime number
----@field maxHeight number
----@field maxLength number
----@field maxFontSize number
----@field nowPos UnityEngine.Vector2
----@field start_position UnityEngine.Vector2
----@field time number
----@field existTime number
----@field target string
----@field pause boolean
-Witch.UI.Window.PopUpTextUI = {}
----@alias CS.Witch.UI.Window.PopUpTextUI Witch.UI.Window.PopUpTextUI
-CS.Witch.UI.Window.PopUpTextUI = Witch.UI.Window.PopUpTextUI
-
----@param value number
-function Witch.UI.Window.PopUpTextUI:SetDisplayInt(value) end
----@return number
-function Witch.UI.Window.PopUpTextUI:GetDisplayInt() end
-function Witch.UI.Window.PopUpTextUI:InitChange() end
----@param val number
-function Witch.UI.Window.PopUpTextUI:SetTextFont(val) end
-function Witch.UI.Window.PopUpTextUI:Update() end
-
----@class Witch.UI.Window.StatusBarUI : UnityEngine.MonoBehaviour
----@field Status StatusManager
----@field hpItemObj UnityEngine.GameObject
----@field buffBarObj UnityEngine.GameObject
----@field hpTxt TMPro.TMP_Text
----@field hpRedImg UnityEngine.SpriteRenderer
----@field hpImg UnityEngine.SpriteRenderer
----@field defendImg UnityEngine.SpriteRenderer
----@field nameObj UnityEngine.GameObject
----@field toughObj UnityEngine.GameObject
----@field backgroundObj UnityEngine.GameObject
-Witch.UI.Window.StatusBarUI = {}
----@alias CS.Witch.UI.Window.StatusBarUI Witch.UI.Window.StatusBarUI
-CS.Witch.UI.Window.StatusBarUI = Witch.UI.Window.StatusBarUI
-
----@param status StatusManager
-function Witch.UI.Window.StatusBarUI:Init(status) end
----@param Defend number
----@param CurHp number
----@param MaxHp number
----@param NeedEffect boolean
-function Witch.UI.Window.StatusBarUI:UpdateHealthBar(Defend, CurHp, MaxHp, NeedEffect) end
-function Witch.UI.Window.StatusBarUI:UpdateTough() end
-function Witch.UI.Window.StatusBarUI:OnSelected() end
-function Witch.UI.Window.StatusBarUI:OnUnSelected() end
-
----@class Witch.UI.Window.GameEntryUI : Witch.UI.UIBase
----@field selectedSave Data.Save.SaveInfo
----@field playerCount number
----@field partner DataConfig
----@field MainParent UnityEngine.Transform
----@field SecondParent UnityEngine.Transform
----@field selectHardUI Witch.UI.Window.SelectHardUI
----@field careerChoiceParent UnityEngine.Transform
----@field waitCount number
----@field careerIndex number
----@field partnerIndex number
----@field showCareers System.Collections.Generic.List
----@field showPartners System.Collections.Generic.List
----@field lastcareer DataConfig
----@field career DataConfig
----@field isHost boolean
-Witch.UI.Window.GameEntryUI = {}
----@alias CS.Witch.UI.Window.GameEntryUI Witch.UI.Window.GameEntryUI
-CS.Witch.UI.Window.GameEntryUI = Witch.UI.Window.GameEntryUI
-
-function Witch.UI.Window.GameEntryUI:Init() end
-function Witch.UI.Window.GameEntryUI:CloseAllWindows() end
-function Witch.UI.Window.GameEntryUI:DataUpdate() end
-function Witch.UI.Window.GameEntryUI:Outlobby() end
-function Witch.UI.Window.GameEntryUI:ReturnHouse() end
-function Witch.UI.Window.GameEntryUI:Close() end
----@param ready boolean
-function Witch.UI.Window.GameEntryUI:ChangeReady(ready) end
----@param ready boolean
----@param playerId string
-function Witch.UI.Window.GameEntryUI:SetReady(ready, playerId) end
-function Witch.UI.Window.GameEntryUI:StartGame() end
-function Witch.UI.Window.GameEntryUI:NormalGame() end
-function Witch.UI.Window.GameEntryUI:OpenChoice() end
-function Witch.UI.Window.GameEntryUI:OpenWindow() end
-function Witch.UI.Window.GameEntryUI:CloseWindow() end
-function Witch.UI.Window.GameEntryUI:OpenSelectHard() end
----@param players System.Collections.Generic.List
-function Witch.UI.Window.GameEntryUI:UpdateLobby(players) end
-function Witch.UI.Window.GameEntryUI:ShowCareer() end
----@param thiscareer Witch.UI.Window.ShowCareer
----@param way string
----@param ischangeRole boolean
-function Witch.UI.Window.GameEntryUI:ShowDetail(thiscareer, way, ischangeRole) end
----@param thiscareer DataConfig
----@param tempParent UnityEngine.Transform
-function Witch.UI.Window.GameEntryUI:ChangeCareerDesShow(thiscareer, tempParent) end
----@param dataConfig DataConfig
----@param fromId string
-function Witch.UI.Window.GameEntryUI:ChangeRole(dataConfig, fromId) end
-
----@class Witch.UI.Window.GameExitUI : Witch.UI.UIBase
----@field loss boolean
----@field BlackMask UnityEngine.UI.Image
----@field MainContent UnityEngine.Transform
----@field sr UnityEngine.SpriteRenderer
----@field ExpLevel TMPro.TMP_Text
----@field BaseTran UnityEngine.Transform
----@field MulTran UnityEngine.Transform
----@field TrueCount number
----@field gameRuntimeData GameRuntimeData
-Witch.UI.Window.GameExitUI = {}
----@alias CS.Witch.UI.Window.GameExitUI Witch.UI.Window.GameExitUI
-CS.Witch.UI.Window.GameExitUI = Witch.UI.Window.GameExitUI
-
-function Witch.UI.Window.GameExitUI:NextShow() end
-function Witch.UI.Window.GameExitUI:OnDestroy() end
-function Witch.UI.Window.GameExitUI:ReturnAsync() end
-
----@class Witch.UI.Window.HouseUI : UnityEngine.MonoBehaviour
----@field CanScroll boolean
----@field storehouseUI Witch.UI.Window.StorehouseUI
----@field houseRect UnityEngine.RectTransform
----@field targetCamera UnityEngine.Camera
----@field minScale number
-Witch.UI.Window.HouseUI = {}
----@alias CS.Witch.UI.Window.HouseUI Witch.UI.Window.HouseUI
-CS.Witch.UI.Window.HouseUI = Witch.UI.Window.HouseUI
-
-function Witch.UI.Window.HouseUI:ShadowChat() end
-function Witch.UI.Window.HouseUI:StartShop() end
-function Witch.UI.Window.HouseUI:OnClickCardEditor() end
-function Witch.UI.Window.HouseUI:OpenStorehouse() end
-function Witch.UI.Window.HouseUI:OpenDictionary() end
-function Witch.UI.Window.HouseUI:OnClickMod() end
-function Witch.UI.Window.HouseUI:ReturnMenu() end
----@param houseItemType HouseItem.HouseItemType
-function Witch.UI.Window.HouseUI:ClickItem(houseItemType) end
-function Witch.UI.Window.HouseUI:OpenAnnouncement() end
-function Witch.UI.Window.HouseUI:OnDestroy() end
-
----@class Witch.UI.Window.IllustratedBookUI : Witch.UI.UIBase
----@field MsgContent UnityEngine.RectTransform
-Witch.UI.Window.IllustratedBookUI = {}
----@alias CS.Witch.UI.Window.IllustratedBookUI Witch.UI.Window.IllustratedBookUI
-CS.Witch.UI.Window.IllustratedBookUI = Witch.UI.Window.IllustratedBookUI
-
-
----@class Witch.UI.Window.BlessItem : Witch.UI.Window.DictionaryItem
-Witch.UI.Window.BlessItem = {}
----@alias CS.Witch.UI.Window.BlessItem Witch.UI.Window.BlessItem
-CS.Witch.UI.Window.BlessItem = Witch.UI.Window.BlessItem
-
-function Witch.UI.Window.BlessItem:DataUpdate() end
----@param dataConfig DataConfig
-function Witch.UI.Window.BlessItem:Init(dataConfig) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.BlessItem:OnPointerClick(eventData) end
-function Witch.UI.Window.BlessItem:SetName() end
-
----@class Witch.UI.Window.CardChoiceItem : UnityEngine.MonoBehaviour
----@field objectGroup ObjectGroup
-Witch.UI.Window.CardChoiceItem = {}
----@alias CS.Witch.UI.Window.CardChoiceItem Witch.UI.Window.CardChoiceItem
-CS.Witch.UI.Window.CardChoiceItem = Witch.UI.Window.CardChoiceItem
-
----@param UI Witch.UI.Window.CardChoiceUI
----@param fromId string
-function Witch.UI.Window.CardChoiceItem:Initialize(UI, fromId) end
----@param delay number
-function Witch.UI.Window.CardChoiceItem:FadeIn(delay) end
-function Witch.UI.Window.CardChoiceItem:DataUpdate() end
----@param delay number
-function Witch.UI.Window.CardChoiceItem:FadeOut(delay) end
-function Witch.UI.Window.CardChoiceItem:MoveToDeck() end
-
----@class Witch.UI.Window.CardEnchUI : Witch.UI.Window.ShopUI
-Witch.UI.Window.CardEnchUI = {}
----@alias CS.Witch.UI.Window.CardEnchUI Witch.UI.Window.CardEnchUI
-CS.Witch.UI.Window.CardEnchUI = Witch.UI.Window.CardEnchUI
-
-function Witch.UI.Window.CardEnchUI:SetShopItems() end
-function Witch.UI.Window.CardEnchUI:UpdateEnchShow() end
----@param enchItem Witch.UI.Window.ShopItem
-function Witch.UI.Window.CardEnchUI:ShowCardToEnch(enchItem) end
-
----@class Witch.UI.Window.DictionaryItem : Witch.UI.Window.ItemNonDrag
----@field dictionaryUI Witch.UI.Window.DictionaryUI
-Witch.UI.Window.DictionaryItem = {}
----@alias CS.Witch.UI.Window.DictionaryItem Witch.UI.Window.DictionaryItem
-CS.Witch.UI.Window.DictionaryItem = Witch.UI.Window.DictionaryItem
-
----@param dataConfig DataConfig
-function Witch.UI.Window.DictionaryItem:Init(dataConfig) end
-function Witch.UI.Window.DictionaryItem:Awake() end
-function Witch.UI.Window.DictionaryItem:DataUpdate() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.DictionaryItem:OnPointerClick(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.DictionaryItem:OnPointerEnter(eventData) end
-
----@class Witch.UI.Window.DictionaryShowItem : Witch.UI.Window.ItemNonDrag
----@field dictionaryUI Witch.UI.Window.DictionaryUI
----@field defaultCount number
-Witch.UI.Window.DictionaryShowItem = {}
----@alias CS.Witch.UI.Window.DictionaryShowItem Witch.UI.Window.DictionaryShowItem
-CS.Witch.UI.Window.DictionaryShowItem = Witch.UI.Window.DictionaryShowItem
-
----@param dataConfig DataConfig
-function Witch.UI.Window.DictionaryShowItem:Init(dataConfig) end
-function Witch.UI.Window.DictionaryShowItem:DataUpdate() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.DictionaryShowItem:OnPointerEnter(eventData) end
-function Witch.UI.Window.DictionaryShowItem:ShowFloatingWindow() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.DictionaryShowItem:OnPointerClick(eventData) end
-
----@class Witch.UI.Window.DictItem : Witch.UI.Window.DictionaryItem
-Witch.UI.Window.DictItem = {}
----@alias CS.Witch.UI.Window.DictItem Witch.UI.Window.DictItem
-CS.Witch.UI.Window.DictItem = Witch.UI.Window.DictItem
-
----@param dataConfig DataConfig
-function Witch.UI.Window.DictItem:Init(dataConfig) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.DictItem:OnPointerEnter(eventData) end
----@param newTransform UnityEngine.Transform
-function Witch.UI.Window.DictItem:SetCardMsg(newTransform) end
-function Witch.UI.Window.DictItem:DataUpdate() end
-
----@class Witch.UI.Window.DictTagItem : UnityEngine.MonoBehaviour
----@field TagType string
----@field tagName string
-Witch.UI.Window.DictTagItem = {}
----@alias CS.Witch.UI.Window.DictTagItem Witch.UI.Window.DictTagItem
-CS.Witch.UI.Window.DictTagItem = Witch.UI.Window.DictTagItem
-
----@overload fun(self: Witch.UI.Window.DictTagItem, name: string, dictionaryUI: Witch.UI.Window.DictionaryUI)
----@param dictionaryUI Witch.UI.Window.DictionaryUI
-function Witch.UI.Window.DictTagItem:Init(dictionaryUI) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.DictTagItem:OnPointerClick(eventData) end
-function Witch.UI.Window.DictTagItem:ReturnNormal() end
-function Witch.UI.Window.DictTagItem:RegisterEvent() end
-function Witch.UI.Window.DictTagItem:DataUpdate() end
-function Witch.UI.Window.DictTagItem:ClearEvent() end
-
----@class Witch.UI.Window.EnchItem : Witch.UI.Window.Item
----@field CardEnchUI Witch.UI.Window.CardEnchUI
-Witch.UI.Window.EnchItem = {}
----@alias CS.Witch.UI.Window.EnchItem Witch.UI.Window.EnchItem
-CS.Witch.UI.Window.EnchItem = Witch.UI.Window.EnchItem
-
----@param dataConfig DataConfig
-function Witch.UI.Window.EnchItem:Init(dataConfig) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.EnchItem:OnPointerEnter(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.EnchItem:OnPointerExit(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.EnchItem:OnPointerClick(eventData) end
----@return string
-function Witch.UI.Window.EnchItem:CreateTooltipText() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.EnchItem:OnBeginDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.EnchItem:OnEndDrag(eventData) end
-function Witch.UI.Window.EnchItem:AddToParent() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.EnchItem:InsertCard(eventData) end
-
----@class Witch.UI.Window.EnemyItem : Witch.UI.Window.DictionaryItem
----@field MapName System.Collections.Generic.Dictionary
-Witch.UI.Window.EnemyItem = {}
----@alias CS.Witch.UI.Window.EnemyItem Witch.UI.Window.EnemyItem
-CS.Witch.UI.Window.EnemyItem = Witch.UI.Window.EnemyItem
-
-function Witch.UI.Window.EnemyItem:DataUpdate() end
----@param dataConfig DataConfig
-function Witch.UI.Window.EnemyItem:Init(dataConfig) end
-function Witch.UI.Window.EnemyItem:SetName() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.EnemyItem:OnPointerClick(eventData) end
-
----@class Witch.UI.Window.Item : UnityEngine.MonoBehaviour
----@field rareLevel string
----@field itemId string
----@field Rarity string
----@field ifEquipped boolean
----@field color string
----@field keywords System.Collections.Generic.List
----@field dataConfig DataConfig
----@field ItemType string
----@field itemIcon UnityEngine.Sprite
----@field itemPrice number
----@field lastPos UnityEngine.Vector2
----@field canClick boolean
----@field lastParent UnityEngine.Transform
----@field isHover boolean
----@field isDrag boolean
----@field keywordDisplay Witch.UI.KeywordDisplay
----@field floatingWindow FloatingWindow
----@field itemName string
----@field itemDescription string
----@field itemTip string
-Witch.UI.Window.Item = {}
----@alias CS.Witch.UI.Window.Item Witch.UI.Window.Item
-CS.Witch.UI.Window.Item = Witch.UI.Window.Item
-
-function Witch.UI.Window.Item:Awake() end
----@param dataConfig DataConfig
-function Witch.UI.Window.Item:Init(dataConfig) end
-function Witch.UI.Window.Item:DataUpdate() end
-function Witch.UI.Window.Item:RegisterEvent() end
-function Witch.UI.Window.Item:ClearEvent() end
----@return string
-function Witch.UI.Window.Item:CreateTooltipText() end
-function Witch.UI.Window.Item:ShowFloatingWindow() end
-function Witch.UI.Window.Item:HideFloatingWindow() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.Item:OnPointerEnter(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.Item:OnPointerExit(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.Item:OnDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.Item:OnBeginDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.Item:OnEndDrag(eventData) end
----@param item SwapContentIdentity
-function Witch.UI.Window.Item:AddToList(item) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.Item:OnPointerClick(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
----@return UnityEngine.Vector2
-function Witch.UI.Window.Item:GetMousePos(eventData) end
-function Witch.UI.Window.Item:OnDestroy() end
-function Witch.UI.Window.Item:OnTransformParentChanged() end
-function Witch.UI.Window.Item:RemoveFromParent() end
-function Witch.UI.Window.Item:AddToParent() end
-
----@class Witch.UI.Window.ItemNonDrag : Witch.UI.Window.Item
-Witch.UI.Window.ItemNonDrag = {}
----@alias CS.Witch.UI.Window.ItemNonDrag Witch.UI.Window.ItemNonDrag
-CS.Witch.UI.Window.ItemNonDrag = Witch.UI.Window.ItemNonDrag
-
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ItemNonDrag:OnDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ItemNonDrag:OnBeginDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ItemNonDrag:OnEndDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ItemNonDrag:OnPointerClick(eventData) end
-function Witch.UI.Window.ItemNonDrag:OnDestroy() end
-
----@class Witch.UI.Window.PageItem : UnityEngine.MonoBehaviour
----@field dictionaryUI Witch.UI.Window.DictionaryUI
-Witch.UI.Window.PageItem = {}
----@alias CS.Witch.UI.Window.PageItem Witch.UI.Window.PageItem
-CS.Witch.UI.Window.PageItem = Witch.UI.Window.PageItem
-
----@param pointerEvent UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.PageItem:OnPointerClick(pointerEvent) end
-
----@class Witch.UI.Window.RelicItemConfig : Witch.UI.Window.Item
----@field relicSelectUI Witch.UI.Window.RelicSelectUI
----@field glowMaterial UnityEngine.Material
-Witch.UI.Window.RelicItemConfig = {}
----@alias CS.Witch.UI.Window.RelicItemConfig Witch.UI.Window.RelicItemConfig
-CS.Witch.UI.Window.RelicItemConfig = Witch.UI.Window.RelicItemConfig
-
-function Witch.UI.Window.RelicItemConfig:ShowFloatingWindow() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.RelicItemConfig:OnBeginDrag(eventData) end
----@param dataConfig DataConfig
-function Witch.UI.Window.RelicItemConfig:Init(dataConfig) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.RelicItemConfig:OnDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.RelicItemConfig:OnEndDrag(eventData) end
-function Witch.UI.Window.RelicItemConfig:OnTransformParentChanged() end
----@param enable boolean
-function Witch.UI.Window.RelicItemConfig:SetGlowEvent(enable) end
-function Witch.UI.Window.RelicItemConfig:EffectAnimation() end
-
----@class Witch.UI.Window.ResultItem : Witch.UI.Window.ItemNonDrag
----@field canright boolean
----@field outside boolean
-Witch.UI.Window.ResultItem = {}
----@alias CS.Witch.UI.Window.ResultItem Witch.UI.Window.ResultItem
-CS.Witch.UI.Window.ResultItem = Witch.UI.Window.ResultItem
-
----@param dataConfig DataConfig
-function Witch.UI.Window.ResultItem:Init(dataConfig) end
-function Witch.UI.Window.ResultItem:KeyworsDis() end
-function Witch.UI.Window.ResultItem:HideFloatingWindow() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ResultItem:OnPointerClick(eventData) end
----@return string
-function Witch.UI.Window.ResultItem:CreateTooltipText() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ResultItem:OnBeginDrag(eventData) end
-
----@class Witch.UI.Window.ShowCard : Witch.UI.Window.Item
----@field cardShowUI Witch.UI.Window.OutDeckUI
----@field DestroyCost number
-Witch.UI.Window.ShowCard = {}
----@alias CS.Witch.UI.Window.ShowCard Witch.UI.Window.ShowCard
-CS.Witch.UI.Window.ShowCard = Witch.UI.Window.ShowCard
-
----@param dataConfig DataConfig
----@param ifequipped boolean
----@param fromSelf boolean
-function Witch.UI.Window.ShowCard:Init(dataConfig, ifequipped, fromSelf) end
-function Witch.UI.Window.ShowCard:DataUpdate() end
-function Witch.UI.Window.ShowCard:MoveItem() end
-function Witch.UI.Window.ShowCard:ShowFloatingWindow() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShowCard:OnBeginDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShowCard:OnPointerClick(eventData) end
-function Witch.UI.Window.ShowCard:DecomposeItem() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShowCard:OnDrag(eventData) end
-function Witch.UI.Window.ShowCard:ItemCheck() end
-function Witch.UI.Window.ShowCard:SellItem() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShowCard:OnEndDrag(eventData) end
----@param content SwapContentIdentity
-function Witch.UI.Window.ShowCard:AddToList(content) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShowCard:OnPointerEnter(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShowCard:OnPointerExit(eventData) end
-
----@class Witch.UI.Window.ShowVarItem : UnityEngine.MonoBehaviour
----@field text string
-Witch.UI.Window.ShowVarItem = {}
----@alias CS.Witch.UI.Window.ShowVarItem Witch.UI.Window.ShowVarItem
-CS.Witch.UI.Window.ShowVarItem = Witch.UI.Window.ShowVarItem
-
-function Witch.UI.Window.ShowVarItem:Start() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShowVarItem:OnPointerClick(eventData) end
-function Witch.UI.Window.ShowVarItem:Show() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShowVarItem:OnPointerExit(eventData) end
-
----@class Witch.UI.Window.StorehouseItem : Witch.UI.Window.ItemNonDrag
----@field storehouseUI Witch.UI.Window.StorehouseUI
-Witch.UI.Window.StorehouseItem = {}
----@alias CS.Witch.UI.Window.StorehouseItem Witch.UI.Window.StorehouseItem
-CS.Witch.UI.Window.StorehouseItem = Witch.UI.Window.StorehouseItem
-
-function Witch.UI.Window.StorehouseItem:Start() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.StorehouseItem:OnPointerEnter(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.StorehouseItem:OnPointerExit(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.StorehouseItem:OnPointerClick(eventData) end
-
----@class Witch.UI.Window.MainMenuUI : Witch.UI.UIBase
-Witch.UI.Window.MainMenuUI = {}
----@alias CS.Witch.UI.Window.MainMenuUI Witch.UI.Window.MainMenuUI
-CS.Witch.UI.Window.MainMenuUI = Witch.UI.Window.MainMenuUI
-
-function Witch.UI.Window.MainMenuUI:DataUpdate() end
-function Witch.UI.Window.MainMenuUI:StartGame() end
-function Witch.UI.Window.MainMenuUI:CloseTheGame() end
----@param url string
-function Witch.UI.Window.MainMenuUI:OpenWebsite(url) end
-function Witch.UI.Window.MainMenuUI:OpenSettings() end
-function Witch.UI.Window.MainMenuUI:OnDisable() end
-
----@class Witch.UI.Window.MapSelectUI : Witch.UI.UIBase
----@field cardContainer CardContainer
----@field ground_y number
----@field groundPos UnityEngine.Transform
----@field IsAnimating boolean
-Witch.UI.Window.MapSelectUI = {}
----@alias CS.Witch.UI.Window.MapSelectUI Witch.UI.Window.MapSelectUI
-CS.Witch.UI.Window.MapSelectUI = Witch.UI.Window.MapSelectUI
-
-function Witch.UI.Window.MapSelectUI:FadeIn() end
-function Witch.UI.Window.MapSelectUI:DataUpdate() end
-function Witch.UI.Window.MapSelectUI:UpdateCardItemPos() end
-function Witch.UI.Window.MapSelectUI:ReadyToSelect() end
----@param nodes System.Collections.Generic.List
-function Witch.UI.Window.MapSelectUI:CreateMapItem(nodes) end
-function Witch.UI.Window.MapSelectUI:MapAnimation() end
-function Witch.UI.Window.MapSelectUI:SendNode() end
-function Witch.UI.Window.MapSelectUI:ShowMap() end
----@param count number
-function Witch.UI.Window.MapSelectUI:CreateNodes(count) end
----@return MapTree.Node[]
-function Witch.UI.Window.MapSelectUI:GetNodes() end
-function Witch.UI.Window.MapSelectUI:SetNodes() end
-function Witch.UI.Window.MapSelectUI:OnDestroy() end
-
----@class Witch.UI.Window.ItemShowUI : Witch.UI.UIBase
-Witch.UI.Window.ItemShowUI = {}
----@alias CS.Witch.UI.Window.ItemShowUI Witch.UI.Window.ItemShowUI
-CS.Witch.UI.Window.ItemShowUI = Witch.UI.Window.ItemShowUI
-
----@overload fun(self: Witch.UI.Window.ItemShowUI, dataConfig: DataConfig)
----@param icon UnityEngine.Sprite
----@param title string
----@param description string
----@param tips string
-function Witch.UI.Window.ItemShowUI:ShowItem(icon, title, description, tips) end
-
----@class Witch.UI.Window.TitleUI : Witch.UI.UIBase
-Witch.UI.Window.TitleUI = {}
----@alias CS.Witch.UI.Window.TitleUI Witch.UI.Window.TitleUI
-CS.Witch.UI.Window.TitleUI = Witch.UI.Window.TitleUI
-
----@param main string
----@param sub string
-function Witch.UI.Window.TitleUI:ShowTitle(main, sub) end
-
----@class Witch.UI.Window.TutorialUI : Witch.UI.UIBase
----@field ItemPrefab UnityEngine.GameObject
----@field SelectSprite UnityEngine.Sprite
----@field UnselectSprite UnityEngine.Sprite
-Witch.UI.Window.TutorialUI = {}
----@alias CS.Witch.UI.Window.TutorialUI Witch.UI.Window.TutorialUI
-CS.Witch.UI.Window.TutorialUI = Witch.UI.Window.TutorialUI
-
-function Witch.UI.Window.TutorialUI:Awake() end
----@param id string
-function Witch.UI.Window.TutorialUI:ShowTutorial(id) end
-
----@class Witch.UI.Window.ModeChoiceUI : Witch.UI.UIBase
----@field beforeSave System.Collections.Generic.Dictionary
----@field gameEntryUI Witch.UI.Window.GameEntryUI
----@field canClick boolean
-Witch.UI.Window.ModeChoiceUI = {}
----@alias CS.Witch.UI.Window.ModeChoiceUI Witch.UI.Window.ModeChoiceUI
-CS.Witch.UI.Window.ModeChoiceUI = Witch.UI.Window.ModeChoiceUI
-
-function Witch.UI.Window.ModeChoiceUI:DataUpdate() end
-function Witch.UI.Window.ModeChoiceUI:Init() end
----@param modeType string
-function Witch.UI.Window.ModeChoiceUI:CreateNewSave(modeType) end
-function Witch.UI.Window.ModeChoiceUI:TeachMode() end
----@param saveInfo Data.Save.SaveInfo
----@return boolean
-function Witch.UI.Window.ModeChoiceUI:CheckSave(saveInfo) end
-function Witch.UI.Window.ModeChoiceUI:NormalMode() end
-function Witch.UI.Window.ModeChoiceUI:SlotMode() end
-function Witch.UI.Window.ModeChoiceUI:SublimationMode() end
-function Witch.UI.Window.ModeChoiceUI:ShowUnDone() end
----@param modeType string
-function Witch.UI.Window.ModeChoiceUI:ReturnGame(modeType) end
-function Witch.UI.Window.ModeChoiceUI:Close() end
-function Witch.UI.Window.ModeChoiceUI:OnDisable() end
-
----@class Witch.UI.Window.ModManagerUI : Witch.UI.UIBase
----@field progressBar Michsky.MUIP.ProgressBar
-Witch.UI.Window.ModManagerUI = {}
----@alias CS.Witch.UI.Window.ModManagerUI Witch.UI.Window.ModManagerUI
-CS.Witch.UI.Window.ModManagerUI = Witch.UI.Window.ModManagerUI
-
-function Witch.UI.Window.ModManagerUI:Close() end
-
----@class Witch.UI.Window.OutSideItem : Witch.UI.Window.ItemNonDrag
----@field isgoods boolean
----@field outsiderShopUI Witch.UI.Window.OutsiderShopUI
-Witch.UI.Window.OutSideItem = {}
----@alias CS.Witch.UI.Window.OutSideItem Witch.UI.Window.OutSideItem
-CS.Witch.UI.Window.OutSideItem = Witch.UI.Window.OutSideItem
-
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.OutSideItem:OnPointerEnter(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.OutSideItem:OnPointerExit(eventData) end
-
----@class Witch.UI.Window.OutsiderShopUI : Witch.UI.Window.ShopUI
----@field thiscurrentItem Witch.UI.Window.OutsideShopItem
----@field fadeTransforms System.Collections.Generic.List
----@field transitionTime number
----@field TypeMap System.Collections.Generic.Dictionary
----@field ShopItems System.Collections.Generic.List
-Witch.UI.Window.OutsiderShopUI = {}
----@alias CS.Witch.UI.Window.OutsiderShopUI Witch.UI.Window.OutsiderShopUI
-CS.Witch.UI.Window.OutsiderShopUI = Witch.UI.Window.OutsiderShopUI
-
-function Witch.UI.Window.OutsiderShopUI:Awake() end
-function Witch.UI.Window.OutsiderShopUI:DataUpdate() end
-function Witch.UI.Window.OutsiderShopUI:Init() end
-function Witch.UI.Window.OutsiderShopUI:Hide() end
----@param item Witch.UI.Window.OutsideShopItem
-function Witch.UI.Window.OutsiderShopUI:SetCurrentItem(item) end
-function Witch.UI.Window.OutsiderShopUI:SetShopItems() end
-function Witch.UI.Window.OutsiderShopUI:OnEnable() end
-function Witch.UI.Window.OutsiderShopUI:TryBuy() end
-function Witch.UI.Window.OutsiderShopUI:ChangeTrue() end
-function Witch.UI.Window.OutsiderShopUI:UpdateAllItems() end
-function Witch.UI.Window.OutsiderShopUI:UpdateItemDes() end
-function Witch.UI.Window.OutsiderShopUI:TriggerCalled() end
-function Witch.UI.Window.OutsiderShopUI:OnDisable() end
-
----@class Witch.UI.Window.ResultUI : Witch.UI.UIBase
----@field GetItemList UnityEngine.Transform
-Witch.UI.Window.ResultUI = {}
----@alias CS.Witch.UI.Window.ResultUI Witch.UI.Window.ResultUI
-CS.Witch.UI.Window.ResultUI = Witch.UI.Window.ResultUI
-
----@param datas System.Collections.Generic.List
-function Witch.UI.Window.ResultUI:CreateResultItem(datas) end
-
----@class Witch.UI.Window.SafeBoxItem : Witch.UI.Window.Item
----@field safeBoxUI Witch.UI.Window.SafeBoxUI
----@field InBackPack boolean
----@field hasInBack boolean
----@field tooltip Tooltip
----@field normalCanvasGroup UnityEngine.CanvasGroup
----@field highlightCanvasGroup UnityEngine.CanvasGroup
-Witch.UI.Window.SafeBoxItem = {}
----@alias CS.Witch.UI.Window.SafeBoxItem Witch.UI.Window.SafeBoxItem
-CS.Witch.UI.Window.SafeBoxItem = Witch.UI.Window.SafeBoxItem
-
----@param dataConfig DataConfig
-function Witch.UI.Window.SafeBoxItem:Init(dataConfig) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.SafeBoxItem:OnPointerEnter(eventData) end
-function Witch.UI.Window.SafeBoxItem:DataUpdate() end
----@return string
-function Witch.UI.Window.SafeBoxItem:CreateTooltipText() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.SafeBoxItem:OnPointerClick(eventData) end
-function Witch.UI.Window.SafeBoxItem:OnDestroy() end
----@param item SwapContentIdentity
-function Witch.UI.Window.SafeBoxItem:AddToList(item) end
-function Witch.UI.Window.SafeBoxItem:OnTransformParentChanged() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.SafeBoxItem:OnPointerExit(eventData) end
-
----@class Witch.UI.Window.SafeBoxUI : Witch.UI.UIBase
----@field cardBack UnityEngine.Transform
----@field cardBox UnityEngine.Transform
----@field relicBox UnityEngine.Transform
----@field TopRelicPrefab UnityEngine.GameObject
----@field BottomRelicPrefab UnityEngine.GameObject
----@field tooltip Tooltip
----@field floatingWindow FloatingWindow
-Witch.UI.Window.SafeBoxUI = {}
----@alias CS.Witch.UI.Window.SafeBoxUI Witch.UI.Window.SafeBoxUI
-CS.Witch.UI.Window.SafeBoxUI = Witch.UI.Window.SafeBoxUI
-
-function Witch.UI.Window.SafeBoxUI.SafeboxSave() end
-function Witch.UI.Window.SafeBoxUI.ClearList() end
-function Witch.UI.Window.SafeBoxUI.ResetCount() end
-function Witch.UI.Window.SafeBoxUI:DataUpdate() end
-function Witch.UI.Window.SafeBoxUI:RetainMoney() end
-function Witch.UI.Window.SafeBoxUI:ChangeMoney() end
-function Witch.UI.Window.SafeBoxUI:ChangeMoneyShow() end
-function Witch.UI.Window.SafeBoxUI:ChangeCountShow() end
-function Witch.UI.Window.SafeBoxUI:ShowBackItem() end
-function Witch.UI.Window.SafeBoxUI:UpdateBackCard() end
-function Witch.UI.Window.SafeBoxUI:UpdateBackRelic() end
-function Witch.UI.Window.SafeBoxUI:ShowHadItems() end
----@param item Witch.UI.Window.SafeBoxItem
-function Witch.UI.Window.SafeBoxUI:LoseItem(item) end
----@param obj UnityEngine.GameObject
-function Witch.UI.Window.SafeBoxUI:PutIntoStore(obj) end
-function Witch.UI.Window.SafeBoxUI:HideTooltip() end
----@param item Witch.UI.Window.SafeBoxItem
-function Witch.UI.Window.SafeBoxUI:ShowFloatingWindow(item) end
----@param obj UnityEngine.GameObject
-function Witch.UI.Window.SafeBoxUI:PutItBack(obj) end
-
----@class Witch.UI.Window.CurtainTurnUI : Witch.UI.UIBase
----@field CloseAnimation UIAnimation
----@field OpenAnimation UIAnimation
-Witch.UI.Window.CurtainTurnUI = {}
----@alias CS.Witch.UI.Window.CurtainTurnUI Witch.UI.Window.CurtainTurnUI
-CS.Witch.UI.Window.CurtainTurnUI = Witch.UI.Window.CurtainTurnUI
-
----@param action System.Action | function
-function Witch.UI.Window.CurtainTurnUI:Play(action) end
-function Witch.UI.Window.CurtainTurnUI:OnDestroy() end
-
----@class Witch.UI.Window.InkTurnUI : Witch.UI.UIBase
----@field SceneTurnMaterial UnityEngine.Material
----@field textures System.Collections.Generic.List
-Witch.UI.Window.InkTurnUI = {}
----@alias CS.Witch.UI.Window.InkTurnUI Witch.UI.Window.InkTurnUI
-CS.Witch.UI.Window.InkTurnUI = Witch.UI.Window.InkTurnUI
-
----@overload fun()
----@param firstUI System.Action | function
----@param secondUI System.Action | function
-function Witch.UI.Window.InkTurnUI:Play(firstUI, secondUI) end
----@param firstUI System.Action | function
----@param secondUI System.Action | function
-function Witch.UI.Window.InkTurnUI:FastPlay(firstUI, secondUI) end
-function Witch.UI.Window.InkTurnUI:OnDestroy() end
-
----@class Witch.UI.Window.LoadingUI : Witch.UI.UIBase
-Witch.UI.Window.LoadingUI = {}
----@alias CS.Witch.UI.Window.LoadingUI Witch.UI.Window.LoadingUI
-CS.Witch.UI.Window.LoadingUI = Witch.UI.Window.LoadingUI
-
-function Witch.UI.Window.LoadingUI:OnEnable() end
-function Witch.UI.Window.LoadingUI:Close() end
-
----@class Witch.UI.Window.SceneTurnUI : Witch.UI.UIBase
-Witch.UI.Window.SceneTurnUI = {}
----@alias CS.Witch.UI.Window.SceneTurnUI Witch.UI.Window.SceneTurnUI
-CS.Witch.UI.Window.SceneTurnUI = Witch.UI.Window.SceneTurnUI
-
-function Witch.UI.Window.SceneTurnUI:FadeIn() end
-function Witch.UI.Window.SceneTurnUI:Close() end
-
----@class Witch.UI.Window.HardItem : UnityEngine.MonoBehaviour
----@field selectHardUI Witch.UI.Window.SelectHardUI
-Witch.UI.Window.HardItem = {}
----@alias CS.Witch.UI.Window.HardItem Witch.UI.Window.HardItem
-CS.Witch.UI.Window.HardItem = Witch.UI.Window.HardItem
-
----@param hardData System.Collections.Generic.Dictionary
-function Witch.UI.Window.HardItem:Init(hardData) end
-
----@class Witch.UI.Window.SelectHardUI : Witch.UI.UIBase
----@field UseSc System.Collections.Generic.List
----@field AddReward number
----@field Level1Item UnityEngine.GameObject
----@field Level2Item UnityEngine.GameObject
----@field Level3Item UnityEngine.GameObject
-Witch.UI.Window.SelectHardUI = {}
----@alias CS.Witch.UI.Window.SelectHardUI Witch.UI.Window.SelectHardUI
-CS.Witch.UI.Window.SelectHardUI = Witch.UI.Window.SelectHardUI
-
-function Witch.UI.Window.SelectHardUI:Init() end
-function Witch.UI.Window.SelectHardUI:UpdataReward() end
-function Witch.UI.Window.SelectHardUI:Hide() end
-function Witch.UI.Window.SelectHardUI:OnDisable() end
-function Witch.UI.Window.SelectHardUI:OnEnable() end
-function Witch.UI.Window.SelectHardUI:CalCulateReward() end
----@param data System.Collections.Generic.Dictionary
-function Witch.UI.Window.SelectHardUI:AddSc(data) end
----@param Id string
-function Witch.UI.Window.SelectHardUI:RemoveSc(Id) end
-function Witch.UI.Window.SelectHardUI:ReSetHard() end
-function Witch.UI.Window.SelectHardUI:CreateItem() end
-
----@class Witch.UI.Window.SettingUI : Witch.UI.UIBase
----@field Active boolean
-Witch.UI.Window.SettingUI = {}
----@alias CS.Witch.UI.Window.SettingUI Witch.UI.Window.SettingUI
-CS.Witch.UI.Window.SettingUI = Witch.UI.Window.SettingUI
-
-function Witch.UI.Window.SettingUI:Close() end
-function Witch.UI.Window.SettingUI:DataUpdate() end
-function Witch.UI.Window.SettingUI:Hide() end
-function Witch.UI.Window.SettingUI:OnEnable() end
-function Witch.UI.Window.SettingUI:CloseTheGame() end
-function Witch.UI.Window.SettingUI:Save() end
-function Witch.UI.Window.SettingUI:Apply() end
-
----@class Witch.UI.Window.OutsideShopItem : Witch.UI.Window.ItemNonDrag
----@field theData System.Collections.Generic.Dictionary
----@field selfType string
----@field outsiderShopUI Witch.UI.Window.OutsiderShopUI
-Witch.UI.Window.OutsideShopItem = {}
----@alias CS.Witch.UI.Window.OutsideShopItem Witch.UI.Window.OutsideShopItem
-CS.Witch.UI.Window.OutsideShopItem = Witch.UI.Window.OutsideShopItem
-
-function Witch.UI.Window.OutsideShopItem:ShowTypeChange() end
-function Witch.UI.Window.OutsideShopItem:DataUpdate() end
-function Witch.UI.Window.OutsideShopItem:Init() end
-function Witch.UI.Window.OutsideShopItem:TryBuy() end
-function Witch.UI.Window.OutsideShopItem:UpdateItem() end
-
----@class Witch.UI.Window.SellItem : Witch.UI.Window.Item
----@field shop Witch.UI.Window.ShopUI
-Witch.UI.Window.SellItem = {}
----@alias CS.Witch.UI.Window.SellItem Witch.UI.Window.SellItem
-CS.Witch.UI.Window.SellItem = Witch.UI.Window.SellItem
-
----@param equipped boolean
----@param dataConfig DataConfig
-function Witch.UI.Window.SellItem:Init(equipped, dataConfig) end
-function Witch.UI.Window.SellItem:CheckEnch() end
----@return boolean
-function Witch.UI.Window.SellItem:CanSell() end
-function Witch.UI.Window.SellItem:TrySell() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.SellItem:OnPointerEnter(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.SellItem:OnPointerExit(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.SellItem:OnDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.SellItem:OnBeginDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.SellItem:OnEndDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.SellItem:OnPointerClick(eventData) end
-function Witch.UI.Window.SellItem:ShowFloatingWindow() end
-function Witch.UI.Window.SellItem:DataUpdate() end
-
----@class Witch.UI.Window.ShopItem : Witch.UI.Window.ItemNonDrag
----@field shop Witch.UI.Window.ShopUI
----@field dice Dice
-Witch.UI.Window.ShopItem = {}
----@alias CS.Witch.UI.Window.ShopItem Witch.UI.Window.ShopItem
-CS.Witch.UI.Window.ShopItem = Witch.UI.Window.ShopItem
-
----@overload fun(self: Witch.UI.Window.ShopItem, dataConfig: DataConfig)
-function Witch.UI.Window.ShopItem:Init() end
-function Witch.UI.Window.ShopItem:DataUpdate() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShopItem:OnPointerClick(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShopItem:OnPointerEnter(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShopItem:OnPointerExit(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShopItem:OnDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShopItem:OnBeginDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.ShopItem:OnEndDrag(eventData) end
-function Witch.UI.Window.ShopItem:TryBuy() end
-function Witch.UI.Window.ShopItem:UpdateItem() end
-
----@class Witch.UI.Window.ShopUI : Witch.UI.UIBase
----@field currentItem Witch.UI.Window.ShopItem
----@field SellCardPrefab UnityEngine.GameObject
----@field TopRelicPrefab UnityEngine.GameObject
----@field flushedCount number
----@field maxFlushedCount number
----@field ShopTran UnityEngine.Transform
----@field flushmoneychange number
----@field ItemPrefab UnityEngine.GameObject
-Witch.UI.Window.ShopUI = {}
----@alias CS.Witch.UI.Window.ShopUI Witch.UI.Window.ShopUI
-CS.Witch.UI.Window.ShopUI = Witch.UI.Window.ShopUI
-
-function Witch.UI.Window.ShopUI:DataUpdate() end
-function Witch.UI.Window.ShopUI:CreateSellCard() end
-function Witch.UI.Window.ShopUI:UpdateSellRelic() end
-function Witch.UI.Window.ShopUI:Flushed() end
-function Witch.UI.Window.ShopUI:ChangeFlushShow() end
-function Witch.UI.Window.ShopUI:SetShopItems() end
----@param sender System.Object
----@param args System.ComponentModel.PropertyChangedEventArgs
-function Witch.UI.Window.ShopUI:OnRoleTableChanged(sender, args) end
-function Witch.UI.Window.ShopUI:UpdateSellCard() end
----@param obj UnityEngine.GameObject
-function Witch.UI.Window.ShopUI:AnimationPlay(obj) end
-function Witch.UI.Window.ShopUI:OnDestroy() end
-function Witch.UI.Window.ShopUI:UpdateAllItems() end
-
----@class Witch.UI.Window.StorehouseUI : Witch.UI.UIBase
----@field TempItem UnityEngine.GameObject
----@field ListTransform UnityEngine.Transform
----@field thiscurrentItem Witch.UI.Window.StorehouseItem
----@field TypeMap System.Collections.Generic.Dictionary
-Witch.UI.Window.StorehouseUI = {}
----@alias CS.Witch.UI.Window.StorehouseUI Witch.UI.Window.StorehouseUI
-CS.Witch.UI.Window.StorehouseUI = Witch.UI.Window.StorehouseUI
-
-function Witch.UI.Window.StorehouseUI:OnEnable() end
-function Witch.UI.Window.StorehouseUI:CreateCardList() end
----@param Data DataConfig
----@param isCard boolean
-function Witch.UI.Window.StorehouseUI:CreateItem(Data, isCard) end
----@param item Witch.UI.Window.StorehouseItem
-function Witch.UI.Window.StorehouseUI:SetCurrentItem(item) end
-function Witch.UI.Window.StorehouseUI:ExitCureentItem() end
-function Witch.UI.Window.StorehouseUI:SetDescription() end
-function Witch.UI.Window.StorehouseUI:HideDescription() end
-
----@class Witch.UI.Window.WarehouseItem : Witch.UI.Window.Item
----@field Inwarehouse boolean
----@field warehouseUI Witch.UI.Window.WarehouseUI
-Witch.UI.Window.WarehouseItem = {}
----@alias CS.Witch.UI.Window.WarehouseItem Witch.UI.Window.WarehouseItem
-CS.Witch.UI.Window.WarehouseItem = Witch.UI.Window.WarehouseItem
-
----@param isware boolean
----@param equipped boolean
----@param dataConfig DataConfig
-function Witch.UI.Window.WarehouseItem:Init(isware, equipped, dataConfig) end
-function Witch.UI.Window.WarehouseItem:DataUpdate() end
-function Witch.UI.Window.WarehouseItem:TryMove() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.WarehouseItem:OnPointerEnter(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.WarehouseItem:OnPointerExit(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.WarehouseItem:OnDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.WarehouseItem:OnBeginDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.WarehouseItem:OnEndDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function Witch.UI.Window.WarehouseItem:OnPointerClick(eventData) end
-
----@class Witch.UI.Window.WarehouseUI : Witch.UI.UIBase
----@field withCardParent UnityEngine.Transform
----@field warehouseParent UnityEngine.Transform
----@field withRelicParent UnityEngine.Transform
-Witch.UI.Window.WarehouseUI = {}
----@alias CS.Witch.UI.Window.WarehouseUI Witch.UI.Window.WarehouseUI
-CS.Witch.UI.Window.WarehouseUI = Witch.UI.Window.WarehouseUI
-
-function Witch.UI.Window.WarehouseUI.ResetCount() end
-function Witch.UI.Window.WarehouseUI:OnEnable() end
-function Witch.UI.Window.WarehouseUI:ShowCard() end
----@param itemType string
----@param isGet boolean
----@return boolean
-function Witch.UI.Window.WarehouseUI:MoveCheck(itemType, isGet) end
-function Witch.UI.Window.WarehouseUI:ShowRelic() end
-
----@class Witch.UI.Window.EmojiPanelUI : Witch.UI.UIBase
----@field EmojiPrefab UnityEngine.Transform
-Witch.UI.Window.EmojiPanelUI = {}
----@alias CS.Witch.UI.Window.EmojiPanelUI Witch.UI.Window.EmojiPanelUI
-CS.Witch.UI.Window.EmojiPanelUI = Witch.UI.Window.EmojiPanelUI
-
-function Witch.UI.Window.EmojiPanelUI:CreateEmoji() end
-function Witch.UI.Window.EmojiPanelUI:Start() end
----@overload fun(self: Witch.UI.Window.EmojiPanelUI, gifAsset: GifAsset)
----@param uiAnimation UIAnimation
-function Witch.UI.Window.EmojiPanelUI:ShowEmoji(uiAnimation) end
-
----@class BugReporter.BugReporter : System.Object
-BugReporter.BugReporter = {}
----@alias CS.BugReporter.BugReporter BugReporter.BugReporter
-CS.BugReporter.BugReporter = BugReporter.BugReporter
-
----@param error System.Exception
-function BugReporter.BugReporter.ShowError(error) end
+---@param out_reason string
+---@return boolean,string
+function Witch.UI.Automation.RuntimeBattleAutomationService.CanPlayCardLegally(cardItem, out_reason) end
+
+---@class Witch.UI.Automation.RuntimeLegalAction : System.Object
+---@field Id string
+---@field Kind string
+---@field Label string
+---@field Description string
+---@field Parameters System.Collections.Generic.Dictionary
+Witch.UI.Automation.RuntimeLegalAction = {}
+---@alias CS.Witch.UI.Automation.RuntimeLegalAction Witch.UI.Automation.RuntimeLegalAction
+CS.Witch.UI.Automation.RuntimeLegalAction = Witch.UI.Automation.RuntimeLegalAction
+
+---@return Witch.UI.Automation.RuntimeLegalAction
+function Witch.UI.Automation.RuntimeLegalAction.New() end
+
+---@class Witch.UI.Automation.RuntimeLegalActionsSnapshot : System.Object
+---@field Phase string
+---@field Actions System.Collections.Generic.List
+Witch.UI.Automation.RuntimeLegalActionsSnapshot = {}
+---@alias CS.Witch.UI.Automation.RuntimeLegalActionsSnapshot Witch.UI.Automation.RuntimeLegalActionsSnapshot
+CS.Witch.UI.Automation.RuntimeLegalActionsSnapshot = Witch.UI.Automation.RuntimeLegalActionsSnapshot
+
+---@return Witch.UI.Automation.RuntimeLegalActionsSnapshot
+function Witch.UI.Automation.RuntimeLegalActionsSnapshot.New() end
+
+---@class Witch.UI.Automation.RuntimePerformActionRequest : System.Object
+---@field ActionId string
+Witch.UI.Automation.RuntimePerformActionRequest = {}
+---@alias CS.Witch.UI.Automation.RuntimePerformActionRequest Witch.UI.Automation.RuntimePerformActionRequest
+CS.Witch.UI.Automation.RuntimePerformActionRequest = Witch.UI.Automation.RuntimePerformActionRequest
+
+---@return Witch.UI.Automation.RuntimePerformActionRequest
+function Witch.UI.Automation.RuntimePerformActionRequest.New() end
+
+---@class Witch.UI.Automation.RuntimePerformActionResult : System.Object
+---@field Success boolean
+---@field ActionId string
+---@field Message string
+---@field Data System.Object
+Witch.UI.Automation.RuntimePerformActionResult = {}
+---@alias CS.Witch.UI.Automation.RuntimePerformActionResult Witch.UI.Automation.RuntimePerformActionResult
+CS.Witch.UI.Automation.RuntimePerformActionResult = Witch.UI.Automation.RuntimePerformActionResult
+
+---@return Witch.UI.Automation.RuntimePerformActionResult
+function Witch.UI.Automation.RuntimePerformActionResult.New() end
+
+---@class Witch.UI.Automation.RuntimeGameplayAutomationFacade : System.Object
+Witch.UI.Automation.RuntimeGameplayAutomationFacade = {}
+---@alias CS.Witch.UI.Automation.RuntimeGameplayAutomationFacade Witch.UI.Automation.RuntimeGameplayAutomationFacade
+CS.Witch.UI.Automation.RuntimeGameplayAutomationFacade = Witch.UI.Automation.RuntimeGameplayAutomationFacade
+
+---@return Witch.UI.Automation.RuntimeLegalActionsSnapshot
+function Witch.UI.Automation.RuntimeGameplayAutomationFacade:GetLegalActions() end
+---@param request Witch.UI.Automation.RuntimePerformActionRequest
 ---@return Cysharp.Threading.Tasks.UniTask
-function BugReporter.BugReporter.InitSupabase() end
+function Witch.UI.Automation.RuntimeGameplayAutomationFacade:PerformActionAsync(request) end
 
----@class BugReporter.BugReporter.ErrorMessage : System.Object
----@field playerid string
----@field message string
----@field stackTrace string
----@field isSolved boolean
----@field note string
-BugReporter.BugReporter.ErrorMessage = {}
----@alias CS.BugReporter.BugReporter.ErrorMessage BugReporter.BugReporter.ErrorMessage
-CS.BugReporter.BugReporter.ErrorMessage = BugReporter.BugReporter.ErrorMessage
+---@class Witch.UI.Automation.RuntimeGameplayAutomationService : System.Object
+---@field Facade Witch.UI.Automation.RuntimeGameplayAutomationFacade
+Witch.UI.Automation.RuntimeGameplayAutomationService = {}
+---@alias CS.Witch.UI.Automation.RuntimeGameplayAutomationService Witch.UI.Automation.RuntimeGameplayAutomationService
+CS.Witch.UI.Automation.RuntimeGameplayAutomationService = Witch.UI.Automation.RuntimeGameplayAutomationService
 
----@overload fun(error: System.Exception) : BugReporter.BugReporter.ErrorMessage
----@return BugReporter.BugReporter.ErrorMessage
-function BugReporter.BugReporter.ErrorMessage.New() end
+---@return Witch.UI.Automation.RuntimeLegalActionsSnapshot
+function Witch.UI.Automation.RuntimeGameplayAutomationService.GetLegalActions() end
+---@param request Witch.UI.Automation.RuntimePerformActionRequest
+---@return Cysharp.Threading.Tasks.UniTask
+function Witch.UI.Automation.RuntimeGameplayAutomationService.PerformActionAsync(request) end
 
----@class BugReporter.BugReporter.ErrorSelection : Supabase.Postgrest.Models.BaseModel
----@field data string
-BugReporter.BugReporter.ErrorSelection = {}
----@alias CS.BugReporter.BugReporter.ErrorSelection BugReporter.BugReporter.ErrorSelection
-CS.BugReporter.BugReporter.ErrorSelection = BugReporter.BugReporter.ErrorSelection
+---@class Witch.UI.Automation.RuntimeSceneSnapshotRequest : System.Object
+---@field IncludeInactive boolean
+---@field OnlyInteractive boolean
+Witch.UI.Automation.RuntimeSceneSnapshotRequest = {}
+---@alias CS.Witch.UI.Automation.RuntimeSceneSnapshotRequest Witch.UI.Automation.RuntimeSceneSnapshotRequest
+CS.Witch.UI.Automation.RuntimeSceneSnapshotRequest = Witch.UI.Automation.RuntimeSceneSnapshotRequest
 
----@return BugReporter.BugReporter.ErrorSelection
-function BugReporter.BugReporter.ErrorSelection.New() end
+---@return Witch.UI.Automation.RuntimeSceneSnapshotRequest
+function Witch.UI.Automation.RuntimeSceneSnapshotRequest.New() end
 
----@class Witch_ProcessedByFody : System.Object
-Witch_ProcessedByFody = {}
----@alias CS.Witch_ProcessedByFody Witch_ProcessedByFody
-CS.Witch_ProcessedByFody = Witch_ProcessedByFody
+---@class Witch.UI.Automation.RuntimeSceneObjectSelector : System.Object
+---@field ObjectId string
+---@field InstanceId System.Nullable
+---@field TransformPath string
+---@field Name string
+---@field IsEmpty boolean
+Witch.UI.Automation.RuntimeSceneObjectSelector = {}
+---@alias CS.Witch.UI.Automation.RuntimeSceneObjectSelector Witch.UI.Automation.RuntimeSceneObjectSelector
+CS.Witch.UI.Automation.RuntimeSceneObjectSelector = Witch.UI.Automation.RuntimeSceneObjectSelector
 
+---@return Witch.UI.Automation.RuntimeSceneObjectSelector
+function Witch.UI.Automation.RuntimeSceneObjectSelector.New() end
 
+---@class Witch.UI.Automation.RuntimeSceneObjectInfo : System.Object
+---@field ObjectId string
+---@field InstanceId number
+---@field Name string
+---@field TransformPath string
+---@field SceneName string
+---@field Tag string
+---@field Layer number
+---@field LayerName string
+---@field ActiveSelf boolean
+---@field ActiveInHierarchy boolean
+---@field Visible boolean
+---@field HasCollider3D boolean
+---@field HasCollider2D boolean
+---@field HasPointerHandler boolean
+---@field ScreenPoint Witch.UI.Automation.RuntimeUiPoint
+---@field ScreenRect Witch.UI.Automation.RuntimeUiRect
+---@field ComponentTypes System.Collections.Generic.List
+---@field SupportedActions System.Collections.Generic.List
+Witch.UI.Automation.RuntimeSceneObjectInfo = {}
+---@alias CS.Witch.UI.Automation.RuntimeSceneObjectInfo Witch.UI.Automation.RuntimeSceneObjectInfo
+CS.Witch.UI.Automation.RuntimeSceneObjectInfo = Witch.UI.Automation.RuntimeSceneObjectInfo
 
+---@return Witch.UI.Automation.RuntimeSceneObjectInfo
+function Witch.UI.Automation.RuntimeSceneObjectInfo.New() end
+
+---@class Witch.UI.Automation.RuntimeSceneSnapshot : System.Object
+---@field CapturedAtUtc string
+---@field SceneName string
+---@field CameraName string
+---@field Objects System.Collections.Generic.List
+---@field TotalObjects number
+---@field ScreenshotPath string
+---@field ScreenshotFullPath string
+---@field ScreenshotIsAsync boolean
+---@field ScreenshotError string
+Witch.UI.Automation.RuntimeSceneSnapshot = {}
+---@alias CS.Witch.UI.Automation.RuntimeSceneSnapshot Witch.UI.Automation.RuntimeSceneSnapshot
+CS.Witch.UI.Automation.RuntimeSceneSnapshot = Witch.UI.Automation.RuntimeSceneSnapshot
+
+---@return Witch.UI.Automation.RuntimeSceneSnapshot
+function Witch.UI.Automation.RuntimeSceneSnapshot.New() end
+
+---@class Witch.UI.Automation.RuntimeSceneRaycastRequest : System.Object
+---@field X number
+---@field Y number
+---@field Distance number
+Witch.UI.Automation.RuntimeSceneRaycastRequest = {}
+---@alias CS.Witch.UI.Automation.RuntimeSceneRaycastRequest Witch.UI.Automation.RuntimeSceneRaycastRequest
+CS.Witch.UI.Automation.RuntimeSceneRaycastRequest = Witch.UI.Automation.RuntimeSceneRaycastRequest
+
+---@return Witch.UI.Automation.RuntimeSceneRaycastRequest
+function Witch.UI.Automation.RuntimeSceneRaycastRequest.New() end
+
+---@class Witch.UI.Automation.RuntimeSceneRaycastHitInfo : System.Object
+---@field Object Witch.UI.Automation.RuntimeSceneObjectInfo
+---@field Distance number
+---@field Point Witch.UI.Automation.RuntimeUiPoint
+---@field Normal Witch.UI.Automation.RuntimeUiPoint
+---@field HitType string
+Witch.UI.Automation.RuntimeSceneRaycastHitInfo = {}
+---@alias CS.Witch.UI.Automation.RuntimeSceneRaycastHitInfo Witch.UI.Automation.RuntimeSceneRaycastHitInfo
+CS.Witch.UI.Automation.RuntimeSceneRaycastHitInfo = Witch.UI.Automation.RuntimeSceneRaycastHitInfo
+
+---@return Witch.UI.Automation.RuntimeSceneRaycastHitInfo
+function Witch.UI.Automation.RuntimeSceneRaycastHitInfo.New() end
+
+---@class Witch.UI.Automation.RuntimeSceneRaycastResult : System.Object
+---@field ScreenPoint Witch.UI.Automation.RuntimeUiPoint
+---@field Hits3D System.Collections.Generic.List
+---@field Hits2D System.Collections.Generic.List
+Witch.UI.Automation.RuntimeSceneRaycastResult = {}
+---@alias CS.Witch.UI.Automation.RuntimeSceneRaycastResult Witch.UI.Automation.RuntimeSceneRaycastResult
+CS.Witch.UI.Automation.RuntimeSceneRaycastResult = Witch.UI.Automation.RuntimeSceneRaycastResult
+
+---@return Witch.UI.Automation.RuntimeSceneRaycastResult
+function Witch.UI.Automation.RuntimeSceneRaycastResult.New() end
+
+---@class Witch.UI.Automation.RuntimeSceneInteractionRequest : System.Object
+---@field Action string
+---@field Selector Witch.UI.Automation.RuntimeSceneObjectSelector
+---@field TargetSelector Witch.UI.Automation.RuntimeSceneObjectSelector
+---@field ScreenPoint Witch.UI.Automation.RuntimeUiPoint
+---@field TargetPoint Witch.UI.Automation.RuntimeUiPoint
+---@field Button string
+---@field ScrollX number
+---@field ScrollY number
+---@field Steps number
+---@field FramesPerStep number
+Witch.UI.Automation.RuntimeSceneInteractionRequest = {}
+---@alias CS.Witch.UI.Automation.RuntimeSceneInteractionRequest Witch.UI.Automation.RuntimeSceneInteractionRequest
+CS.Witch.UI.Automation.RuntimeSceneInteractionRequest = Witch.UI.Automation.RuntimeSceneInteractionRequest
+
+---@return Witch.UI.Automation.RuntimeSceneInteractionRequest
+function Witch.UI.Automation.RuntimeSceneInteractionRequest.New() end
+
+---@class Witch.UI.Automation.RuntimeSceneInteractionResult : System.Object
+---@field Success boolean
+---@field Action string
+---@field Message string
+---@field Object Witch.UI.Automation.RuntimeSceneObjectInfo
+---@field FinalPointerPosition Witch.UI.Automation.RuntimeUiPoint
+Witch.UI.Automation.RuntimeSceneInteractionResult = {}
+---@alias CS.Witch.UI.Automation.RuntimeSceneInteractionResult Witch.UI.Automation.RuntimeSceneInteractionResult
+CS.Witch.UI.Automation.RuntimeSceneInteractionResult = Witch.UI.Automation.RuntimeSceneInteractionResult
+
+---@return Witch.UI.Automation.RuntimeSceneInteractionResult
+function Witch.UI.Automation.RuntimeSceneInteractionResult.New() end
+
+---@class Witch.UI.Automation.RuntimeSceneAutomationFacade : System.Object
+Witch.UI.Automation.RuntimeSceneAutomationFacade = {}
+---@alias CS.Witch.UI.Automation.RuntimeSceneAutomationFacade Witch.UI.Automation.RuntimeSceneAutomationFacade
+CS.Witch.UI.Automation.RuntimeSceneAutomationFacade = Witch.UI.Automation.RuntimeSceneAutomationFacade
+
+---@param request Witch.UI.Automation.RuntimeSceneSnapshotRequest
+---@return Witch.UI.Automation.RuntimeSceneSnapshot
+function Witch.UI.Automation.RuntimeSceneAutomationFacade:Snapshot(request) end
+---@param request Witch.UI.Automation.RuntimeSceneRaycastRequest
+---@return Witch.UI.Automation.RuntimeSceneRaycastResult
+function Witch.UI.Automation.RuntimeSceneAutomationFacade:Raycast(request) end
+---@param request Witch.UI.Automation.RuntimeSceneInteractionRequest
+---@return Cysharp.Threading.Tasks.UniTask
+function Witch.UI.Automation.RuntimeSceneAutomationFacade:InteractAsync(request) end
+
+---@class Witch.UI.Automation.RuntimeSceneAutomationService : System.Object
+---@field Facade Witch.UI.Automation.RuntimeSceneAutomationFacade
+Witch.UI.Automation.RuntimeSceneAutomationService = {}
+---@alias CS.Witch.UI.Automation.RuntimeSceneAutomationService Witch.UI.Automation.RuntimeSceneAutomationService
+CS.Witch.UI.Automation.RuntimeSceneAutomationService = Witch.UI.Automation.RuntimeSceneAutomationService
+
+---@param out_camera UnityEngine.Camera
+---@param out_eventSystem UnityEngine.EventSystems.EventSystem
+---@param out_error string
+---@return boolean,UnityEngine.Camera,UnityEngine.EventSystems.EventSystem,string
+function Witch.UI.Automation.RuntimeSceneAutomationService.TryGetContext(out_camera, out_eventSystem, out_error) end
+---@param request Witch.UI.Automation.RuntimeSceneSnapshotRequest
+---@return Witch.UI.Automation.RuntimeSceneSnapshot
+function Witch.UI.Automation.RuntimeSceneAutomationService.CaptureSnapshot(request) end
+---@param request Witch.UI.Automation.RuntimeSceneRaycastRequest
+---@return Witch.UI.Automation.RuntimeSceneRaycastResult
+function Witch.UI.Automation.RuntimeSceneAutomationService.Raycast(request) end
+---@param request Witch.UI.Automation.RuntimeSceneInteractionRequest
+---@return Cysharp.Threading.Tasks.UniTask
+function Witch.UI.Automation.RuntimeSceneAutomationService.InteractAsync(request) end
+
+---@class Witch.UI.Automation.RuntimeUiSnapshotRequest : System.Object
+---@field IncludeHidden boolean
+---@field Scope string
+Witch.UI.Automation.RuntimeUiSnapshotRequest = {}
+---@alias CS.Witch.UI.Automation.RuntimeUiSnapshotRequest Witch.UI.Automation.RuntimeUiSnapshotRequest
+CS.Witch.UI.Automation.RuntimeUiSnapshotRequest = Witch.UI.Automation.RuntimeUiSnapshotRequest
+
+---@return Witch.UI.Automation.RuntimeUiSnapshotRequest
+function Witch.UI.Automation.RuntimeUiSnapshotRequest.New() end
+
+---@class Witch.UI.Automation.RuntimeUiNodeSelector : System.Object
+---@field NodeId string
+---@field InstanceId System.Nullable
+---@field WindowName string
+---@field TransformPath string
+---@field Label string
+---@field IsEmpty boolean
+Witch.UI.Automation.RuntimeUiNodeSelector = {}
+---@alias CS.Witch.UI.Automation.RuntimeUiNodeSelector Witch.UI.Automation.RuntimeUiNodeSelector
+CS.Witch.UI.Automation.RuntimeUiNodeSelector = Witch.UI.Automation.RuntimeUiNodeSelector
+
+---@return Witch.UI.Automation.RuntimeUiNodeSelector
+function Witch.UI.Automation.RuntimeUiNodeSelector.New() end
+
+---@class Witch.UI.Automation.RuntimeUiPoint : System.Object
+---@field X number
+---@field Y number
+Witch.UI.Automation.RuntimeUiPoint = {}
+---@alias CS.Witch.UI.Automation.RuntimeUiPoint Witch.UI.Automation.RuntimeUiPoint
+CS.Witch.UI.Automation.RuntimeUiPoint = Witch.UI.Automation.RuntimeUiPoint
+
+---@overload fun() : Witch.UI.Automation.RuntimeUiPoint
+---@param x number
+---@param y number
+---@return Witch.UI.Automation.RuntimeUiPoint
+function Witch.UI.Automation.RuntimeUiPoint.New(x, y) end
+
+---@class Witch.UI.Automation.RuntimeUiRect : System.Object
+---@field X number
+---@field Y number
+---@field Width number
+---@field Height number
+Witch.UI.Automation.RuntimeUiRect = {}
+---@alias CS.Witch.UI.Automation.RuntimeUiRect Witch.UI.Automation.RuntimeUiRect
+CS.Witch.UI.Automation.RuntimeUiRect = Witch.UI.Automation.RuntimeUiRect
+
+---@return Witch.UI.Automation.RuntimeUiRect
+function Witch.UI.Automation.RuntimeUiRect.New() end
+
+---@class Witch.UI.Automation.RuntimeUiCanvasInfo : System.Object
+---@field Name string
+---@field InstanceId number
+---@field TransformPath string
+---@field ActiveInHierarchy boolean
+---@field Enabled boolean
+---@field RenderMode string
+---@field SortingOrder number
+Witch.UI.Automation.RuntimeUiCanvasInfo = {}
+---@alias CS.Witch.UI.Automation.RuntimeUiCanvasInfo Witch.UI.Automation.RuntimeUiCanvasInfo
+CS.Witch.UI.Automation.RuntimeUiCanvasInfo = Witch.UI.Automation.RuntimeUiCanvasInfo
+
+---@return Witch.UI.Automation.RuntimeUiCanvasInfo
+function Witch.UI.Automation.RuntimeUiCanvasInfo.New() end
+
+---@class Witch.UI.Automation.RuntimeUiWindowInfo : System.Object
+---@field WindowName string
+---@field InstanceId number
+---@field NodeId string
+---@field TransformPath string
+---@field ActiveInHierarchy boolean
+---@field Visible boolean
+---@field SiblingIndex number
+Witch.UI.Automation.RuntimeUiWindowInfo = {}
+---@alias CS.Witch.UI.Automation.RuntimeUiWindowInfo Witch.UI.Automation.RuntimeUiWindowInfo
+CS.Witch.UI.Automation.RuntimeUiWindowInfo = Witch.UI.Automation.RuntimeUiWindowInfo
+
+---@return Witch.UI.Automation.RuntimeUiWindowInfo
+function Witch.UI.Automation.RuntimeUiWindowInfo.New() end
+
+---@class Witch.UI.Automation.RuntimeUiNode : System.Object
+---@field NodeId string
+---@field WindowName string
+---@field TransformPath string
+---@field InstanceId number
+---@field Name string
+---@field Label string
+---@field Text string
+---@field ActiveSelf boolean
+---@field ActiveInHierarchy boolean
+---@field Visible boolean
+---@field Interactable boolean
+---@field Clickable boolean
+---@field BlocksRaycasts boolean
+---@field Depth number
+---@field ParentNodeId string
+---@field ChildNodeIds System.Collections.Generic.List
+---@field ComponentTypes System.Collections.Generic.List
+---@field SupportedActions System.Collections.Generic.List
+---@field ScreenRect Witch.UI.Automation.RuntimeUiRect
+---@field PreferredClickPoint Witch.UI.Automation.RuntimeUiPoint
+Witch.UI.Automation.RuntimeUiNode = {}
+---@alias CS.Witch.UI.Automation.RuntimeUiNode Witch.UI.Automation.RuntimeUiNode
+CS.Witch.UI.Automation.RuntimeUiNode = Witch.UI.Automation.RuntimeUiNode
+
+---@return Witch.UI.Automation.RuntimeUiNode
+function Witch.UI.Automation.RuntimeUiNode.New() end
+
+---@class Witch.UI.Automation.RuntimeUiSnapshot : System.Object
+---@field Scope string
+---@field IncludeHidden boolean
+---@field CapturedAtUtc string
+---@field Canvases System.Collections.Generic.List
+---@field Windows System.Collections.Generic.List
+---@field Nodes System.Collections.Generic.List
+---@field TotalNodes number
+---@field LayoutSignature string
+---@field ScreenshotPath string
+---@field ScreenshotFullPath string
+---@field ScreenshotIsAsync boolean
+---@field ScreenshotError string
+Witch.UI.Automation.RuntimeUiSnapshot = {}
+---@alias CS.Witch.UI.Automation.RuntimeUiSnapshot Witch.UI.Automation.RuntimeUiSnapshot
+CS.Witch.UI.Automation.RuntimeUiSnapshot = Witch.UI.Automation.RuntimeUiSnapshot
+
+---@return Witch.UI.Automation.RuntimeUiSnapshot
+function Witch.UI.Automation.RuntimeUiSnapshot.New() end
+
+---@class Witch.UI.Automation.RuntimeUiInteractionRequest : System.Object
+---@field Action string
+---@field Selector Witch.UI.Automation.RuntimeUiNodeSelector
+---@field TargetSelector Witch.UI.Automation.RuntimeUiNodeSelector
+---@field TargetPoint Witch.UI.Automation.RuntimeUiPoint
+---@field Text string
+---@field Submit boolean
+---@field RequireClickable boolean
+---@field Button string
+---@field DeltaX number
+---@field DeltaY number
+---@field Steps number
+---@field FramesPerStep number
+---@field IncludePostSnapshot boolean
+Witch.UI.Automation.RuntimeUiInteractionRequest = {}
+---@alias CS.Witch.UI.Automation.RuntimeUiInteractionRequest Witch.UI.Automation.RuntimeUiInteractionRequest
+CS.Witch.UI.Automation.RuntimeUiInteractionRequest = Witch.UI.Automation.RuntimeUiInteractionRequest
+
+---@return Witch.UI.Automation.RuntimeUiInteractionRequest
+function Witch.UI.Automation.RuntimeUiInteractionRequest.New() end
+
+---@class Witch.UI.Automation.RuntimeUiInteractionResult : System.Object
+---@field Success boolean
+---@field Action string
+---@field Message string
+---@field MatchedNode Witch.UI.Automation.RuntimeUiNode
+---@field PreNode Witch.UI.Automation.RuntimeUiNode
+---@field PostNode Witch.UI.Automation.RuntimeUiNode
+---@field PostSnapshot Witch.UI.Automation.RuntimeUiSnapshot
+---@field FinalPointerPosition Witch.UI.Automation.RuntimeUiPoint
+---@field HorizontalNormalizedPosition System.Nullable
+---@field VerticalNormalizedPosition System.Nullable
+---@field HoveredNodeId string
+Witch.UI.Automation.RuntimeUiInteractionResult = {}
+---@alias CS.Witch.UI.Automation.RuntimeUiInteractionResult Witch.UI.Automation.RuntimeUiInteractionResult
+CS.Witch.UI.Automation.RuntimeUiInteractionResult = Witch.UI.Automation.RuntimeUiInteractionResult
+
+---@return Witch.UI.Automation.RuntimeUiInteractionResult
+function Witch.UI.Automation.RuntimeUiInteractionResult.New() end
+
+---@class Witch.UI.Automation.RuntimeUiWaitRequest : System.Object
+---@field Condition string
+---@field Selector Witch.UI.Automation.RuntimeUiNodeSelector
+---@field WindowName string
+---@field ExpectedText string
+Witch.UI.Automation.RuntimeUiWaitRequest = {}
+---@alias CS.Witch.UI.Automation.RuntimeUiWaitRequest Witch.UI.Automation.RuntimeUiWaitRequest
+CS.Witch.UI.Automation.RuntimeUiWaitRequest = Witch.UI.Automation.RuntimeUiWaitRequest
+
+---@return Witch.UI.Automation.RuntimeUiWaitRequest
+function Witch.UI.Automation.RuntimeUiWaitRequest.New() end
+
+---@class Witch.UI.Automation.RuntimeUiWaitCheckResult : System.Object
+---@field Satisfied boolean
+---@field Message string
+---@field Node Witch.UI.Automation.RuntimeUiNode
+---@field Window Witch.UI.Automation.RuntimeUiWindowInfo
+---@field LayoutSignature string
+Witch.UI.Automation.RuntimeUiWaitCheckResult = {}
+---@alias CS.Witch.UI.Automation.RuntimeUiWaitCheckResult Witch.UI.Automation.RuntimeUiWaitCheckResult
+CS.Witch.UI.Automation.RuntimeUiWaitCheckResult = Witch.UI.Automation.RuntimeUiWaitCheckResult
+
+---@return Witch.UI.Automation.RuntimeUiWaitCheckResult
+function Witch.UI.Automation.RuntimeUiWaitCheckResult.New() end
+
+---@class Witch.UI.Automation.RuntimeUiAutomationFacade : System.Object
+Witch.UI.Automation.RuntimeUiAutomationFacade = {}
+---@alias CS.Witch.UI.Automation.RuntimeUiAutomationFacade Witch.UI.Automation.RuntimeUiAutomationFacade
+CS.Witch.UI.Automation.RuntimeUiAutomationFacade = Witch.UI.Automation.RuntimeUiAutomationFacade
+
+---@param request Witch.UI.Automation.RuntimeUiSnapshotRequest
+---@return Witch.UI.Automation.RuntimeUiSnapshot
+function Witch.UI.Automation.RuntimeUiAutomationFacade:Snapshot(request) end
+---@param request Witch.UI.Automation.RuntimeUiInteractionRequest
+---@return Cysharp.Threading.Tasks.UniTask
+function Witch.UI.Automation.RuntimeUiAutomationFacade:InteractAsync(request) end
+---@param snapshot Witch.UI.Automation.RuntimeUiSnapshot
+---@param request Witch.UI.Automation.RuntimeUiWaitRequest
+---@return Witch.UI.Automation.RuntimeUiWaitCheckResult
+function Witch.UI.Automation.RuntimeUiAutomationFacade:EvaluateWait(snapshot, request) end
+---@param snapshot Witch.UI.Automation.RuntimeUiSnapshot
+---@return string
+function Witch.UI.Automation.RuntimeUiAutomationFacade:LayoutSignature(snapshot) end
+
+---@class Witch.UI.Automation.RuntimeUiAutomationService : System.Object
+---@field Facade Witch.UI.Automation.RuntimeUiAutomationFacade
+Witch.UI.Automation.RuntimeUiAutomationService = {}
+---@alias CS.Witch.UI.Automation.RuntimeUiAutomationService Witch.UI.Automation.RuntimeUiAutomationService
+CS.Witch.UI.Automation.RuntimeUiAutomationService = Witch.UI.Automation.RuntimeUiAutomationService
+
+---@overload fun(out_error: string) : boolean, string
+---@param out_context Witch.UI.Automation.RuntimeUiContext
+---@param out_error string
+---@return boolean,Witch.UI.Automation.RuntimeUiContext,string
+function Witch.UI.Automation.RuntimeUiAutomationService.TryGetContext(out_context, out_error) end
+---@param request Witch.UI.Automation.RuntimeUiSnapshotRequest
+---@return Witch.UI.Automation.RuntimeUiSnapshot
+function Witch.UI.Automation.RuntimeUiAutomationService.CaptureSnapshot(request) end
+---@param snapshot Witch.UI.Automation.RuntimeUiSnapshot
+---@param request Witch.UI.Automation.RuntimeUiWaitRequest
+---@return Witch.UI.Automation.RuntimeUiWaitCheckResult
+function Witch.UI.Automation.RuntimeUiAutomationService.EvaluateWaitCondition(snapshot, request) end
+---@param request Witch.UI.Automation.RuntimeUiInteractionRequest
+---@return Cysharp.Threading.Tasks.UniTask
+function Witch.UI.Automation.RuntimeUiAutomationService.InteractAsync(request) end
+---@param snapshot Witch.UI.Automation.RuntimeUiSnapshot
+---@return string
+function Witch.UI.Automation.RuntimeUiAutomationService.CreateLayoutSignature(snapshot) end

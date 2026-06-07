@@ -68,6 +68,11 @@ Network.Query = {}
 ---@alias CS.Network.Query Network.Query
 CS.Network.Query = {}
 
+---@class Network.SupabaseUpload
+Network.SupabaseUpload = {}
+---@alias CS.Network.SupabaseUpload Network.SupabaseUpload
+CS.Network.SupabaseUpload = {}
+
 ---@class System.Runtime.CompilerServices
 System.Runtime.CompilerServices = {}
 ---@alias CS.System.Runtime.CompilerServices System.Runtime.CompilerServices
@@ -83,11 +88,6 @@ UI.ScreenEffect = {}
 ---@alias CS.UI.ScreenEffect UI.ScreenEffect
 CS.UI.ScreenEffect = {}
 
----@class UnityEngine.InputSystem
-UnityEngine.InputSystem = {}
----@alias CS.UnityEngine.InputSystem UnityEngine.InputSystem
-CS.UnityEngine.InputSystem = {}
-
 ---@class UnityEngine.UI
 UnityEngine.UI = {}
 ---@alias CS.UnityEngine.UI UnityEngine.UI
@@ -97,16 +97,6 @@ CS.UnityEngine.UI = {}
 Witch = {}
 ---@alias CS.Witch Witch
 CS.Witch = {}
-
----@class Witch.Core
-Witch.Core = {}
----@alias CS.Witch.Core Witch.Core
-CS.Witch.Core = {}
-
----@class Witch.Core.Event
-Witch.Core.Event = {}
----@alias CS.Witch.Core.Event Witch.Core.Event
-CS.Witch.Core.Event = {}
 
 ---@class Witch.Mod
 Witch.Mod = {}
@@ -118,6 +108,11 @@ Witch.UI = {}
 ---@alias CS.Witch.UI Witch.UI
 CS.Witch.UI = {}
 
+---@class Witch.UI.Automation
+Witch.UI.Automation = {}
+---@alias CS.Witch.UI.Automation Witch.UI.Automation
+CS.Witch.UI.Automation = {}
+
 ---@class Witch.UI.Component
 Witch.UI.Component = {}
 ---@alias CS.Witch.UI.Component Witch.UI.Component
@@ -127,1455 +122,6 @@ CS.Witch.UI.Component = {}
 Witch.UI.Window = {}
 ---@alias CS.Witch.UI.Window Witch.UI.Window
 CS.Witch.UI.Window = {}
-
----@class XLua
-XLua = {}
----@alias CS.XLua XLua
-CS.XLua = {}
-
----@class XLua.Cast
-XLua.Cast = {}
----@alias CS.XLua.Cast XLua.Cast
-CS.XLua.Cast = {}
-
----@class XLua.CSObjectWrap
-XLua.CSObjectWrap = {}
----@alias CS.XLua.CSObjectWrap XLua.CSObjectWrap
-CS.XLua.CSObjectWrap = {}
-
----@class XLua.LuaDLL
-XLua.LuaDLL = {}
----@alias CS.XLua.LuaDLL XLua.LuaDLL
-CS.XLua.LuaDLL = {}
-
----@class XLua.TemplateEngine
-XLua.TemplateEngine = {}
----@alias CS.XLua.TemplateEngine XLua.TemplateEngine
-CS.XLua.TemplateEngine = {}
-
----@class Modifiable : Rougamo.MoAttribute
-Modifiable = {}
----@alias CS.Modifiable Modifiable
-CS.Modifiable = Modifiable
-
----@return Modifiable
-function Modifiable.New() end
----@param context Rougamo.Context.MethodContext
-function Modifiable:OnEntry(context) end
----@param context Rougamo.Context.MethodContext
-function Modifiable:OnException(context) end
----@param context Rougamo.Context.MethodContext
-function Modifiable:OnSuccess(context) end
----@param context Rougamo.Context.MethodContext
-function Modifiable:OnExit(context) end
-
----@class BGMList : UnityEngine.ScriptableObject
----@field list System.Collections.Generic.List
-BGMList = {}
----@alias CS.BGMList BGMList
-CS.BGMList = BGMList
-
----@return BGMList
-function BGMList.New() end
-
----@class GifAsset : UnityEngine.ScriptableObject
----@field frames System.Collections.Generic.List
----@field frameDelays System.Collections.Generic.List
----@field gifPath string
----@field FrameCount number
-GifAsset = {}
----@alias CS.GifAsset GifAsset
-CS.GifAsset = GifAsset
-
----@return GifAsset
-function GifAsset.New() end
-
----@class GifAssetSerializer : System.Object
-GifAssetSerializer = {}
----@alias CS.GifAssetSerializer GifAssetSerializer
-CS.GifAssetSerializer = GifAssetSerializer
-
----@param writer Mirror.NetworkWriter
----@param gifAsset GifAsset
-function GifAssetSerializer.Write(writer, gifAsset) end
----@param reader Mirror.NetworkReader
----@return GifAsset
-function GifAssetSerializer.Read(reader) end
-
----@class GifAssetJsonConverter : Newtonsoft.Json.JsonConverter
-GifAssetJsonConverter = {}
----@alias CS.GifAssetJsonConverter GifAssetJsonConverter
-CS.GifAssetJsonConverter = GifAssetJsonConverter
-
----@return GifAssetJsonConverter
-function GifAssetJsonConverter.New() end
----@param writer Newtonsoft.Json.JsonWriter
----@param value GifAsset
----@param serializer Newtonsoft.Json.JsonSerializer
-function GifAssetJsonConverter:WriteJson(writer, value, serializer) end
----@param reader Newtonsoft.Json.JsonReader
----@param objectType System.Type
----@param existingValue GifAsset
----@param hasExistingValue boolean
----@param serializer Newtonsoft.Json.JsonSerializer
----@return GifAsset
-function GifAssetJsonConverter:ReadJson(reader, objectType, existingValue, hasExistingValue, serializer) end
-
----@class Priority_Queue : System.Object
----@field Data System.Collections.Generic.List[T]
-Priority_Queue = {}
----@alias CS.Priority_Queue Priority_Queue
-CS.Priority_Queue = Priority_Queue
-
----@param compare System.Func[T,T,System.Int32]
----@return Priority_Queue
-function Priority_Queue.New(compare) end
----@param item T
-function Priority_Queue:Push(item) end
----@return T
-function Priority_Queue:Pop() end
----@return T
-function Priority_Queue:Top() end
----@return number
-function Priority_Queue:Count() end
----@return boolean
-function Priority_Queue:IsEmpty() end
-
----@class StringValue : System.ValueType
-StringValue = {}
----@alias CS.StringValue StringValue
-CS.StringValue = StringValue
-
----@overload fun(v: number) : StringValue
----@overload fun(v: number) : StringValue
----@param s string
----@return StringValue
-function StringValue.New(s) end
----@return string
-function StringValue:ToString() end
----@return string
-function StringValue:GetString() end
----@param out_v number
----@return boolean,number
-function StringValue:TryGetInt(out_v) end
----@param out_v number
----@return boolean,number
-function StringValue:TryGetFloat(out_v) end
----@param out_v string
----@return boolean,string
-function StringValue:TryGetString(out_v) end
----@return number
-function StringValue:ToInt() end
----@return number
-function StringValue:ToFloat() end
-
----@class StringValue.ValueType
----@field None StringValue.ValueType
----@field Int StringValue.ValueType
----@field Float StringValue.ValueType
----@field String StringValue.ValueType
-StringValue.ValueType = {}
----@alias CS.StringValue.ValueType StringValue.ValueType
-CS.StringValue.ValueType = StringValue.ValueType
-
-
----@class TextTagData : UnityEngine.ScriptableObject
----@field fontSize string
----@field textColor UnityEngine.Color
----@field isDescrible boolean
-TextTagData = {}
----@alias CS.TextTagData TextTagData
-CS.TextTagData = TextTagData
-
----@return TextTagData
-function TextTagData.New() end
-
----@class DataType
----@field Card DataType
----@field Enemy DataType
----@field EnemyCard DataType
----@field KeyWords DataType
----@field EnchTag DataType
----@field Level DataType
----@field Partner DataType
----@field PartnerCard DataType
----@field Map DataType
----@field Item DataType
----@field Buff DataType
----@field Career DataType
----@field Relic DataType
----@field Bless DataType
----@field Food DataType
----@field Coin DataType
----@field IllustraedBook DataType
----@field DesList DataType
----@field BuyItems DataType
----@field Hard DataType
----@field Event DataType
----@field Tutorial DataType
----@field Announcement DataType
----@field Dialogue DataType
----@field DialogueBox DataType
----@field Effect DataType
----@field RoleData DataType
----@field Task DataType
----@field Affection DataType
-DataType = {}
----@alias CS.DataType DataType
-CS.DataType = DataType
-
-
----@class FightType
----@field None FightType
----@field Init FightType
----@field Start FightType
----@field Player FightType
----@field OtherTurn FightType
----@field Partner FightType
----@field Enemy FightType
----@field Win FightType
----@field Loss FightType
-FightType = {}
----@alias CS.FightType FightType
-CS.FightType = FightType
-
-
----@class EventCenter : Singleton
----@field Instance EventCenter -- infered from Singleton`1[EventCenter]
----@field GetInstance EventCenter -- infered from Singleton`1[EventCenter]
-EventCenter = {}
----@alias CS.EventCenter EventCenter
-CS.EventCenter = EventCenter
-
----@return EventCenter
-function EventCenter.New() end
----@overload fun(self: EventCenter, eventName: string, action: System.Action | function, obj: System.Object, dispose: EventDispose)
----@param eventName string
----@param action System.Action | function
----@param obj System.Object
----@param dispose EventDispose
-function EventCenter:AddEventListener(eventName, action, obj, dispose) end
----@param eventName string
----@param obj System.Object
-function EventCenter:RemoveEventListener(eventName, obj) end
----@overload fun(self: EventCenter, obj: System.Object)
----@param disposeType EventDispose[]
-function EventCenter:Clear(disposeType) end
----@param obj System.Object
----@return System.String[]
-function EventCenter:GetAllEvents(obj) end
----@overload fun(self: EventCenter, eventName: string)
----@param eventName string
----@param obj System.Object
-function EventCenter:EventTrigger(eventName, obj) end
-
----@class EventDispose
----@field None EventDispose
----@field OnTrigger EventDispose
----@field OnFightEnd EventDispose
-EventDispose = {}
----@alias CS.EventDispose EventDispose
-CS.EventDispose = EventDispose
-
-
----@class EventType
----@field Attack EventType
----@field RelicAdd EventType
----@field AddEnemy EventType
----@field AttackDone EventType
----@field CostPower EventType
----@field NoPower EventType
----@field AddPower EventType
----@field Dead EventType
----@field ToughCountZero EventType
----@field OnEnemyDead EventType
----@field Resurrection EventType
----@field EndRound EventType
----@field ICreateCardItem EventType
----@field CreateCardItem EventType
----@field EndCreateCardItem EventType
----@field NoPowerWhenTry EventType
----@field Action EventType
----@field BurnCard EventType
----@field Init EventType
----@field UIOpen EventType
----@field UIHelp EventType
----@field UIClose EventType
----@field OnDiceCheck EventType
----@field OnDiceValue EventType
----@field Win EventType
----@field Escape EventType
----@field HouseUIOpen EventType
----@field FirstTalk EventType
----@field StartRound EventType
----@field Shuffle EventType
----@field OnCameraMove EventType
----@field BreaksUIOpen EventType
----@field FightStart EventType
----@field Hurt EventType
----@field Heal EventType
----@field ResolutionChanged EventType
----@field SelectCardEnd EventType
----@field LanguageChange EventType
----@field OnTriggerEffect EventType
----@field ScriptExecute EventType
-EventType = {}
----@alias CS.EventType EventType
-CS.EventType = EventType
-
-
----@class ActionData : System.ValueType
----@field data IDataConfig
----@field Id string
-ActionData = {}
----@alias CS.ActionData ActionData
-CS.ActionData = ActionData
-
----@param data IDataConfig
----@param Id string
----@return ActionData
-function ActionData.New(data, Id) end
-
----@class DamageData : System.ValueType
----@field data IDataConfig
-DamageData = {}
----@alias CS.DamageData DamageData
-CS.DamageData = DamageData
-
----@param data IDataConfig
----@return DamageData
-function DamageData.New(data) end
-
----@class HurtData : System.ValueType
----@field damageType string
----@field val string
----@field SourceId string
----@field fromDataId string
-HurtData = {}
----@alias CS.HurtData HurtData
-CS.HurtData = HurtData
-
----@param DamType string
----@param val string
----@param sourceId string
----@param fromDataId string
----@return HurtData
-function HurtData.New(DamType, val, sourceId, fromDataId) end
-
----@class ISourceData
-ISourceData = {}
----@alias CS.ISourceData ISourceData
-CS.ISourceData = ISourceData
-
-
----@class NewEnemyData : System.ValueType
----@field Id string
-NewEnemyData = {}
----@alias CS.NewEnemyData NewEnemyData
-CS.NewEnemyData = NewEnemyData
-
----@param Id string
----@return NewEnemyData
-function NewEnemyData.New(Id) end
-
----@class ScriptExecuteData : System.ValueType
----@field MethodName string
----@field Executor IScriptExecutor
----@field Arguments System.Object[]
-ScriptExecuteData = {}
----@alias CS.ScriptExecuteData ScriptExecuteData
-CS.ScriptExecuteData = ScriptExecuteData
-
-
----@class CustomConverter : System.Object
-CustomConverter = {}
----@alias CS.CustomConverter CustomConverter
-CS.CustomConverter = CustomConverter
-
----@overload fun(s: string) : number
----@param s System.Object
----@return number
-function CustomConverter.ToInt(s) end
-
----@class IsNullExtension : System.Object
-IsNullExtension = {}
----@alias CS.IsNullExtension IsNullExtension
-CS.IsNullExtension = IsNullExtension
-
----@param obj IStatusManager
----@return boolean
-function IsNullExtension.IsNull(obj) end
-
----@class LocalizeEx : System.Object
-LocalizeEx = {}
----@alias CS.LocalizeEx LocalizeEx
-CS.LocalizeEx = LocalizeEx
-
----@param text string
----@param keyword System.Collections.Generic.List
----@return string
-function LocalizeEx.Highlight(text, keyword) end
----@overload fun(dataConfig: IDataConfig) : string
----@param text string
----@return string
-function LocalizeEx.Description(text) end
----@overload fun(dic: System.Collections.Generic.IDictionary, key: string) : string
----@overload fun(path: string) : UnityEngine.Sprite
----@param text string
----@param type string
----@return string
-function LocalizeEx.Localize(text, type) end
----@overload fun(textComponent: TMPro.TMP_Text, localized: System.Func)
----@param button Michsky.MUIP.ButtonManager
----@param localized System.Func
-function LocalizeEx.SetLocalizedText(button, localized) end
----@param dic System.Collections.Generic.IDictionary
----@param key string
----@param defaultValue string
----@return string
-function LocalizeEx.GetValueOrDefault(dic, key, defaultValue) end
-
----@class MonoBehaviourEx : System.Object
-MonoBehaviourEx = {}
----@alias CS.MonoBehaviourEx MonoBehaviourEx
-CS.MonoBehaviourEx = MonoBehaviourEx
-
----@param mono UnityEngine.MonoBehaviour
----@param eventName string
----@param action System.Action | function
-function MonoBehaviourEx.ListenEvent(mono, eventName, action) end
----@param mono UnityEngine.MonoBehaviour
----@param from string
----@return boolean
-function MonoBehaviourEx.IsNull(mono, from) end
-
----@class FightObject : Mirror.NetworkBehaviour
----@field InstanceId string
----@field Type string
----@field Id string
----@field Status IStatusManager
----@field Name string
----@field CurHp number
----@field MaxHp number
----@field BottomDistance number
----@field TopDistance number
----@field AnimatedStateSprites System.Collections.Generic.Dictionary
----@field animationPerFrame number
----@field animationTimeCounter number
----@field AnimationLocation string
----@field AnimationData System.ValueTuple
----@field AnimationConfigs System.Collections.Generic.Dictionary
----@field VocalLocation string
----@field VocalClipsCache System.Collections.Generic.Dictionary
-FightObject = {}
----@alias CS.FightObject FightObject
-CS.FightObject = FightObject
-
----@return System.Collections.IEnumerator
-function FightObject:DoAction() end
----@param state IStatusManager.AnimatedState
-function FightObject:OnAnimatedStateChange(state) end
-function FightObject:PlayAnimatedPerFrame() end
----@param sprite UnityEngine.Sprite
----@param replaceImmediate boolean
-function FightObject:InitBound(sprite, replaceImmediate) end
-function FightObject:EndRound() end
-function FightObject:OnDestroy() end
----@return boolean
-function FightObject:Weaved() end
-
----@class GameConfigData : System.Object
----@field dataDic System.Collections.Generic.Dictionary
----@field LockedIds System.Collections.Generic.HashSet
-GameConfigData = {}
----@alias CS.GameConfigData GameConfigData
-CS.GameConfigData = GameConfigData
-
----@param table System.Data.DataTable
----@param prefix string
----@return GameConfigData
-function GameConfigData.New(table, prefix) end
----@param data1 GameConfigData
----@param data2 GameConfigData
----@return GameConfigData
-function GameConfigData.Concat(data1, data2) end
----@return System.Collections.Generic.List
-function GameConfigData:Getlines() end
----@param id string
----@return System.Collections.Generic.Dictionary
-function GameConfigData:GetOneById(id) end
-
----@class Globals : System.Object
----@field SavePath string
----@field ModsPath string
----@field VRam number
----@field Language string
----@field VersionMajor number
----@field VersionMinor number
----@field BuildVersion number
----@field VersionString string
----@field DataConfigCache System.Collections.Concurrent.ConcurrentDictionary
----@field GetDataBydId System.Func
----@field MapEnemyPositiveFunc System.Func
-Globals = {}
----@alias CS.Globals Globals
-CS.Globals = Globals
-
-
----@class KeyManager : UnityEngine.MonoBehaviour
----@field playerAction UnityEngine.InputSystem.PlayerAction
-KeyManager = {}
----@alias CS.KeyManager KeyManager
-CS.KeyManager = KeyManager
-
-
----@class mouse : UnityEngine.MonoBehaviour
----@field Texture2D UnityEngine.Texture2D
----@field hotSpot UnityEngine.Vector2
----@field vfx UnityEngine.GameObject
-mouse = {}
----@alias CS.mouse mouse
-CS.mouse = mouse
-
-function mouse:Start() end
-
----@class IBuffItem
----@field scriptExecutor IScriptExecutor
----@field transform UnityEngine.Transform
----@field buffConfig IBuffItemConfig
----@field effectList System.Collections.ObjectModel.ObservableCollection
----@field status IStatusManager
-IBuffItem = {}
----@alias CS.IBuffItem IBuffItem
-CS.IBuffItem = IBuffItem
-
-function IBuffItem:ApplyBuff() end
----@param isacting boolean
-function IBuffItem:BuffProcess(isacting) end
-function IBuffItem:ClearBuff() end
----@param fromId string
-function IBuffItem:ClearDynamicVar(fromId) end
----@param way string
-function IBuffItem:DurationCheck(way) end
-function IBuffItem:EffectAnimation() end
-function IBuffItem:UpdateMsg() end
-
----@class IBuffItemConfig
----@field Level number
----@field buffItem IBuffItem
----@field status IStatusManager
----@field BuffId string
----@field BuffName string
----@field Description string
----@field dataConfig IDataConfig
----@field Type string
----@field UpperBound number
----@field ReducePerTurn number
----@field ReducePerUse number
----@field ReducePerAttacked number
-IBuffItemConfig = {}
----@alias CS.IBuffItemConfig IBuffItemConfig
-CS.IBuffItemConfig = IBuffItemConfig
-
----@param way string
----@return boolean
-function IBuffItemConfig:DurationCheck(way) end
-
----@class IDataConfig
----@field data System.Collections.Generic.IDictionary
----@field Vars System.Collections.Generic.IDictionary
----@field InstanceID string
----@field Type DataType
----@field scriptExecutor IScriptExecutor
----@field isCompiling boolean
-IDataConfig = {}
----@alias CS.IDataConfig IDataConfig
-CS.IDataConfig = IDataConfig
-
----@return string
-function IDataConfig:Description() end
-
----@class IEffectManager
-IEffectManager = {}
----@alias CS.IEffectManager IEffectManager
-CS.IEffectManager = IEffectManager
-
----@overload fun(self: IEffectManager, scriptExecutor: IScriptExecutor, effectName: string)
----@param Self IStatusManager
----@param effectName string
-function IEffectManager:PlayEffect(Self, effectName) end
----@param Self IStatusManager
----@param Object System.Collections.Generic.List
----@param effectName string
-function IEffectManager:InternalPlayEffect(Self, Object, effectName) end
----@param scriptExecutor IScriptExecutor
----@param effectName string
----@param delay number
-function IEffectManager:PlayActionEffect(scriptExecutor, effectName, delay) end
-
----@class ILocalize
-ILocalize = {}
----@alias CS.ILocalize ILocalize
-CS.ILocalize = ILocalize
-
-function ILocalize:DataUpdate() end
-function ILocalize:RegisterEvent() end
-function ILocalize:ClearEvent() end
-
----@class LanguageEvent
----@field LanguageChange LanguageEvent
-LanguageEvent = {}
----@alias CS.LanguageEvent LanguageEvent
-CS.LanguageEvent = LanguageEvent
-
-
----@class IRole
----@field Name string
----@field Id string
----@field InstanceId string
----@field AnimatedStateSprites System.Collections.Generic.Dictionary
----@field animationPerFrame number
----@field animationTimeCounter number
----@field AnimationLocation string
----@field AnimationData System.ValueTuple
----@field AnimationConfigs System.Collections.Generic.Dictionary
----@field VocalLocation string
----@field VocalClipsCache System.Collections.Generic.Dictionary
-IRole = {}
----@alias CS.IRole IRole
-CS.IRole = IRole
-
----@overload fun(animationLocation: string, state: IStatusManager.AnimatedState) : IRole.AnimationConfig
----@param state IStatusManager.AnimatedState
----@return IRole.AnimationConfig
-function IRole:TryGetAnimationConfig(state) end
----@overload fun(vocalLocation: string, state: IStatusManager.VocalState) : UnityEngine.AudioClip[]
----@param state IStatusManager.VocalState
----@return UnityEngine.AudioClip[]
-function IRole:TryGetVocalClips(state) end
----@param state IStatusManager.AnimatedState
-function IRole:OnAnimatedStateChange(state) end
-function IRole:PlayAnimatedPerFrame() end
----@param state IStatusManager.AnimatedState
----@return number
-function IRole:GetAnimationPerFrame(state) end
----@param state IStatusManager.AnimatedState
----@return string
-function IRole:GetAnimationDirection(state) end
----@param state IStatusManager.AnimatedState
----@return string
-function IRole:GetAnimationSize(state) end
----@param state IStatusManager.AnimatedState
----@return number
-function IRole:GetAnimationLayer(state) end
----@param state IStatusManager.AnimatedState
----@return boolean
-function IRole:IsAnimationLoop(state) end
----@param state IStatusManager.VocalState
----@return UnityEngine.AudioClip
-function IRole:TryGetRandomVocalClip(state) end
-
----@class IRole.AnimationConfig : System.Object
----@field AnimationPerFrame number
----@field Direction string
----@field isLoop boolean
----@field Size string
-IRole.AnimationConfig = {}
----@alias CS.IRole.AnimationConfig IRole.AnimationConfig
-CS.IRole.AnimationConfig = IRole.AnimationConfig
-
----@return IRole.AnimationConfig
-function IRole.AnimationConfig.New() end
-
----@class IScriptExecutor
----@field status IStatusManager
----@field CompiledSuccessfully boolean
----@field dataConfig IDataConfig
----@field Vars System.Collections.Generic.IDictionary
----@field Self IStatusManager
----@field Object System.Collections.Generic.List
----@field Target IStatusManager
----@field ScriptDict System.Collections.Generic.Dictionary
-IScriptExecutor = {}
----@alias CS.IScriptExecutor IScriptExecutor
-CS.IScriptExecutor = IScriptExecutor
-
----@param scriptName string
-function IScriptExecutor:RunScript(scriptName) end
----@param scriptName string
----@param options Microsoft.CodeAnalysis.Scripting.ScriptOptions
-function IScriptExecutor:PreCompileScripts(scriptName, options) end
----@overload fun(self: IScriptExecutor, filter: string) : System.Collections.Generic.List
----@overload fun(self: IScriptExecutor, statuses: System.Collections.Generic.IEnumerable) : System.Collections.Generic.List
----@param statuses ZLinq.ValueEnumerable
----@return System.Collections.Generic.List
-function IScriptExecutor:SetStatus(statuses) end
----@param eventName string
----@param parameters System.String[]
----@return boolean
-function IScriptExecutor:TrySendOnlineEvent(eventName, parameters) end
----@param eventName string
----@param action System.Action | function
-function IScriptExecutor:AddEvent(eventName, action) end
-function IScriptExecutor:Clear() end
-
----@class ISingleton
----@field Instance T
----@field GetInstance T
-ISingleton = {}
----@alias CS.ISingleton ISingleton
-CS.ISingleton = ISingleton
-
-
----@class IStatusCommand
----@field From string
-IStatusCommand = {}
----@alias CS.IStatusCommand IStatusCommand
-CS.IStatusCommand = IStatusCommand
-
-function IStatusCommand:Execute() end
-
----@class IStatusManager
----@field fatherObject FightObject
----@field animatedState IStatusManager.AnimatedState
----@field state IStatusManager.State
----@field Name string
----@field InstanceId string
----@field MirrorSc IScriptExecutor
----@field MaxHp number
----@field ToughCount number
----@field CurHp number
----@field Defend number
----@field dynamicVariables System.Collections.Generic.Dictionary
----@field dynamicVariablesLog System.Collections.Generic.Dictionary
----@field ToughOrigin number
----@field effectList System.Collections.Generic.List
----@field transform UnityEngine.Transform
----@field actionObj UnityEngine.GameObject[]
----@field DamageFilter System.Collections.Generic.Dictionary
-IStatusManager = {}
----@alias CS.IStatusManager IStatusManager
-CS.IStatusManager = IStatusManager
-
----@overload fun(self: IStatusManager, buffId: string, level: number) : IStatusManager
----@param buffConfig IBuffItemConfig
----@return IStatusManager
-function IStatusManager:AddBuff(buffConfig) end
----@param state IStatusManager.State
-function IStatusManager:ChangeState(state) end
----@param way string
----@return IStatusManager
-function IStatusManager:CheckAllBuff(way) end
----@return IStatusManager
-function IStatusManager:UpdateBuff() end
-function IStatusManager:CheckDead() end
----@return IStatusManager
-function IStatusManager:ClearAllBuff() end
----@param BaseDamage number
----@return number
-function IStatusManager:DamageCalculate(BaseDamage) end
----@param BaseDefence number
----@return number
-function IStatusManager:DefenceCalculate(BaseDefence) end
----@param Delay number
-function IStatusManager:EnemyDead(Delay) end
----@param buffId string
----@return IBuffItem
-function IStatusManager:GetBuff(buffId) end
----@return IBuffItem[]
-function IStatusManager:GetBuffs() end
----@param val number
----@param damageType string
-function IStatusManager:Heal(val, damageType) end
----@param val number
----@param damageType string
----@param fromDataId string
----@param fromInstanceId string
-function IStatusManager:Hit(val, damageType, fromDataId, fromInstanceId) end
----@param father FightObject
----@return IStatusManager
-function IStatusManager:Init(father) end
----@param replaceImmediate boolean
----@return UnityEngine.Sprite
-function IStatusManager:InitAnimator(replaceImmediate) end
-function IStatusManager:InitVocal() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function IStatusManager:OnPointerEnter(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function IStatusManager:OnPointerExit(eventData) end
-function IStatusManager:OnSelect() end
-function IStatusManager:OnUnSelect() end
----@param buffId string
----@return IStatusManager
-function IStatusManager:RemoveBuff(buffId) end
----@param replaceImmediate boolean
-function IStatusManager:ResetAnimator(replaceImmediate) end
-function IStatusManager:ResetVocal() end
-function IStatusManager:ResetDamageStatus() end
----@param value number
-function IStatusManager:Resurrection(value) end
----@param pos UnityEngine.Vector3
-function IStatusManager:SetPosition(pos) end
----@param sprite UnityEngine.Sprite
-function IStatusManager:SetSprite(sprite) end
----@param BaseDamage number
----@return number
-function IStatusManager:UnDamageCalucate(BaseDamage) end
-function IStatusManager:UpdateDisplay() end
-function IStatusManager:UpdateEffectList() end
----@param NeedEffect boolean
-function IStatusManager:UpdateStatus(NeedEffect) end
----@param state IStatusManager.VocalState
-function IStatusManager:PlayVocal(state) end
-function IStatusManager:UpdateTough() end
----@param path string
----@param name string
-function IStatusManager:AddSummon(path, name) end
----@param name string
-function IStatusManager:RemoveSummon(name) end
----@return boolean
-function IStatusManager:IsNull() end
-
----@class IStatusManager.State
----@field Default IStatusManager.State
----@field NoAction IStatusManager.State
----@field Dead IStatusManager.State
-IStatusManager.State = {}
----@alias CS.IStatusManager.State IStatusManager.State
-CS.IStatusManager.State = IStatusManager.State
-
-
----@class IStatusManager.AnimatedState
----@field Idle IStatusManager.AnimatedState
----@field Attack IStatusManager.AnimatedState
----@field Hit IStatusManager.AnimatedState
----@field Buff IStatusManager.AnimatedState
----@field Debuff IStatusManager.AnimatedState
----@field Skill IStatusManager.AnimatedState
----@field Special IStatusManager.AnimatedState
----@field Special1 IStatusManager.AnimatedState
----@field Special2 IStatusManager.AnimatedState
-IStatusManager.AnimatedState = {}
----@alias CS.IStatusManager.AnimatedState IStatusManager.AnimatedState
-CS.IStatusManager.AnimatedState = IStatusManager.AnimatedState
-
-
----@class IStatusManager.VocalState
----@field FightStart IStatusManager.VocalState
----@field Focus IStatusManager.VocalState
----@field Skill IStatusManager.VocalState
----@field Defend IStatusManager.VocalState
----@field Hurt IStatusManager.VocalState
----@field Dying IStatusManager.VocalState
----@field Dead IStatusManager.VocalState
----@field Bored IStatusManager.VocalState
----@field Kill IStatusManager.VocalState
----@field Win IStatusManager.VocalState
----@field Chat IStatusManager.VocalState
----@field AffectionUp IStatusManager.VocalState
-IStatusManager.VocalState = {}
----@alias CS.IStatusManager.VocalState IStatusManager.VocalState
-CS.IStatusManager.VocalState = IStatusManager.VocalState
-
-
----@class ForEachObject : System.ValueType
-ForEachObject = {}
----@alias CS.ForEachObject ForEachObject
-CS.ForEachObject = ForEachObject
-
----@param context Rougamo.Context.MethodContext
-function ForEachObject:OnEntry(context) end
----@param context Rougamo.Context.MethodContext
-function ForEachObject:OnSuccess(context) end
----@param context Rougamo.Context.MethodContext
-function ForEachObject:OnException(context) end
----@param context Rougamo.Context.MethodContext
-function ForEachObject:OnExit(context) end
----@param context Rougamo.Context.MethodContext
----@return System.Threading.Tasks.ValueTask
-function ForEachObject:OnEntryAsync(context) end
----@param context Rougamo.Context.MethodContext
----@return System.Threading.Tasks.ValueTask
-function ForEachObject:OnSuccessAsync(context) end
----@param context Rougamo.Context.MethodContext
----@return System.Threading.Tasks.ValueTask
-function ForEachObject:OnExceptionAsync(context) end
----@param context Rougamo.Context.MethodContext
----@return System.Threading.Tasks.ValueTask
-function ForEachObject:OnExitAsync(context) end
-
----@class ForEachObjectNative : System.ValueType
-ForEachObjectNative = {}
----@alias CS.ForEachObjectNative ForEachObjectNative
-CS.ForEachObjectNative = ForEachObjectNative
-
----@param context Rougamo.Context.MethodContext
-function ForEachObjectNative:OnEntry(context) end
----@param context Rougamo.Context.MethodContext
-function ForEachObjectNative:OnSuccess(context) end
----@param context Rougamo.Context.MethodContext
-function ForEachObjectNative:OnException(context) end
----@param context Rougamo.Context.MethodContext
-function ForEachObjectNative:OnExit(context) end
----@param context Rougamo.Context.MethodContext
----@return System.Threading.Tasks.ValueTask
-function ForEachObjectNative:OnEntryAsync(context) end
----@param context Rougamo.Context.MethodContext
----@return System.Threading.Tasks.ValueTask
-function ForEachObjectNative:OnSuccessAsync(context) end
----@param context Rougamo.Context.MethodContext
----@return System.Threading.Tasks.ValueTask
-function ForEachObjectNative:OnExceptionAsync(context) end
----@param context Rougamo.Context.MethodContext
----@return System.Threading.Tasks.ValueTask
-function ForEachObjectNative:OnExitAsync(context) end
-
----@class AAReleaseSetting : UnityEngine.ScriptableObject
-AAReleaseSetting = {}
----@alias CS.AAReleaseSetting AAReleaseSetting
-CS.AAReleaseSetting = AAReleaseSetting
-
----@return AAReleaseSetting
-function AAReleaseSetting.New() end
-function AAReleaseSetting.ClearPathMapper() end
----@param groupName string
----@param path string
-function AAReleaseSetting.TryCombinePrefix(groupName, path) end
----@param groupName string
----@return ResourceLoader.AALoadPolicy
-function AAReleaseSetting.GetPolicy(groupName) end
----@param path string
----@return string
-function AAReleaseSetting.GetGroupNameByPath(path) end
-
----@class AAReleaseSetting.GroupReleaseSettingEditor : System.ValueType
----@field Group UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
----@field LoadPolicy ResourceLoader.AALoadPolicy
-AAReleaseSetting.GroupReleaseSettingEditor = {}
----@alias CS.AAReleaseSetting.GroupReleaseSettingEditor AAReleaseSetting.GroupReleaseSettingEditor
-CS.AAReleaseSetting.GroupReleaseSettingEditor = AAReleaseSetting.GroupReleaseSettingEditor
-
-
----@class AAReleaseSetting.GroupReleaseSetting : System.ValueType
----@field GroupName string
----@field LoadPolicy ResourceLoader.AALoadPolicy
-AAReleaseSetting.GroupReleaseSetting = {}
----@alias CS.AAReleaseSetting.GroupReleaseSetting AAReleaseSetting.GroupReleaseSetting
-CS.AAReleaseSetting.GroupReleaseSetting = AAReleaseSetting.GroupReleaseSetting
-
-
----@class AddressableReference : System.ValueType
----@field Asset T
-AddressableReference = {}
----@alias CS.AddressableReference AddressableReference
-CS.AddressableReference = AddressableReference
-
----@param asset T
----@return AddressableReference
-function AddressableReference.New(asset) end
-function AddressableReference:OnBeforeSerialize() end
-function AddressableReference:OnAfterDeserialize() end
-
----@class ExcelTableReader : Singleton
----@field Instance ExcelTableReader -- infered from Singleton`1[ExcelTableReader]
----@field GetInstance ExcelTableReader -- infered from Singleton`1[ExcelTableReader]
-ExcelTableReader = {}
----@alias CS.ExcelTableReader ExcelTableReader
-CS.ExcelTableReader = ExcelTableReader
-
----@return ExcelTableReader
-function ExcelTableReader.New() end
----@param path string
----@return GameConfigData
-function ExcelTableReader:ReadByFolder(path) end
----@param path string
----@return System.Data.DataTable
-function ExcelTableReader:ReadExcel(path) end
----@param path string
----@return System.Data.DataTable
-function ExcelTableReader:ReadCsvWindows(path) end
-
----@class ResourceLoader : System.Object
-ResourceLoader = {}
----@alias CS.ResourceLoader ResourceLoader
-CS.ResourceLoader = ResourceLoader
-
----@param originalPath string
----@param newPath string
-function ResourceLoader.RedirectPath(originalPath, newPath) end
----@param path string
----@param needAa boolean
----@return boolean
-function ResourceLoader.Exists(path, needAa) end
----@param path string
----@return UnityEngine.Object
-function ResourceLoader.Load(path) end
----@param path string
----@param token System.Threading.CancellationToken
----@return Cysharp.Threading.Tasks.UniTask
-function ResourceLoader.LoadAsync(path, token) end
-function ResourceLoader.ReleaseAllCachedAAHandles() end
-function ResourceLoader.ResetForTests() end
-
----@class ResourceLoader.AALoadPolicy
----@field AlwaysResident ResourceLoader.AALoadPolicy
----@field Temporary ResourceLoader.AALoadPolicy
-ResourceLoader.AALoadPolicy = {}
----@alias CS.ResourceLoader.AALoadPolicy ResourceLoader.AALoadPolicy
-CS.ResourceLoader.AALoadPolicy = ResourceLoader.AALoadPolicy
-
-
----@class Singleton : System.Object
----@field Instance T
----@field GetInstance T
-Singleton = {}
----@alias CS.Singleton Singleton
-CS.Singleton = Singleton
-
-
----@class SingletonResolver : System.Object
-SingletonResolver = {}
----@alias CS.SingletonResolver SingletonResolver
-CS.SingletonResolver = SingletonResolver
-
-
----@class SteamManager : UnityEngine.MonoBehaviour
----@field Initialized boolean
-SteamManager = {}
----@alias CS.SteamManager SteamManager
-CS.SteamManager = SteamManager
-
-
----@class DeepCopyUtility : System.Object
-DeepCopyUtility = {}
----@alias CS.DeepCopyUtility DeepCopyUtility
-CS.DeepCopyUtility = DeepCopyUtility
-
-
----@class ExprInterpreter : System.Object
----@field Vars System.Collections.Generic.IDictionary
-ExprInterpreter = {}
----@alias CS.ExprInterpreter ExprInterpreter
-CS.ExprInterpreter = ExprInterpreter
-
----@return ExprInterpreter
-function ExprInterpreter.New() end
----@param expr string
----@return string
-function ExprInterpreter:Evaluate(expr) end
-
----@class ExprInterpreter.TokenType
----@field Number ExprInterpreter.TokenType
----@field Variable ExprInterpreter.TokenType
----@field Operator ExprInterpreter.TokenType
----@field LeftParen ExprInterpreter.TokenType
----@field RightParen ExprInterpreter.TokenType
-ExprInterpreter.TokenType = {}
----@alias CS.ExprInterpreter.TokenType ExprInterpreter.TokenType
-CS.ExprInterpreter.TokenType = ExprInterpreter.TokenType
-
-
----@class ExprInterpreter.Token : System.ValueType
----@field Type ExprInterpreter.TokenType
----@field Text string
----@field Number number
----@field Op System.Char
-ExprInterpreter.Token = {}
----@alias CS.ExprInterpreter.Token ExprInterpreter.Token
-CS.ExprInterpreter.Token = ExprInterpreter.Token
-
-
----@class GenericHelper : System.Object
-GenericHelper = {}
----@alias CS.GenericHelper GenericHelper
-CS.GenericHelper = GenericHelper
-
----@return GenericHelper
-function GenericHelper.New() end
----@param methodBase System.Reflection.MethodBase
----@param target System.Object
----@param arguments System.Object[]
----@return System.Object
-function GenericHelper.InvokeGeneric(methodBase, target, arguments) end
-
----@class GZip : System.Object
-GZip = {}
----@alias CS.GZip GZip
-CS.GZip = GZip
-
----@param data System.Byte[]
----@return System.Byte[]
-function GZip.Compress(data) end
----@param data System.Byte[]
----@return System.Byte[]
-function GZip.Decompress(data) end
----@param data System.Byte[]
----@return string
-function GZip.DecompressToString(data) end
----@param str string
----@return System.Byte[]
-function GZip.CompressString(str) end
-
----@class NaturalStringComparer : System.Object
-NaturalStringComparer = {}
----@alias CS.NaturalStringComparer NaturalStringComparer
-CS.NaturalStringComparer = NaturalStringComparer
-
----@return NaturalStringComparer
-function NaturalStringComparer.New() end
----@param x string
----@param y string
----@return number
-function NaturalStringComparer:Compare(x, y) end
-
----@class PositionUtility : System.Object
-PositionUtility = {}
----@alias CS.PositionUtility PositionUtility
-CS.PositionUtility = PositionUtility
-
----@param canvas UnityEngine.RectTransform
----@param screenPoint UnityEngine.Vector2
----@return UnityEngine.Vector2
-function PositionUtility.ScreenPointToCanvasPoint(canvas, screenPoint) end
----@param rectTransform UnityEngine.RectTransform
----@param canvas UnityEngine.Canvas
----@return UnityEngine.Vector3
-function PositionUtility.CameraSpaceToZeroPlane(rectTransform, canvas) end
-
----@class TextureTransparencyAnalyzer : System.Object
-TextureTransparencyAnalyzer = {}
----@alias CS.TextureTransparencyAnalyzer TextureTransparencyAnalyzer
-CS.TextureTransparencyAnalyzer = TextureTransparencyAnalyzer
-
----@param texture UnityEngine.Texture2D
----@param alphaThreshold number
----@return TextureTransparencyAnalyzer.TransparencyData
-function TextureTransparencyAnalyzer.AnalyzeAllEdges(texture, alphaThreshold) end
----@param texture UnityEngine.Texture2D
----@param alphaThreshold number
----@return number
-function TextureTransparencyAnalyzer.CalculateBottomTransparentHeight(texture, alphaThreshold) end
----@param texture UnityEngine.Texture2D
----@param pixelsPerUnit number
----@param alphaThreshold number
----@return number
-function TextureTransparencyAnalyzer.CalculateBottomTransparentHeightInUnits(texture, pixelsPerUnit, alphaThreshold) end
-
----@class TextureTransparencyAnalyzer.TransparencyData : System.ValueType
----@field bottomTransparentHeight number
----@field topTransparentHeight number
----@field leftTransparentWidth number
----@field rightTransparentWidth number
-TextureTransparencyAnalyzer.TransparencyData = {}
----@alias CS.TextureTransparencyAnalyzer.TransparencyData TextureTransparencyAnalyzer.TransparencyData
-CS.TextureTransparencyAnalyzer.TransparencyData = TextureTransparencyAnalyzer.TransparencyData
-
----@return string
-function TextureTransparencyAnalyzer.TransparencyData:ToString() end
-
----@class TextTranslator : Singleton
----@field Instance TextTranslator -- infered from Singleton`1[TextTranslator]
----@field GetInstance TextTranslator -- infered from Singleton`1[TextTranslator]
-TextTranslator = {}
----@alias CS.TextTranslator TextTranslator
-CS.TextTranslator = TextTranslator
-
----@return TextTranslator
-function TextTranslator.New() end
----@param keyWords System.Collections.Generic.List
-function TextTranslator:Init(keyWords) end
----@param text string
----@param outputArgs System.Collections.Generic.List
----@return string
-function TextTranslator:Translate(text, outputArgs) end
-
----@class AhoCorasick : System.Object
-AhoCorasick = {}
----@alias CS.AhoCorasick AhoCorasick
-CS.AhoCorasick = AhoCorasick
-
----@return AhoCorasick
-function AhoCorasick.New() end
----@param patterns System.Collections.Generic.IEnumerable
-function AhoCorasick:Build(patterns) end
----@param text string
----@return System.Collections.Generic.IEnumerable
-function AhoCorasick:Search(text) end
----@param text string
----@return System.Collections.Generic.IEnumerable
-function AhoCorasick:SearchLongestPerPosition(text) end
-
----@class AhoCorasick.TrieNode : System.Object
----@field Children System.Collections.Generic.Dictionary
----@field Fail AhoCorasick.TrieNode
----@field Outputs System.Collections.Generic.List
-AhoCorasick.TrieNode = {}
----@alias CS.AhoCorasick.TrieNode AhoCorasick.TrieNode
-CS.AhoCorasick.TrieNode = AhoCorasick.TrieNode
-
----@return AhoCorasick.TrieNode
-function AhoCorasick.TrieNode.New() end
-
----@class UnitySourceGeneratedAssemblyMonoScriptTypes_v1 : System.Object
-UnitySourceGeneratedAssemblyMonoScriptTypes_v1 = {}
----@alias CS.UnitySourceGeneratedAssemblyMonoScriptTypes_v1 UnitySourceGeneratedAssemblyMonoScriptTypes_v1
-CS.UnitySourceGeneratedAssemblyMonoScriptTypes_v1 = UnitySourceGeneratedAssemblyMonoScriptTypes_v1
-
----@return UnitySourceGeneratedAssemblyMonoScriptTypes_v1
-function UnitySourceGeneratedAssemblyMonoScriptTypes_v1.New() end
-
----@class UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData : System.ValueType
----@field FilePathsData System.Byte[]
----@field TypesData System.Byte[]
----@field TotalTypes number
----@field TotalFiles number
----@field IsEditorOnly boolean
-UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData = {}
----@alias CS.UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData
-CS.UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData = UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData
-
-
----@class UnityEngine.InputSystem.PlayerAction : System.Object
----@field asset UnityEngine.InputSystem.InputActionAsset
----@field bindingMask System.Nullable
----@field devices System.Nullable
----@field controlSchemes UnityEngine.InputSystem.Utilities.ReadOnlyArray
----@field bindings System.Collections.Generic.IEnumerable
----@field Main UnityEngine.InputSystem.PlayerAction.MainActions
----@field Movement UnityEngine.InputSystem.PlayerAction.MovementActions
----@field KeyboardMouseScheme UnityEngine.InputSystem.InputControlScheme
----@field GamepadScheme UnityEngine.InputSystem.InputControlScheme
----@field TouchScheme UnityEngine.InputSystem.InputControlScheme
----@field JoystickScheme UnityEngine.InputSystem.InputControlScheme
----@field XRScheme UnityEngine.InputSystem.InputControlScheme
-UnityEngine.InputSystem.PlayerAction = {}
----@alias CS.UnityEngine.InputSystem.PlayerAction UnityEngine.InputSystem.PlayerAction
-CS.UnityEngine.InputSystem.PlayerAction = UnityEngine.InputSystem.PlayerAction
-
----@return UnityEngine.InputSystem.PlayerAction
-function UnityEngine.InputSystem.PlayerAction.New() end
-function UnityEngine.InputSystem.PlayerAction:Dispose() end
----@param action UnityEngine.InputSystem.InputAction
----@return boolean
-function UnityEngine.InputSystem.PlayerAction:Contains(action) end
----@return System.Collections.Generic.IEnumerator
-function UnityEngine.InputSystem.PlayerAction:GetEnumerator() end
-function UnityEngine.InputSystem.PlayerAction:Enable() end
-function UnityEngine.InputSystem.PlayerAction:Disable() end
----@param actionNameOrId string
----@param throwIfNotFound boolean
----@return UnityEngine.InputSystem.InputAction
-function UnityEngine.InputSystem.PlayerAction:FindAction(actionNameOrId, throwIfNotFound) end
----@param bindingMask UnityEngine.InputSystem.InputBinding
----@param out_action UnityEngine.InputSystem.InputAction
----@return number,UnityEngine.InputSystem.InputAction
-function UnityEngine.InputSystem.PlayerAction:FindBinding(bindingMask, out_action) end
-
----@class UnityEngine.InputSystem.PlayerAction.MainActions : System.ValueType
----@field Debug UnityEngine.InputSystem.InputAction
----@field Cancel UnityEngine.InputSystem.InputAction
----@field Point UnityEngine.InputSystem.InputAction
----@field RightClick UnityEngine.InputSystem.InputAction
----@field Click UnityEngine.InputSystem.InputAction
----@field ScrollWheel UnityEngine.InputSystem.InputAction
----@field MiddleClick UnityEngine.InputSystem.InputAction
----@field Chat UnityEngine.InputSystem.InputAction
----@field Submit UnityEngine.InputSystem.InputAction
----@field enabled boolean
-UnityEngine.InputSystem.PlayerAction.MainActions = {}
----@alias CS.UnityEngine.InputSystem.PlayerAction.MainActions UnityEngine.InputSystem.PlayerAction.MainActions
-CS.UnityEngine.InputSystem.PlayerAction.MainActions = UnityEngine.InputSystem.PlayerAction.MainActions
-
----@param wrapper UnityEngine.InputSystem.PlayerAction
----@return UnityEngine.InputSystem.PlayerAction.MainActions
-function UnityEngine.InputSystem.PlayerAction.MainActions.New(wrapper) end
----@return UnityEngine.InputSystem.InputActionMap
-function UnityEngine.InputSystem.PlayerAction.MainActions:Get() end
-function UnityEngine.InputSystem.PlayerAction.MainActions:Enable() end
-function UnityEngine.InputSystem.PlayerAction.MainActions:Disable() end
----@param instance UnityEngine.InputSystem.PlayerAction.IMainActions
-function UnityEngine.InputSystem.PlayerAction.MainActions:AddCallbacks(instance) end
----@param instance UnityEngine.InputSystem.PlayerAction.IMainActions
-function UnityEngine.InputSystem.PlayerAction.MainActions:RemoveCallbacks(instance) end
----@param instance UnityEngine.InputSystem.PlayerAction.IMainActions
-function UnityEngine.InputSystem.PlayerAction.MainActions:SetCallbacks(instance) end
-
----@class UnityEngine.InputSystem.PlayerAction.MovementActions : System.ValueType
----@field Jump UnityEngine.InputSystem.InputAction
----@field Dash UnityEngine.InputSystem.InputAction
----@field Move UnityEngine.InputSystem.InputAction
----@field enabled boolean
-UnityEngine.InputSystem.PlayerAction.MovementActions = {}
----@alias CS.UnityEngine.InputSystem.PlayerAction.MovementActions UnityEngine.InputSystem.PlayerAction.MovementActions
-CS.UnityEngine.InputSystem.PlayerAction.MovementActions = UnityEngine.InputSystem.PlayerAction.MovementActions
-
----@param wrapper UnityEngine.InputSystem.PlayerAction
----@return UnityEngine.InputSystem.PlayerAction.MovementActions
-function UnityEngine.InputSystem.PlayerAction.MovementActions.New(wrapper) end
----@return UnityEngine.InputSystem.InputActionMap
-function UnityEngine.InputSystem.PlayerAction.MovementActions:Get() end
-function UnityEngine.InputSystem.PlayerAction.MovementActions:Enable() end
-function UnityEngine.InputSystem.PlayerAction.MovementActions:Disable() end
----@param instance UnityEngine.InputSystem.PlayerAction.IMovementActions
-function UnityEngine.InputSystem.PlayerAction.MovementActions:AddCallbacks(instance) end
----@param instance UnityEngine.InputSystem.PlayerAction.IMovementActions
-function UnityEngine.InputSystem.PlayerAction.MovementActions:RemoveCallbacks(instance) end
----@param instance UnityEngine.InputSystem.PlayerAction.IMovementActions
-function UnityEngine.InputSystem.PlayerAction.MovementActions:SetCallbacks(instance) end
-
----@class UnityEngine.InputSystem.PlayerAction.IMainActions
-UnityEngine.InputSystem.PlayerAction.IMainActions = {}
----@alias CS.UnityEngine.InputSystem.PlayerAction.IMainActions UnityEngine.InputSystem.PlayerAction.IMainActions
-CS.UnityEngine.InputSystem.PlayerAction.IMainActions = UnityEngine.InputSystem.PlayerAction.IMainActions
-
----@param context UnityEngine.InputSystem.InputAction.CallbackContext
-function UnityEngine.InputSystem.PlayerAction.IMainActions:OnDebug(context) end
----@param context UnityEngine.InputSystem.InputAction.CallbackContext
-function UnityEngine.InputSystem.PlayerAction.IMainActions:OnCancel(context) end
----@param context UnityEngine.InputSystem.InputAction.CallbackContext
-function UnityEngine.InputSystem.PlayerAction.IMainActions:OnPoint(context) end
----@param context UnityEngine.InputSystem.InputAction.CallbackContext
-function UnityEngine.InputSystem.PlayerAction.IMainActions:OnRightClick(context) end
----@param context UnityEngine.InputSystem.InputAction.CallbackContext
-function UnityEngine.InputSystem.PlayerAction.IMainActions:OnClick(context) end
----@param context UnityEngine.InputSystem.InputAction.CallbackContext
-function UnityEngine.InputSystem.PlayerAction.IMainActions:OnScrollWheel(context) end
----@param context UnityEngine.InputSystem.InputAction.CallbackContext
-function UnityEngine.InputSystem.PlayerAction.IMainActions:OnMiddleClick(context) end
----@param context UnityEngine.InputSystem.InputAction.CallbackContext
-function UnityEngine.InputSystem.PlayerAction.IMainActions:OnChat(context) end
----@param context UnityEngine.InputSystem.InputAction.CallbackContext
-function UnityEngine.InputSystem.PlayerAction.IMainActions:OnSubmit(context) end
-
----@class UnityEngine.InputSystem.PlayerAction.IMovementActions
-UnityEngine.InputSystem.PlayerAction.IMovementActions = {}
----@alias CS.UnityEngine.InputSystem.PlayerAction.IMovementActions UnityEngine.InputSystem.PlayerAction.IMovementActions
-CS.UnityEngine.InputSystem.PlayerAction.IMovementActions = UnityEngine.InputSystem.PlayerAction.IMovementActions
-
----@param context UnityEngine.InputSystem.InputAction.CallbackContext
-function UnityEngine.InputSystem.PlayerAction.IMovementActions:OnJump(context) end
----@param context UnityEngine.InputSystem.InputAction.CallbackContext
-function UnityEngine.InputSystem.PlayerAction.IMovementActions:OnDash(context) end
----@param context UnityEngine.InputSystem.InputAction.CallbackContext
-function UnityEngine.InputSystem.PlayerAction.IMovementActions:OnMove(context) end
-
----@class Witch.Core.ModHookContext : System.Object
----@field Arguments System.Object[]
-Witch.Core.ModHookContext = {}
----@alias CS.Witch.Core.ModHookContext Witch.Core.ModHookContext
-CS.Witch.Core.ModHookContext = Witch.Core.ModHookContext
-
----@return Witch.Core.ModHookContext
-function Witch.Core.ModHookContext.New() end
-
----@class Witch.Core.ModHookRegistry : System.Object
-Witch.Core.ModHookRegistry = {}
----@alias CS.Witch.Core.ModHookRegistry Witch.Core.ModHookRegistry
-CS.Witch.Core.ModHookRegistry = Witch.Core.ModHookRegistry
-
----@param typeFullName string
----@param methodName string
----@return string
-function Witch.Core.ModHookRegistry.Key(typeFullName, methodName) end
----@param key string
----@param callback System.Action | function
-function Witch.Core.ModHookRegistry.AddBefore(key, callback) end
----@param key string
----@param callback System.Action | function
-function Witch.Core.ModHookRegistry.AddAfter(key, callback) end
----@param key string
----@return System.Collections.Generic.IReadOnlyList
-function Witch.Core.ModHookRegistry.GetBefore(key) end
----@param key string
----@return System.Collections.Generic.IReadOnlyList
-function Witch.Core.ModHookRegistry.GetAfter(key) end
-
----@class Witch.Core.ModifiableValue : System.ValueType
----@field Modifier System.Func[T,T]
----@field Value T
-Witch.Core.ModifiableValue = {}
----@alias CS.Witch.Core.ModifiableValue Witch.Core.ModifiableValue
-CS.Witch.Core.ModifiableValue = Witch.Core.ModifiableValue
-
-
----@class Witch.Core.SummonObject : FightObject
----@field fatherObject FightObject
----@field Name string
----@field Type string
----@field Id string
----@field InstanceId string
----@field AnimatedStateSprites System.Collections.Generic.Dictionary
----@field animationPerFrame number
----@field animationTimeCounter number
----@field AnimationLocation string
----@field AnimationData System.ValueTuple
----@field AnimationConfigs System.Collections.Generic.Dictionary
----@field VocalLocation string
----@field VocalClipsCache System.Collections.Generic.Dictionary
-Witch.Core.SummonObject = {}
----@alias CS.Witch.Core.SummonObject Witch.Core.SummonObject
-CS.Witch.Core.SummonObject = Witch.Core.SummonObject
-
----@param path string
----@param name string
-function Witch.Core.SummonObject:Init(path, name) end
----@return System.Collections.IEnumerator
-function Witch.Core.SummonObject:DoAction() end
-function Witch.Core.SummonObject:PlayAnimatedPerFrame() end
----@return boolean
-function Witch.Core.SummonObject:Weaved() end
-
----@class Witch.Core.Event.EventBody : System.Object
----@field Action System.Delegate
----@field Dispose EventDispose
----@field isDisposed boolean
-Witch.Core.Event.EventBody = {}
----@alias CS.Witch.Core.Event.EventBody Witch.Core.Event.EventBody
-CS.Witch.Core.Event.EventBody = Witch.Core.Event.EventBody
-
----@return Witch.Core.Event.EventBody
-function Witch.Core.Event.EventBody.New() end
-function Witch.Core.Event.EventBody:Invoke() end
-
----@class Witch.Core.Event.EventList : System.Object
-Witch.Core.Event.EventList = {}
----@alias CS.Witch.Core.Event.EventList Witch.Core.Event.EventList
-CS.Witch.Core.Event.EventList = Witch.Core.Event.EventList
-
----@return Witch.Core.Event.EventList
-function Witch.Core.Event.EventList.New() end
----@param action System.Delegate
----@param dispose EventDispose
-function Witch.Core.Event.EventList:Add(action, dispose) end
-function Witch.Core.Event.EventList:Invoke() end
----@param dispose EventDispose
-function Witch.Core.Event.EventList:RemoveBy(dispose) end
-
----@class Witch.Core.Event.EventInfo : System.Object
----@field Owner System.Object
----@field EventName string
----@field IsExecuting boolean
-Witch.Core.Event.EventInfo = {}
----@alias CS.Witch.Core.Event.EventInfo Witch.Core.Event.EventInfo
-CS.Witch.Core.Event.EventInfo = Witch.Core.Event.EventInfo
-
----@param owner System.Object
----@param eventName string
----@param action Witch.Core.Event.EventBody
----@return Witch.Core.Event.EventInfo
-function Witch.Core.Event.EventInfo.New(owner, eventName, action) end
-function Witch.Core.Event.EventInfo:Execute() end
----@param action System.Delegate
----@param dispose EventDispose
-function Witch.Core.Event.EventInfo:AddAction(action, dispose) end
----@param disposeType EventDispose
-function Witch.Core.Event.EventInfo:RemoveByDisposeType(disposeType) end
-
----@class WitchCore_ProcessedByFody : System.Object
-WitchCore_ProcessedByFody = {}
----@alias CS.WitchCore_ProcessedByFody WitchCore_ProcessedByFody
-CS.WitchCore_ProcessedByFody = WitchCore_ProcessedByFody
-
 
 ---@class Microsoft.CodeAnalysis.EmbeddedAttribute : System.Attribute
 Microsoft.CodeAnalysis.EmbeddedAttribute = {}
@@ -1631,6 +177,7 @@ function UnityInjectAttribute.New(autoCreate) end
 ---@class BuffItemConfig : System.Object
 ---@field Icon string
 ---@field level number
+---@field CanZero boolean
 ---@field buffBarUI Witch.UI.Window.BuffBarUI
 ---@field Level number
 ---@field UpperBound number
@@ -1674,10 +221,13 @@ function AttackCardItem:Init(dataConfig) end
 function AttackCardItem:OnEndDrag(eventData) end
 ---@param eventData UnityEngine.EventSystems.PointerEventData
 function AttackCardItem:OnPointerDown(eventData) end
-function AttackCardItem:BeginLineMode() end
+---@param requireClickable boolean
+---@return boolean
+function AttackCardItem:BeginLineMode(requireClickable) end
 function AttackCardItem:CancelLineMode() end
 function AttackCardItem:CommitOrCancelFromKeyboard() end
 function AttackCardItem:DrawEffect() end
+function AttackCardItem:TrueUse() end
 
 ---@class CardAnimationController : System.Object
 ---@field maxAngle number
@@ -1768,8 +318,12 @@ function CardItem:Awake() end
 function CardItem:Start() end
 function CardItem:ClearEvent() end
 function CardItem:RegisterEvent() end
+---@param nextDataConfig DataConfig
+---@return CardItem
+function CardItem:TransformToConfiguredType(nextDataConfig) end
 ---@param eventData UnityEngine.EventSystems.PointerEventData
 function CardItem:OnRightClick(eventData) end
+function CardItem:RefreshTag() end
 function CardItem:DataUpdate() end
 ---@param eventData UnityEngine.EventSystems.PointerEventData
 function CardItem:OnBeginDrag(eventData) end
@@ -1787,9 +341,11 @@ function CardItem:InternalBurning(animationDelay) end
 function CardItem:Reverse() end
 function CardItem:EffectOfBurnCard() end
 function CardItem:ThrowCard() end
-function CardItem:InternalThrow() end
+---@param needUp boolean
+function CardItem:InternalThrow(needUp) end
 ---@param targetPath string
-function CardItem:EffectOfThrowCard(targetPath) end
+---@param needUp boolean
+function CardItem:EffectOfThrowCard(targetPath, needUp) end
 
 ---@class CommonCardItem : CardItem
 ---@field UseChecker System.Collections.Generic.List
@@ -1804,6 +360,7 @@ CS.CommonCardItem = CommonCardItem
 function CommonCardItem:OnEndDrag(eventData) end
 ---@param eventData UnityEngine.EventSystems.PointerEventData
 function CommonCardItem:OnBeginDrag(eventData) end
+function CommonCardItem:TrueUse() end
 function CommonCardItem:UseCardDirectly() end
 ---@param eventData UnityEngine.EventSystems.PointerEventData
 function CommonCardItem:OnPointerDown(eventData) end
@@ -1947,6 +504,13 @@ CS.HelpText = HelpText
 function HelpText.New(description) end
 
 ---@class Commands : System.Object
+---@field DebugEnemyHpMultiplier number
+---@field DebugEnemyAttackMultiplier number
+---@field DebugEnemyGrowthMultiplier number
+---@field DebugPlayerMaxHpGainMultiplier number
+---@field DebugPlayerHealMultiplier number
+---@field DebugPlayerDefendGainMultiplier number
+---@field DebugClearShieldOnTurnStart boolean
 Commands = {}
 ---@alias CS.Commands Commands
 CS.Commands = Commands
@@ -1968,6 +532,9 @@ function Commands.copy(arg1, arg2) end
 ---@param arg2 string
 ---@return string
 function Commands.remove(arg1, arg2) end
+---@param packId string
+---@return string
+function Commands.givepack(packId) end
 ---@param type string
 ---@param id2 string
 ---@return string
@@ -1983,8 +550,11 @@ function Commands.setId(arg1) end
 ---@return string
 function Commands.check(arg1) end
 ---@param arg1 string
+function Commands.updateback(arg1) end
+---@param arg1 string
 ---@param arg2 string
 function Commands.Log(arg1, arg2) end
+function Commands.showack() end
 ---@param arg1 string
 ---@param arg2 string
 function Commands.LogWarning(arg1, arg2) end
@@ -1998,12 +568,97 @@ function Commands.ShowReward(arg1, arg2) end
 function Commands.connect(arg1) end
 ---@param arg1 string
 function Commands.lockitem(arg1) end
+function Commands.showann() end
 ---@param arg1 string
 function Commands.unlock(arg1) end
 ---@param arg1 string
 function Commands.eventtrigger(arg1) end
 ---@param arg1 string
 function Commands.auto(arg1) end
+---@param field string
+---@param value string
+---@return string
+function Commands.enemyall(field, value) end
+---@param type string
+---@param field string
+---@param value string
+---@return string
+function Commands.enemytype(type, field, value) end
+---@param target string
+---@param field string
+---@param value string
+---@return string
+function Commands.enemyone(target, field, value) end
+---@param value string
+---@return string
+function Commands.enemygrow(value) end
+---@param target string
+---@param buff string
+---@param level string
+---@return string
+function Commands.enemybuff(target, buff, level) end
+---@param layer string
+---@param buff string
+---@param level string
+---@return string
+function Commands.enemylayerbuff(layer, buff, level) end
+---@param value string
+---@return string
+function Commands.debugmoney(value) end
+---@param value string
+---@return string
+function Commands.debugmaxhp(value) end
+---@param value string
+---@return string
+function Commands.debugheal(value) end
+---@param value string
+---@return string
+function Commands.debugdef(value) end
+---@param value string
+---@return string
+function Commands.debugcleardef(value) end
+---@return string
+function Commands.debugreset() end
+---@param type string
+---@return number
+function Commands.DebugGetEnemyTypeHpMultiplier(type) end
+---@param type string
+---@return number
+function Commands.DebugGetEnemyTypeAttackMultiplier(type) end
+---@param enemy Enemy
+---@return number
+function Commands.DebugGetEnemyHpMultiplier(enemy) end
+---@param enemy Enemy
+---@return number
+function Commands.DebugGetEnemyAttackMultiplier(enemy) end
+---@param levelCount number
+---@return number
+function Commands.DebugAdjustEnemyGrowthLevelCount(levelCount) end
+---@param enemy Enemy
+function Commands.DebugApplyEnemyBuffs(enemy) end
+function Commands.DebugClearAllShields() end
+
+---@class Commands.EnemyDebugOverride : System.Object
+---@field HpMultiplier number
+---@field AttackMultiplier number
+Commands.EnemyDebugOverride = {}
+---@alias CS.Commands.EnemyDebugOverride Commands.EnemyDebugOverride
+CS.Commands.EnemyDebugOverride = Commands.EnemyDebugOverride
+
+---@return Commands.EnemyDebugOverride
+function Commands.EnemyDebugOverride.New() end
+
+---@class Commands.DebugBuffGrant : System.ValueType
+---@field BuffId string
+---@field Level number
+Commands.DebugBuffGrant = {}
+---@alias CS.Commands.DebugBuffGrant Commands.DebugBuffGrant
+CS.Commands.DebugBuffGrant = Commands.DebugBuffGrant
+
+---@param buffId string
+---@param level number
+---@return Commands.DebugBuffGrant
+function Commands.DebugBuffGrant.New(buffId, level) end
 
 ---@class ConsoleLogic : UnityEngine.MonoBehaviour
 ConsoleLogic = {}
@@ -2075,7 +730,7 @@ DataConfig = {}
 CS.DataConfig = DataConfig
 
 ---@overload fun(id: string, type: DataType) : DataConfig
----@overload fun(data: System.Collections.Generic.IDictionary, Vars: System.Collections.Generic.IDictionary, ifPreCompile: boolean) : DataConfig
+---@overload fun(data: System.Collections.Generic.IDictionary, Vars: System.Collections.Generic.IDictionary, ifPreCompile: boolean, type: DataType) : DataConfig
 ---@return DataConfig
 function DataConfig.New() end
 function DataConfig.RegisterFormatter() end
@@ -2087,6 +742,8 @@ function DataConfig:PreCompileScripts() end
 function DataConfig:ReSetVars() end
 ---@return System.Object
 function DataConfig:Clone() end
+---@return IScriptExecutor
+function DataConfig:CreateExecutor() end
 
 ---@class DataConfig.DataConfigFormatter : MemoryPack.MemoryPackFormatter
 DataConfig.DataConfigFormatter = {}
@@ -2133,18 +790,6 @@ function DataConfigSerializer.WriteDataConfig(writer, dataConfig) end
 ---@return DataConfig
 function DataConfigSerializer.ReadDataConfig(reader) end
 
----@class DataConfigFormatter : MemoryPack.MemoryPackFormatter
-DataConfigFormatter = {}
----@alias CS.DataConfigFormatter DataConfigFormatter
-CS.DataConfigFormatter = DataConfigFormatter
-
----@return DataConfigFormatter
-function DataConfigFormatter.New() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value IDataConfig
----@return ,MemoryPack.MemoryPackReader,IDataConfig
-function DataConfigFormatter:Deserialize(ref_reader, ref_value) end
-
 ---@class RoleTable : System.Object
 ---@field cardList System.Collections.ObjectModel.ObservableCollection
 ---@field UnCardList System.Collections.ObjectModel.ObservableCollection
@@ -2158,6 +803,7 @@ function DataConfigFormatter:Deserialize(ref_reader, ref_value) end
 ---@field relicGets System.Collections.Generic.Dictionary
 ---@field SkillTime System.Collections.Generic.Dictionary
 ---@field BuyBlessCount number
+---@field MaxAlCardCount number
 ---@field SpecialVarMap System.Collections.Generic.Dictionary
 ---@field san number
 ---@field isDead boolean
@@ -2176,6 +822,7 @@ function DataConfigFormatter:Deserialize(ref_reader, ref_value) end
 ---@field ChooseVars System.Collections.Generic.List
 ---@field money Loxodon.Framework.Obfuscation.ObfuscatedInt
 ---@field VarsMap System.Collections.Generic.Dictionary
+---@field relicOwnSc System.Collections.Generic.Dictionary
 ---@field SpecialCount number
 ---@field Instance RoleTable
 ---@field InHighTide boolean
@@ -2184,7 +831,6 @@ function DataConfigFormatter:Deserialize(ref_reader, ref_value) end
 ---@field CardCount number
 ---@field CardBottomCount number
 ---@field CardTopCount number
----@field MaxAlCardCount number
 ---@field MainVarUpperBound number
 ---@field SecondaryVarUpperBound number
 ---@field OtherVarUpperBound number
@@ -2213,6 +859,7 @@ function RoleTable:VarsCheck(key) end
 function RoleTable:UseVarsChanges(key, value) end
 function RoleTable:LevelCount() end
 function RoleTable:Init() end
+function RoleTable:ResetBackCard() end
 
 ---@class CustomRoleTableReaderWriter : System.Object
 CustomRoleTableReaderWriter = {}
@@ -2246,10 +893,12 @@ function SettingTable:Apply() end
 function SettingTable:ChangeLanguage(language) end
 
 ---@class GameConfigManager : Singleton
+---@field DefaultCardPackId string
 ---@field PlayerId string
 ---@field PlayerName string
 ---@field modConfigs System.Collections.Generic.List
 ---@field OnAppicationQuit System.Action | function
+---@field LimitList System.Collections.Generic.List
 ---@field ifCompileImmidiate boolean
 ---@field cts System.Threading.CancellationTokenSource
 ---@field NativeIds System.Collections.Generic.HashSet
@@ -2274,6 +923,9 @@ function GameConfigManager:GetTable(type) end
 function GameConfigManager:Init() end
 ---@param path string
 function GameConfigManager:LoadResource(path) end
+---@param cards System.Collections.Generic.List
+---@return System.Collections.Generic.List
+function GameConfigManager:CardPackCheck(cards) end
 function GameConfigManager:AddNativeIds() end
 function GameConfigManager:BuySave() end
 ---@param item System.Collections.Generic.IDictionary
@@ -2281,18 +933,48 @@ function GameConfigManager:BuySaveByName(item) end
 ---@param TheList System.Collections.Generic.List
 ---@return System.Collections.Generic.List
 function GameConfigManager:GetByNote(TheList) end
+---@overload fun(self: GameConfigManager, prefix: string) : System.Collections.Generic.Dictionary
 ---@param list System.Collections.Generic.List
 ---@param prefix string
 ---@return System.Collections.Generic.Dictionary
 function GameConfigManager:GetDataByPrefix(list, prefix) end
+---@param item System.Collections.Generic.IDictionary
+---@return string
+function GameConfigManager:GetPackBelong(item) end
+---@param type DataType
+---@param packId string
+---@return System.Collections.Generic.List
+function GameConfigManager:GetItemsByPack(type, packId) end
+---@param packId string
+---@return System.Collections.Generic.Dictionary
+function GameConfigManager:GetPackItems(packId) end
 ---@overload fun(self: GameConfigManager, type: DataType, id: string) : System.Collections.Generic.Dictionary
 ---@param data GameConfigData
 ---@param id string
 ---@return System.Collections.Generic.Dictionary
 function GameConfigManager:GetOne(data, id) end
 ---@param id string
+---@return DataType
+function GameConfigManager:GetTypeById(id) end
+---@param id string
 ---@return System.Collections.Generic.Dictionary
 function GameConfigManager:GetOneById(id) end
+---@overload fun(self: GameConfigManager, modRootDirectory: string, out_data: Witch.Mod.ModConfigurationData) : boolean, Witch.Mod.ModConfigurationData
+---@param mod Witch.Mod.ModConfig
+---@param out_data Witch.Mod.ModConfigurationData
+---@return boolean,Witch.Mod.ModConfigurationData
+function GameConfigManager:TryGetModOwnConfiguration(mod, out_data) end
+
+---@class GameConfigManager.FontWarmupWorker : System.Object
+GameConfigManager.FontWarmupWorker = {}
+---@alias CS.GameConfigManager.FontWarmupWorker GameConfigManager.FontWarmupWorker
+CS.GameConfigManager.FontWarmupWorker = GameConfigManager.FontWarmupWorker
+
+---@param snapshot System.Collections.Generic.List
+---@return GameConfigManager.FontWarmupWorker
+function GameConfigManager.FontWarmupWorker.New(snapshot) end
+---@return System.Char[]
+function GameConfigManager.FontWarmupWorker:CollectCharacters() end
 
 ---@class DataId : System.Object
 ---@field Id_2Fight_1 string
@@ -2303,7 +985,6 @@ function GameConfigManager:GetOneById(id) end
 ---@field Id_2Fight_6 string
 ---@field Id_2Fight_7 string
 ---@field Id_2Fight_8 string
----@field Id_2Fight_9 string
 ---@field Id_3Fight_1 string
 ---@field Id_3Fight_2 string
 ---@field Id_3Fight_3 string
@@ -2321,7 +1002,190 @@ function GameConfigManager:GetOneById(id) end
 ---@field Id_7Node_1 string
 ---@field Id_7Node_2 string
 ---@field Id_7Node_3 string
+---@field Administration_1 string
+---@field Administration_10 string
+---@field Administration_11 string
+---@field Administration_12 string
+---@field Administration_13 string
+---@field Administration_14 string
+---@field Administration_15 string
+---@field Administration_16 string
+---@field Administration_17 string
+---@field Administration_18 string
+---@field Administration_2 string
+---@field Administration_3 string
+---@field Administration_4 string
+---@field Administration_5 string
+---@field Administration_6 string
+---@field Administration_7 string
+---@field Administration_8 string
+---@field Administration_9 string
 ---@field Amelia_1 string
+---@field CrowdFundingRelic_1 string
+---@field CrowdFundingRelic_10 string
+---@field CrowdFundingRelic_11 string
+---@field CrowdFundingRelic_12 string
+---@field CrowdFundingRelic_13 string
+---@field CrowdFundingRelic_14 string
+---@field CrowdFundingRelic_15 string
+---@field CrowdFundingRelic_16 string
+---@field CrowdFundingRelic_17 string
+---@field CrowdFundingRelic_18 string
+---@field CrowdFundingRelic_19 string
+---@field CrowdFundingRelic_2 string
+---@field CrowdFundingRelic_20 string
+---@field CrowdFundingRelic_22 string
+---@field CrowdFundingRelic_23 string
+---@field CrowdFundingRelic_24 string
+---@field CrowdFundingRelic_25 string
+---@field CrowdFundingRelic_26 string
+---@field CrowdFundingRelic_27 string
+---@field CrowdFundingRelic_28 string
+---@field CrowdFundingRelic_29 string
+---@field CrowdFundingRelic_3 string
+---@field CrowdFundingRelic_30 string
+---@field CrowdFundingRelic_31 string
+---@field CrowdFundingRelic_32 string
+---@field CrowdFundingRelic_33 string
+---@field CrowdFundingRelic_34 string
+---@field CrowdFundingRelic_35 string
+---@field CrowdFundingRelic_36 string
+---@field CrowdFundingRelic_37 string
+---@field CrowdFundingRelic_38 string
+---@field CrowdFundingRelic_39 string
+---@field CrowdFundingRelic_4 string
+---@field CrowdFundingRelic_40 string
+---@field CrowdFundingRelic_41 string
+---@field CrowdFundingRelic_42 string
+---@field CrowdFundingRelic_43 string
+---@field CrowdFundingRelic_44 string
+---@field CrowdFundingRelic_45 string
+---@field CrowdFundingRelic_46 string
+---@field CrowdFundingRelic_47 string
+---@field CrowdFundingRelic_48 string
+---@field CrowdFundingRelic_49 string
+---@field CrowdFundingRelic_5 string
+---@field CrowdFundingRelic_50 string
+---@field CrowdFundingRelic_51 string
+---@field CrowdFundingRelic_52 string
+---@field CrowdFundingRelic_53 string
+---@field CrowdFundingRelic_54 string
+---@field CrowdFundingRelic_55 string
+---@field CrowdFundingRelic_56 string
+---@field CrowdFundingRelic_6 string
+---@field CrowdFundingRelic_7 string
+---@field CrowdFundingRelic_8 string
+---@field CrowdFundingRelic_9 string
+---@field CrowdfundingBlessing_1 string
+---@field CrowdfundingBlessing_10 string
+---@field CrowdfundingBlessing_11 string
+---@field CrowdfundingBlessing_12 string
+---@field CrowdfundingBlessing_13 string
+---@field CrowdfundingBlessing_14 string
+---@field CrowdfundingBlessing_15 string
+---@field CrowdfundingBlessing_16 string
+---@field CrowdfundingBlessing_17 string
+---@field CrowdfundingBlessing_18 string
+---@field CrowdfundingBlessing_19 string
+---@field CrowdfundingBlessing_2 string
+---@field CrowdfundingBlessing_20 string
+---@field CrowdfundingBlessing_21 string
+---@field CrowdfundingBlessing_22 string
+---@field CrowdfundingBlessing_24 string
+---@field CrowdfundingBlessing_26 string
+---@field CrowdfundingBlessing_27 string
+---@field CrowdfundingBlessing_28 string
+---@field CrowdfundingBlessing_29 string
+---@field CrowdfundingBlessing_3 string
+---@field CrowdfundingBlessing_30 string
+---@field CrowdfundingBlessing_4 string
+---@field CrowdfundingBlessing_5 string
+---@field CrowdfundingBlessing_7 string
+---@field CrowdfundingBlessing_8 string
+---@field CrowdfundingBlessing_9 string
+---@field Crowdfundingcard_1 string
+---@field Crowdfundingcard_10 string
+---@field Crowdfundingcard_11 string
+---@field Crowdfundingcard_13 string
+---@field Crowdfundingcard_14 string
+---@field Crowdfundingcard_15 string
+---@field Crowdfundingcard_16 string
+---@field Crowdfundingcard_17 string
+---@field Crowdfundingcard_18 string
+---@field Crowdfundingcard_2 string
+---@field Crowdfundingcard_20 string
+---@field Crowdfundingcard_21 string
+---@field Crowdfundingcard_22 string
+---@field Crowdfundingcard_23 string
+---@field Crowdfundingcard_24 string
+---@field Crowdfundingcard_25 string
+---@field Crowdfundingcard_26 string
+---@field Crowdfundingcard_27 string
+---@field Crowdfundingcard_28 string
+---@field Crowdfundingcard_29 string
+---@field Crowdfundingcard_3 string
+---@field Crowdfundingcard_30 string
+---@field Crowdfundingcard_31 string
+---@field Crowdfundingcard_32 string
+---@field Crowdfundingcard_33 string
+---@field Crowdfundingcard_34 string
+---@field Crowdfundingcard_36 string
+---@field Crowdfundingcard_4 string
+---@field Crowdfundingcard_40 string
+---@field Crowdfundingcard_41 string
+---@field Crowdfundingcard_42 string
+---@field Crowdfundingcard_43 string
+---@field Crowdfundingcard_44 string
+---@field Crowdfundingcard_45 string
+---@field Crowdfundingcard_46 string
+---@field Crowdfundingcard_47 string
+---@field Crowdfundingcard_48 string
+---@field Crowdfundingcard_49 string
+---@field Crowdfundingcard_5 string
+---@field Crowdfundingcard_6 string
+---@field Crowdfundingcard_7 string
+---@field Crowdfundingcard_8 string
+---@field Crowdfundingcard_9 string
+---@field Crowdfundingenchtag_1 string
+---@field Crowdfundingenchtag_10 string
+---@field Crowdfundingenchtag_11 string
+---@field Crowdfundingenchtag_12 string
+---@field Crowdfundingenchtag_13 string
+---@field Crowdfundingenchtag_14 string
+---@field Crowdfundingenchtag_15 string
+---@field Crowdfundingenchtag_16 string
+---@field Crowdfundingenchtag_17 string
+---@field Crowdfundingenchtag_18 string
+---@field Crowdfundingenchtag_19 string
+---@field Crowdfundingenchtag_2 string
+---@field Crowdfundingenchtag_20 string
+---@field Crowdfundingenchtag_21 string
+---@field Crowdfundingenchtag_22 string
+---@field Crowdfundingenchtag_3 string
+---@field Crowdfundingenchtag_4 string
+---@field Crowdfundingenchtag_5 string
+---@field Crowdfundingenchtag_6 string
+---@field Crowdfundingenchtag_8 string
+---@field Crowdfundingenchtag_9 string
+---@field Exhibition_1 string
+---@field Exhibition_10 string
+---@field Exhibition_11 string
+---@field Exhibition_12 string
+---@field Exhibition_13 string
+---@field Exhibition_14 string
+---@field Exhibition_15 string
+---@field Exhibition_16 string
+---@field Exhibition_17 string
+---@field Exhibition_18 string
+---@field Exhibition_19 string
+---@field Exhibition_2 string
+---@field Exhibition_3 string
+---@field Exhibition_4 string
+---@field Exhibition_5 string
+---@field Exhibition_6 string
+---@field Exhibition_7 string
+---@field Exhibition_8 string
+---@field Exhibition_9 string
 ---@field FirstBless_1 string
 ---@field FirstBless_2 string
 ---@field FirstBless_3 string
@@ -2348,22 +1212,9 @@ function GameConfigManager:GetOneById(id) end
 ---@field FirstShop_6 string
 ---@field FirstShop_7 string
 ---@field FirstShop_8 string
----@field FirstTalk_1 string
----@field FirstTalk_10 string
----@field FirstTalk_11 string
----@field FirstTalk_12 string
----@field FirstTalk_2 string
----@field FirstTalk_3 string
----@field FirstTalk_4 string
----@field FirstTalk_5 string
----@field FirstTalk_6 string
----@field FirstTalk_7 string
----@field FirstTalk_8 string
----@field FirstTalk_9 string
 ---@field Hard_1 string
 ---@field Hard_10 string
 ---@field Hard_11 string
----@field Hard_12 string
 ---@field Hard_13 string
 ---@field Hard_14 string
 ---@field Hard_15 string
@@ -2372,6 +1223,9 @@ function GameConfigManager:GetOneById(id) end
 ---@field Hard_18 string
 ---@field Hard_19 string
 ---@field Hard_2 string
+---@field Hard_20 string
+---@field Hard_21 string
+---@field Hard_22 string
 ---@field Hard_3 string
 ---@field Hard_4 string
 ---@field Hard_5 string
@@ -2379,6 +1233,76 @@ function GameConfigManager:GetOneById(id) end
 ---@field Hard_7 string
 ---@field Hard_8 string
 ---@field Hard_9 string
+---@field House1_1 string
+---@field House1_10 string
+---@field House1_11 string
+---@field House1_12 string
+---@field House1_2 string
+---@field House1_3 string
+---@field House1_4 string
+---@field House1_5 string
+---@field House1_6 string
+---@field House1_7 string
+---@field House1_8 string
+---@field House1_9 string
+---@field House2_1 string
+---@field House2_10 string
+---@field House2_11 string
+---@field House2_12 string
+---@field House2_13 string
+---@field House2_14 string
+---@field House2_15 string
+---@field House2_16 string
+---@field House2_17 string
+---@field House2_2 string
+---@field House2_3 string
+---@field House2_4 string
+---@field House2_5 string
+---@field House2_6 string
+---@field House2_7 string
+---@field House2_8 string
+---@field House2_9 string
+---@field House_1 string
+---@field House_10 string
+---@field House_11 string
+---@field House_12 string
+---@field House_13 string
+---@field House_14 string
+---@field House_15 string
+---@field House_16 string
+---@field House_17 string
+---@field House_18 string
+---@field House_19 string
+---@field House_2 string
+---@field House_20 string
+---@field House_21 string
+---@field House_22 string
+---@field House_23 string
+---@field House_3 string
+---@field House_4 string
+---@field House_5 string
+---@field House_6 string
+---@field House_7 string
+---@field House_8 string
+---@field House_9 string
+---@field Library2_1 string
+---@field Library2_10 string
+---@field Library2_11 string
+---@field Library2_12 string
+---@field Library2_13 string
+---@field Library2_14 string
+---@field Library2_15 string
+---@field Library2_16 string
+---@field Library2_17 string
+---@field Library2_18 string
+---@field Library2_2 string
+---@field Library2_3 string
+---@field Library2_4 string
+---@field Library2_5 string
+---@field Library2_6 string
+---@field Library2_7 string
+---@field Library2_8 string
+---@field Library2_9 string
 ---@field Mapselect_1 string
 ---@field Mapselect_10 string
 ---@field Mapselect_11 string
@@ -2403,25 +1327,53 @@ function GameConfigManager:GetOneById(id) end
 ---@field PartnerCard_defence string
 ---@field Partner_10001 string
 ---@field Partner_10002 string
+---@field Partner_10003 string
+---@field Partner_10004 string
+---@field Partner_10005 string
+---@field ReturnAgain_1 string
+---@field ReturnAgain_10 string
+---@field ReturnAgain_11 string
+---@field ReturnAgain_12 string
+---@field ReturnAgain_13 string
+---@field ReturnAgain_14 string
+---@field ReturnAgain_15 string
+---@field ReturnAgain_2 string
+---@field ReturnAgain_3 string
+---@field ReturnAgain_4 string
+---@field ReturnAgain_5 string
+---@field ReturnAgain_6 string
+---@field ReturnAgain_7 string
+---@field ReturnAgain_8 string
+---@field ReturnAgain_9 string
 ---@field SecondAD_1 string
 ---@field SecondAD_2 string
 ---@field SecondAD_3 string
 ---@field SecondAD_4 string
 ---@field SecondAD_5 string
----@field SpecialBuff_AdvancedWoodenStakes string
 ---@field SpecialBuff_AllogeneicConcentric string
 ---@field SpecialBuff_BackToBasics string
 ---@field SpecialBuff_BlessedByHeaven string
+---@field SpecialBuff_CAR_Deadline string
+---@field SpecialBuff_CAR_HeroBlessing string
+---@field SpecialBuff_CAR_Momentum string
 ---@field SpecialBuff_CalamityIncarnates string
 ---@field SpecialBuff_Crow string
 ---@field SpecialBuff_Demigod_sBody string
+---@field SpecialBuff_DesireWitch string
+---@field SpecialBuff_Dragon_sBlood string
 ---@field SpecialBuff_DragonScaleArmor string
 ---@field SpecialBuff_EndlessDesire string
 ---@field SpecialBuff_FortuneBoy string
 ---@field SpecialBuff_GiantDollBear string
+---@field SpecialBuff_HJE_AbsoluteShield string
+---@field SpecialBuff_HJE_FateDawn string
+---@field SpecialBuff_HJE_FateHolyMachine string
+---@field SpecialBuff_HJE_FateJudgment string
+---@field SpecialBuff_HolyJudgementEngine string
 ---@field SpecialBuff_Hysteresis string
 ---@field SpecialBuff_ImmortalGodhead string
 ---@field SpecialBuff_Irritable string
+---@field SpecialBuff_Joker_King string
 ---@field SpecialBuff_Law_Death string
 ---@field SpecialBuff_Law_Judgment string
 ---@field SpecialBuff_Law_Supreme string
@@ -2437,19 +1389,71 @@ function GameConfigManager:GetOneById(id) end
 ---@field SpecialBuff_ThievesKing string
 ---@field SpecialBuff_ThirstForBlood string
 ---@field SpecialBuff_Transcendent string
----@field SpecialBuff_TrialsOfStrength string
----@field SpecialBuff_TrialsOfTenacity string
 ---@field SpecialBuff_TrialsOfWisdom string
 ---@field SpecialBuff_Twins string
 ---@field SpecialBuff_UnparalleledPower string
 ---@field SpecialBuff_WitchCultists string
 ---@field SpecialBuff_believer string
----@field SpecialBuff_biologicalInstinct string
 ---@field SpecialBuff_expiation string
 ---@field SpecialBuff_fluster string
----@field SpecialBuff_guiltless string
 ---@field SpecialBuff_hunting string
 ---@field SpecialBuff_meow string
+---@field SpecialBuff_meowFamiliar string
+---@field SpellCard_1 string
+---@field SpellCard_10 string
+---@field SpellCard_11 string
+---@field SpellCard_12 string
+---@field SpellCard_13 string
+---@field SpellCard_14 string
+---@field SpellCard_15 string
+---@field SpellCard_16 string
+---@field SpellCard_17 string
+---@field SpellCard_18 string
+---@field SpellCard_19 string
+---@field SpellCard_2 string
+---@field SpellCard_20 string
+---@field SpellCard_21 string
+---@field SpellCard_22 string
+---@field SpellCard_23 string
+---@field SpellCard_3 string
+---@field SpellCard_4 string
+---@field SpellCard_5 string
+---@field SpellCard_6 string
+---@field SpellCard_7 string
+---@field SpellCard_8 string
+---@field SpellCard_9 string
+---@field Spring1_1 string
+---@field Spring1_10 string
+---@field Spring1_11 string
+---@field Spring1_12 string
+---@field Spring1_13 string
+---@field Spring1_14 string
+---@field Spring1_2 string
+---@field Spring1_3 string
+---@field Spring1_4 string
+---@field Spring1_5 string
+---@field Spring1_6 string
+---@field Spring1_7 string
+---@field Spring1_8 string
+---@field Spring1_9 string
+---@field Spring_1 string
+---@field Spring_10 string
+---@field Spring_11 string
+---@field Spring_12 string
+---@field Spring_13 string
+---@field Spring_14 string
+---@field Spring_15 string
+---@field Spring_16 string
+---@field Spring_17 string
+---@field Spring_18 string
+---@field Spring_2 string
+---@field Spring_3 string
+---@field Spring_4 string
+---@field Spring_5 string
+---@field Spring_6 string
+---@field Spring_7 string
+---@field Spring_8 string
+---@field Spring_9 string
 ---@field StartTutorial_1 string
 ---@field StartTutorial_10 string
 ---@field StartTutorial_11 string
@@ -2511,6 +1515,99 @@ function GameConfigManager:GetOneById(id) end
 ---@field StartTutorial_7 string
 ---@field StartTutorial_8 string
 ---@field StartTutorial_9 string
+---@field StoreHouse_1 string
+---@field StoreHouse_10 string
+---@field StoreHouse_11 string
+---@field StoreHouse_12 string
+---@field StoreHouse_13 string
+---@field StoreHouse_14 string
+---@field StoreHouse_15 string
+---@field StoreHouse_16 string
+---@field StoreHouse_17 string
+---@field StoreHouse_18 string
+---@field StoreHouse_19 string
+---@field StoreHouse_2 string
+---@field StoreHouse_20 string
+---@field StoreHouse_21 string
+---@field StoreHouse_22 string
+---@field StoreHouse_23 string
+---@field StoreHouse_24 string
+---@field StoreHouse_3 string
+---@field StoreHouse_4 string
+---@field StoreHouse_5 string
+---@field StoreHouse_6 string
+---@field StoreHouse_7 string
+---@field StoreHouse_8 string
+---@field StoreHouse_9 string
+---@field WinChruch_1 string
+---@field WinChruch_10 string
+---@field WinChruch_11 string
+---@field WinChruch_12 string
+---@field WinChruch_13 string
+---@field WinChruch_14 string
+---@field WinChruch_15 string
+---@field WinChruch_16 string
+---@field WinChruch_2 string
+---@field WinChruch_3 string
+---@field WinChruch_4 string
+---@field WinChruch_5 string
+---@field WinChruch_6 string
+---@field WinChruch_7 string
+---@field WinChruch_8 string
+---@field WinChruch_9 string
+---@field achievement_abyss_1 string
+---@field achievement_abyss_2 string
+---@field achievement_abyss_3 string
+---@field achievement_abyss_4 string
+---@field achievement_adela_obsidian_legion string
+---@field achievement_boss_demon_king string
+---@field achievement_boss_hero_phase3 string
+---@field achievement_boss_holy_judgement string
+---@field achievement_boss_night_avatar string
+---@field achievement_burn_20 string
+---@field achievement_choose_branch string
+---@field achievement_clean_shot string
+---@field achievement_clear_adela string
+---@field achievement_clear_ameliya string
+---@field achievement_clear_caroline string
+---@field achievement_clear_coco string
+---@field achievement_clear_emiya string
+---@field achievement_clear_nana string
+---@field achievement_clear_once string
+---@field achievement_clear_slot string
+---@field achievement_clear_vivian string
+---@field achievement_create_magic string
+---@field achievement_damage_2000 string
+---@field achievement_defend_400 string
+---@field achievement_die_by_alchemy string
+---@field achievement_die_by_contract string
+---@field achievement_extraordinary_9999 string
+---@field achievement_gold_1 string
+---@field achievement_heal_100 string
+---@field achievement_hp_1000_before_12 string
+---@field achievement_large_deck string
+---@field achievement_lucky_cap string
+---@field achievement_max_hp string
+---@field achievement_nana_devour_teammate string
+---@field achievement_one_hit_kill string
+---@field achievement_perceive_cap string
+---@field achievement_play_30 string
+---@field achievement_prebattle_setup string
+---@field achievement_resentment_99 string
+---@field achievement_resurrect_3 string
+---@field achievement_safebox string
+---@field achievement_send_emoji string
+---@field achievement_skip_card_reward string
+---@field achievement_small_deck string
+---@field achievement_statue_all string
+---@field achievement_statue_upgrade string
+---@field achievement_strength_cap string
+---@field achievement_third_tier_spell string
+---@field achievement_tutorial_ameliya string
+---@field achievement_unload_relic string
+---@field achievement_win_without_card string
+---@field achievement_wisdom_cap string
+---@field achievement_witch_skill string
 ---@field blessing_1 string
 ---@field blessing_10 string
 ---@field blessing_101 string
@@ -2550,7 +1647,18 @@ function GameConfigManager:GetOneById(id) end
 ---@field blessing_38 string
 ---@field blessing_39 string
 ---@field blessing_4 string
+---@field blessing_40 string
+---@field blessing_41 string
+---@field blessing_42 string
+---@field blessing_43 string
+---@field blessing_44 string
+---@field blessing_45 string
+---@field blessing_46 string
+---@field blessing_47 string
+---@field blessing_48 string
+---@field blessing_49 string
 ---@field blessing_5 string
+---@field blessing_50 string
 ---@field blessing_6 string
 ---@field blessing_7 string
 ---@field blessing_8 string
@@ -2568,13 +1676,21 @@ function GameConfigManager:GetOneById(id) end
 ---@field blood_7 string
 ---@field blood_8 string
 ---@field blood_9 string
+---@field buff_AllDharmas string
 ---@field buff_BonePiercingSpike string
 ---@field buff_ChaosMark string
 ---@field buff_DoomPower string
 ---@field buff_EnergyStorage string
 ---@field buff_GuleiSummoningArt string
----@field buff_Lilith_s_Pact string
+---@field buff_LilithsPact string
+---@field buff_ProfaneButterflyHymn string
 ---@field buff_RegenerationPrayer string
+---@field buff_ReturnAgain string
+---@field buff_ReturnAgainDoubleNext string
+---@field buff_Soul string
+---@field buff_SpellNextClearImpregnable string
+---@field buff_SpellNextPower2Draw2 string
+---@field buff_VowPower string
 ---@field buff_WailingWall string
 ---@field buff_barkhide string
 ---@field buff_biologicalArmor string
@@ -2605,14 +1721,27 @@ function GameConfigManager:GetOneById(id) end
 ---@field buff_lifelink string
 ---@field buff_limitdamage string
 ---@field buff_oblivion string
----@field buff_obsidianKnight string
----@field buff_obsidianQueen string
----@field buff_obsidianSoldier string
 ---@field buff_oniblood string
 ---@field buff_poised string
+---@field buff_rebirth string
+---@field buff_resentment string
 ---@field buff_resilient string
 ---@field buff_revelation string
 ---@field buff_reverie string
+---@field buff_ritualasceticism string
+---@field buff_ritualbloodsacrifice string
+---@field buff_ritualbountygold string
+---@field buff_ritualbountymana string
+---@field buff_ritualcatalyst string
+---@field buff_ritualcourage string
+---@field buff_ritualcycle string
+---@field buff_ritualechostaff string
+---@field buff_ritualenlightenment string
+---@field buff_ritualoverload string
+---@field buff_ritualpyre string
+---@field buff_ritualsolidify string
+---@field buff_ritualsublimation string
+---@field buff_ritualtimeprison string
 ---@field buff_rotten string
 ---@field buff_sourcecast string
 ---@field buff_swordIntent string
@@ -2654,16 +1783,23 @@ function GameConfigManager:GetOneById(id) end
 ---@field career_4 string
 ---@field career_5 string
 ---@field career_6 string
+---@field career_7 string
+---@field career_8 string
 ---@field careercard_1 string
+---@field careercard_10 string
+---@field careercard_11 string
 ---@field careercard_2 string
 ---@field careercard_3 string
 ---@field careercard_4 string
 ---@field careercard_5 string
 ---@field careercard_6 string
 ---@field careercard_7 string
+---@field careercard_8 string
+---@field careercard_9 string
 ---@field coin_1 string
 ---@field coin_2 string
 ---@field coin_3 string
+---@field coin_4 string
 ---@field combo_1 string
 ---@field combo_10 string
 ---@field combo_11 string
@@ -2697,6 +1833,8 @@ function GameConfigManager:GetOneById(id) end
 ---@field cursecard_11 string
 ---@field cursecard_12 string
 ---@field cursecard_13 string
+---@field cursecard_14 string
+---@field cursecard_15 string
 ---@field cursecard_2 string
 ---@field cursecard_3 string
 ---@field cursecard_4 string
@@ -2705,6 +1843,15 @@ function GameConfigManager:GetOneById(id) end
 ---@field cursecard_7 string
 ---@field cursecard_8 string
 ---@field cursecard_9 string
+---@field destiny_1 string
+---@field destiny_2 string
+---@field destiny_3 string
+---@field destiny_4 string
+---@field destiny_5 string
+---@field destiny_6 string
+---@field destiny_7 string
+---@field destiny_8 string
+---@field destiny_9 string
 ---@field effect_damage string
 ---@field elementscard_1 string
 ---@field elementscard_10 string
@@ -2726,6 +1873,7 @@ function GameConfigManager:GetOneById(id) end
 ---@field enchtag_13 string
 ---@field enchtag_14 string
 ---@field enchtag_15 string
+---@field enchtag_16 string
 ---@field enchtag_2 string
 ---@field enchtag_3 string
 ---@field enchtag_4 string
@@ -2735,10 +1883,19 @@ function GameConfigManager:GetOneById(id) end
 ---@field enchtag_8 string
 ---@field enchtag_9 string
 ---@field ending_1 string
+---@field ending_10 string
+---@field ending_11 string
+---@field ending_12 string
+---@field ending_13 string
+---@field ending_14 string
 ---@field ending_2 string
 ---@field ending_3 string
 ---@field ending_4 string
 ---@field ending_5 string
+---@field ending_6 string
+---@field ending_7 string
+---@field ending_8 string
+---@field ending_9 string
 ---@field enemy_10001 string
 ---@field enemy_10002 string
 ---@field enemy_10003 string
@@ -2764,8 +1921,6 @@ function GameConfigManager:GetOneById(id) end
 ---@field enemy_10027 string
 ---@field enemy_10028 string
 ---@field enemy_10029 string
----@field enemy_10030 string
----@field enemy_10031 string
 ---@field enemy_10032 string
 ---@field enemy_10033 string
 ---@field enemy_10034 string
@@ -2788,7 +1943,19 @@ function GameConfigManager:GetOneById(id) end
 ---@field enemy_10051 string
 ---@field enemy_10052 string
 ---@field enemy_10053 string
+---@field enemy_10054 string
+---@field enemy_10055 string
+---@field enemy_10056 string
+---@field enemy_10057 string
+---@field enemy_10058 string
+---@field enemy_10059 string
+---@field enemy_10060 string
+---@field enemy_10061 string
 ---@field enemy_99999 string
+---@field enemycard_CAR_Hammer string
+---@field enemycard_CAR_Shield string
+---@field enemycard_CAR_Spear string
+---@field enemycard_CAR_Sword string
 ---@field enemycard_Charge1 string
 ---@field enemycard_Charge2 string
 ---@field enemycard_Come string
@@ -2799,6 +1966,9 @@ function GameConfigManager:GetOneById(id) end
 ---@field enemycard_FiveHit string
 ---@field enemycard_FullSupport string
 ---@field enemycard_GiantClawStrike string
+---@field enemycard_HJE_Dawn string
+---@field enemycard_HJE_HolyMachine string
+---@field enemycard_HJE_Judgment string
 ---@field enemycard_HighFly string
 ---@field enemycard_IceShield string
 ---@field enemycard_Licking string
@@ -2821,6 +1991,7 @@ function GameConfigManager:GetOneById(id) end
 ---@field enemycard_PowerlessCurse string
 ---@field enemycard_QuadrupleHits string
 ---@field enemycard_RoyalBarrier string
+---@field enemycard_Seduce string
 ---@field enemycard_SpreadWings string
 ---@field enemycard_SuperFireBall string
 ---@field enemycard_Thieves string
@@ -2863,6 +2034,26 @@ function GameConfigManager:GetOneById(id) end
 ---@field event_19 string
 ---@field event_2 string
 ---@field event_20 string
+---@field event_2001 string
+---@field event_2002 string
+---@field event_2003 string
+---@field event_2004 string
+---@field event_2005 string
+---@field event_2006 string
+---@field event_2007 string
+---@field event_2008 string
+---@field event_2009 string
+---@field event_2010 string
+---@field event_2011 string
+---@field event_2012 string
+---@field event_2013 string
+---@field event_2014 string
+---@field event_2015 string
+---@field event_2016 string
+---@field event_2017 string
+---@field event_2018 string
+---@field event_2019 string
+---@field event_2020 string
 ---@field event_21 string
 ---@field event_3 string
 ---@field event_4 string
@@ -2922,8 +2113,6 @@ function GameConfigManager:GetOneById(id) end
 ---@field level_10022 string
 ---@field level_10024 string
 ---@field level_10025 string
----@field level_10026 string
----@field level_10027 string
 ---@field level_10028 string
 ---@field level_10029 string
 ---@field level_10030 string
@@ -2944,11 +2133,16 @@ function GameConfigManager:GetOneById(id) end
 ---@field level_10045 string
 ---@field level_10046 string
 ---@field level_10047 string
+---@field level_10048 string
+---@field level_10049 string
+---@field level_10050 string
+---@field level_10051 string
+---@field level_10052 string
+---@field level_10053 string
+---@field level_10054 string
 ---@field level_99999 string
 ---@field luckycard_1 string
 ---@field luckycard_10 string
----@field luckycard_11 string
----@field luckycard_12 string
 ---@field luckycard_2 string
 ---@field luckycard_3 string
 ---@field luckycard_4 string
@@ -2961,6 +2155,11 @@ function GameConfigManager:GetOneById(id) end
 ---@field map_1 string
 ---@field map_10 string
 ---@field map_1000 string
+---@field map_1001 string
+---@field map_1002 string
+---@field map_1003 string
+---@field map_1004 string
+---@field map_1005 string
 ---@field map_11 string
 ---@field map_12 string
 ---@field map_13 string
@@ -2979,9 +2178,7 @@ function GameConfigManager:GetOneById(id) end
 ---@field map_26 string
 ---@field map_27 string
 ---@field map_28 string
----@field map_29 string
 ---@field map_3 string
----@field map_30 string
 ---@field map_31 string
 ---@field map_32 string
 ---@field map_33 string
@@ -3043,21 +2240,45 @@ function GameConfigManager:GetOneById(id) end
 ---@field nocard_2 string
 ---@field nocard_3 string
 ---@field nocard_4 string
+---@field nocard_5 string
 ---@field onlinecard_1 string
+---@field onlinecard_10 string
+---@field onlinecard_11 string
+---@field onlinecard_12 string
+---@field onlinecard_13 string
+---@field onlinecard_14 string
+---@field onlinecard_15 string
+---@field onlinecard_16 string
+---@field onlinecard_17 string
 ---@field onlinecard_2 string
 ---@field onlinecard_3 string
 ---@field onlinecard_4 string
 ---@field onlinecard_5 string
----@field outsideshop_1 string
+---@field onlinecard_6 string
+---@field onlinecard_7 string
+---@field onlinecard_8 string
+---@field onlinecard_9 string
 ---@field outsideshop_10 string
----@field outsideshop_11 string
----@field outsideshop_12 string
----@field outsideshop_13 string
----@field outsideshop_14 string
----@field outsideshop_15 string
 ---@field outsideshop_16 string
+---@field outsideshop_17 string
+---@field outsideshop_18 string
+---@field outsideshop_19 string
 ---@field outsideshop_2 string
+---@field outsideshop_20 string
+---@field outsideshop_21 string
+---@field outsideshop_22 string
+---@field outsideshop_23 string
+---@field outsideshop_24 string
+---@field outsideshop_25 string
+---@field outsideshop_26 string
+---@field outsideshop_27 string
+---@field outsideshop_28 string
+---@field outsideshop_29 string
 ---@field outsideshop_3 string
+---@field outsideshop_30 string
+---@field outsideshop_31 string
+---@field outsideshop_32 string
+---@field outsideshop_33 string
 ---@field outsideshop_4 string
 ---@field outsideshop_5 string
 ---@field outsideshop_6 string
@@ -3148,20 +2369,46 @@ function GameConfigManager:GetOneById(id) end
 ---@field relic_8 string
 ---@field relic_80 string
 ---@field relic_9 string
+---@field ritualcard_1 string
+---@field ritualcard_10 string
+---@field ritualcard_11 string
+---@field ritualcard_12 string
+---@field ritualcard_13 string
+---@field ritualcard_14 string
+---@field ritualcard_15 string
+---@field ritualcard_16 string
+---@field ritualcard_17 string
+---@field ritualcard_18 string
+---@field ritualcard_19 string
+---@field ritualcard_2 string
+---@field ritualcard_3 string
+---@field ritualcard_4 string
+---@field ritualcard_5 string
+---@field ritualcard_6 string
+---@field ritualcard_7 string
+---@field ritualcard_8 string
+---@field ritualcard_9 string
 ---@field role_Adele string
 ---@field role_Krisna string
 ---@field role_amelia string
+---@field role_berserker string
+---@field role_coco string
+---@field role_ermia string
+---@field role_little_krisna string
+---@field role_nana string
 ---@field role_narrator string
----@field shadowchat1_1 string
----@field shadowchat1_10 string
----@field shadowchat1_2 string
----@field shadowchat1_3 string
----@field shadowchat1_4 string
----@field shadowchat1_5 string
----@field shadowchat1_6 string
----@field shadowchat1_7 string
----@field shadowchat1_8 string
----@field shadowchat1_9 string
+---@field slotCal_1 string
+---@field slotCal_2 string
+---@field slotCal_3 string
+---@field slotCal_4 string
+---@field slotCal_5 string
+---@field slotReward_1 string
+---@field slotReward_2 string
+---@field slotReward_3 string
+---@field slotReward_4 string
+---@field slotReward_5 string
+---@field slotReward_6 string
+---@field slotReward_7 string
 ---@field testTask_1 string
 ---@field timekeeper_1 string
 ---@field timekeeper_10 string
@@ -3595,6 +2842,20 @@ CS.DataId = DataId
 ---@field Buff_resilient string
 ---@field Buff_revelation string
 ---@field Buff_reverie string
+---@field Buff_ritualasceticism string
+---@field Buff_ritualbloodsacrifice string
+---@field Buff_ritualbountygold string
+---@field Buff_ritualbountymana string
+---@field Buff_ritualcatalyst string
+---@field Buff_ritualcourage string
+---@field Buff_ritualcycle string
+---@field Buff_ritualechostaff string
+---@field Buff_ritualenlightenment string
+---@field Buff_ritualoverload string
+---@field Buff_ritualpyre string
+---@field Buff_ritualsolidify string
+---@field Buff_ritualsublimation string
+---@field Buff_ritualtimeprison string
 ---@field Buff_rotten string
 ---@field Buff_sourcecast string
 ---@field Buff_swordIntent string
@@ -4208,42 +3469,6 @@ DataIds = {}
 CS.DataIds = DataIds
 
 
----@class ModConfig : System.Object
----@field DirectoryName string
----@field ModName string
----@field ModVersion string
----@field ModAuthor string
----@field ModDescription string
----@field IconPath string
----@field Enabled boolean
----@field Dependencies System.Collections.Generic.List
----@field ModId string
-ModConfig = {}
----@alias CS.ModConfig ModConfig
-CS.ModConfig = ModConfig
-
----@return ModConfig
-function ModConfig.New() end
----@param id string
----@param newData System.Collections.Generic.Dictionary
-function ModConfig:SetDataConfig(id, newData) end
----@param id string
----@param key string
----@param value string
-function ModConfig:ModifyDataConfig(id, key, value) end
----@param originalPath string
----@param newPath string
-function ModConfig:RedirectSourcePath(originalPath, newPath) end
----@param methodName string
----@param _function XLua.LuaFunction
-function ModConfig:AddDynamicMethod(methodName, _function) end
----@param typeDotMethod string
----@param _function XLua.LuaFunction
-function ModConfig:AddMethodHookBefore(typeDotMethod, _function) end
----@param typeDotMethod string
----@param _function XLua.LuaFunction
-function ModConfig:AddMethodHookAfter(typeDotMethod, _function) end
-
 ---@class ObjectPool : Singleton
 ---@field Instance ObjectPool -- infered from Singleton`1[ObjectPool]
 ---@field GetInstance ObjectPool -- infered from Singleton`1[ObjectPool]
@@ -4310,22 +3535,26 @@ function RandomPool:DrawByTag(count, tagWeightDic) end
 ---@field playCount number
 ---@field Level Loxodon.Framework.Obfuscation.ObfuscatedInt
 ---@field Exp Loxodon.Framework.Obfuscation.ObfuscatedInt
+---@field time Loxodon.Framework.Obfuscation.ObfuscatedInt
 ---@field Gain System.Collections.Generic.Dictionary
 ---@field roleTable RoleTable
 ---@field TutorialData System.Collections.Generic.Dictionary
 ---@field IsTutorialCompleted System.Collections.Generic.Dictionary
 ---@field truth Loxodon.Framework.Obfuscation.ObfuscatedInt
 ---@field PlayerId string
+---@field UseCardPack System.Collections.Generic.HashSet
 ---@field Money number
----@field UseSc System.Collections.Generic.List
+---@field HardTags System.Collections.Generic.List
 ---@field UnLockDataConfigs System.Collections.Generic.HashSet
----@field achivementTable AchivementTable
+---@field AchievementTable Witch.UI.Window.AchievementTable
 ---@field BuyedItems System.Collections.Generic.Dictionary
+---@field UsedBuyedItems System.Collections.Generic.HashSet
 ---@field Items System.Collections.ObjectModel.ObservableCollection
 ---@field CardData System.Collections.Generic.List
 ---@field RelicData System.Collections.Generic.List
 ---@field MeetEvents System.Collections.Generic.Dictionary
 ---@field settingTable SettingTable
+---@field Time Loxodon.Framework.Obfuscation.ObfuscatedInt
 ---@field Saves System.Collections.Generic.List
 ---@field Truth Loxodon.Framework.Obfuscation.ObfuscatedInt
 ---@field Instance GameRuntimeData -- infered from Singleton`1[GameRuntimeData]
@@ -4372,6 +3601,18 @@ function ObfuscateIntConverter:WriteJson(writer, value, serializer) end
 ---@return Loxodon.Framework.Obfuscation.ObfuscatedInt
 function ObfuscateIntConverter:ReadJson(reader, objectType, existingValue, hasExistingValue, serializer) end
 
+---@class HardTagEntry : System.Object
+---@field Data System.Collections.Generic.Dictionary
+---@field DynamicValue number
+HardTagEntry = {}
+---@alias CS.HardTagEntry HardTagEntry
+CS.HardTagEntry = HardTagEntry
+
+---@param data System.Collections.Generic.Dictionary
+---@param dynamicValue number
+---@return HardTagEntry
+function HardTagEntry.New(data, dynamicValue) end
+
 ---@class ScriptExecutor : System.Object
 ---@field luaEnv XLua.LuaEnv
 ---@field luaTable XLua.LuaTable
@@ -4389,7 +3630,9 @@ function ObfuscateIntConverter:ReadJson(reader, objectType, existingValue, hasEx
 ---@field DefaultDice ScriptExecutor.DiceWrapper
 ---@field Vars System.Collections.Generic.IDictionary
 ---@field HandCard System.Collections.Generic.List
----@field CompiledSuccessfully boolean
+---@field WaitCard System.Collections.Generic.List
+---@field DeckCard System.Collections.Generic.List
+---@field UsedCard System.Collections.Generic.List
 ScriptExecutor = {}
 ---@alias CS.ScriptExecutor ScriptExecutor
 CS.ScriptExecutor = ScriptExecutor
@@ -4400,6 +3643,20 @@ function ScriptExecutor:SetHp(val) end
 function ScriptExecutor:SetMaxHp(val) end
 ---@param val string
 function ScriptExecutor:ChangeHp(val) end
+---@param val string
+function ScriptExecutor:PureChangeHp(val) end
+---@param val string
+function ScriptExecutor:ChangeSkill(val) end
+---@param id string
+function ScriptExecutor:AddCardById(id) end
+---@param Id string
+---@param toUsed boolean
+function ScriptExecutor:AddCardToDeckById(Id, toUsed) end
+---@param toUsed boolean
+function ScriptExecutor:AddFakeCard(toUsed) end
+---@param dataConfig DataConfig
+---@param toUsed boolean
+function ScriptExecutor:AddCardToFightManager(dataConfig, toUsed) end
 ---@param val string
 function ScriptExecutor:ChangeMaxHp(val) end
 ---@param buffId string
@@ -4416,6 +3673,10 @@ function ScriptExecutor:Resurrection(value) end
 function ScriptExecutor:ChangeDefence(val) end
 ---@param val string
 function ScriptExecutor:SetPower(val) end
+---@param val string
+function ScriptExecutor:DrawCount(val) end
+---@param val string
+function ScriptExecutor:ChangePower(val) end
 ---@param val string
 function ScriptExecutor:ChangeMaxPower(val) end
 function ScriptExecutor:ChangeRound() end
@@ -4436,10 +3697,12 @@ function ScriptExecutor:AddCardByUsedCardList(count, tag) end
 ---@param id string
 function ScriptExecutor:RandomAddCard(id) end
 ---@param val string
-function ScriptExecutor:ChangeMoney(val) end
+---@param changeMax string
+function ScriptExecutor:ChangeMoney(val, changeMax) end
 ---@param count string
 function ScriptExecutor:AddAction(count) end
 function ScriptExecutor:ShuffleDeck() end
+function ScriptExecutor:ShuffleHand() end
 ---@param val string
 function ScriptExecutor:ChangeCardTop(val) end
 ---@param count string
@@ -4448,39 +3711,109 @@ function ScriptExecutor:GetCardByTag(count, tag) end
 ---@param id string
 function ScriptExecutor:AddCard(id) end
 ---@param Id string
+---@param AddTag string
+function ScriptExecutor:AddCardByData(Id, AddTag) end
+---@param Id string
 function ScriptExecutor:ChangeCareer(Id) end
+---@param Isshow boolean
+function ScriptExecutor:ChangeSummon(Isshow) end
 ---@param eventName string
 ---@param script System.Action | function
 function ScriptExecutor:AddEvent(eventName, script) end
 ---@param eventName string
 ---@param script System.Action | function
 function ScriptExecutor:AddTempEvent(eventName, script) end
+---@param name string
+---@param script System.Action | function
+function ScriptExecutor:AddEventWithVar(name, script) end
 ---@param varName string
 ---@param value string
 function ScriptExecutor:ChangeDynamicVar(varName, value) end
 ---@param varName string
 ---@param value string
 function ScriptExecutor:ChangeDynamicVarPercent(varName, value) end
+---@param type string
+---@param val string
+function ScriptExecutor:ChangeVars(type, val) end
+---@param key string
+---@param value number
+function ScriptExecutor:SetDamageFilter(key, value) end
+---@param key string
+---@param delta number
+function ScriptExecutor:AddDamageFilter(key, delta) end
+---@param key string
+function ScriptExecutor:RemoveDamageFilter(key) end
+function ScriptExecutor:ClearDamageFilter() end
+---@param val string
+---@param type string
+function ScriptExecutor:ThrowCard(val, type) end
+---@param val string
+---@param type string
+function ScriptExecutor:BurnCard(val, type) end
 ---@param args System.Object[]
 function ScriptExecutor:Undone(args) end
+---@param idata IDataConfig
+function ScriptExecutor:GetCardFromDeck(idata) end
+function ScriptExecutor:UpdateSkillTime() end
+---@param idata IDataConfig
+function ScriptExecutor:UseCard(idata) end
+---@param theData IDataConfig
+---@param tag string
+---@return boolean
+function ScriptExecutor:TagCheck(theData, tag) end
+---@param buffId string
+---@param action System.Action | function
+function ScriptExecutor:RepeatByBuffLevel(buffId, action) end
+---@param ritualBuffId string
+---@param eventName string
+function ScriptExecutor:RepeatRitualEcho(ritualBuffId, eventName) end
+function ScriptExecutor:UpdateAllDharmasSpellList() end
+function ScriptExecutor:ClearAllDharmasSpellList() end
+---@param outData DataConfig
+function ScriptExecutor:AddEnemyAction(outData) end
+---@param action System.Action | function
+function ScriptExecutor:FightRelicCheck(action) end
+---@param count string
+function ScriptExecutor:Resentment(count) end
+---@param thisId string
+---@return boolean
+function ScriptExecutor:CheckFrom(thisId) end
+---@param count string
+---@param onCardSelected System.Action | function
+---@param type string
+function ScriptExecutor:ChooseCardToAction(count, onCardSelected, type) end
+---@param count string
+---@param source System.Collections.Generic.List
+---@param AddTag string
+function ScriptExecutor:CopyCardWare(count, source, AddTag) end
+---@param count string
+---@param source System.Collections.Generic.List
+---@param AddTag string
+---@return Cysharp.Threading.Tasks.UniTask
+function ScriptExecutor:CopyCard(count, source, AddTag) end
+---@param config IDataConfig
+function ScriptExecutor:CreateCard(config) end
 function ScriptExecutor:DesEnemyAction() end
 ---@return FightType
 function ScriptExecutor:returnFightType() end
 ---@param fromdata IDataConfig
 function ScriptExecutor:BurnCardByData(fromdata) end
 function ScriptExecutor:UpdateRelicShow() end
+---@param count string
+function ScriptExecutor:ReplaceSelfRelicWithRandomRelic(count) end
+function ScriptExecutor:ComboSc() end
 ---@return boolean
 function ScriptExecutor:ComboCheck() end
 function ScriptExecutor:EndTheGame() end
 function ScriptExecutor:EscapeFight() end
-function ScriptExecutor:WinTheFight() end
----@param type FightType
-function ScriptExecutor:ChangeType(type) end
+function ScriptExecutor:LossFight() end
 ---@param count string
 function ScriptExecutor:RandomAddBuff(count) end
 ---@param count string
 function ScriptExecutor:RandomAddBuffAndAbility(count) end
-function ScriptExecutor:RandomAddGoodBuff() end
+---@param count string
+---@param type string
+function ScriptExecutor:RandomAddGoodBuff(count, type) end
 ---@param id string
 function ScriptExecutor:AddEnemy(id) end
 ---@return string
@@ -4502,23 +3835,12 @@ function ScriptExecutor:OnlineDamage(val, fromDataId, fromId, damagetype) end
 ---@param val string
 ---@param damagetype string
 function ScriptExecutor:Damage(val, damagetype) end
----@param type string
----@param val string
-function ScriptExecutor:ChangeVars(type, val) end
----@param val string
-function ScriptExecutor:DrawCount(val) end
----@param val string
-function ScriptExecutor:ChangePower(val) end
----@param val string
----@param type string
-function ScriptExecutor:ThrowCard(val, type) end
----@param val string
----@param type string
-function ScriptExecutor:BurnCard(val, type) end
 ---@param Minrarity string
 ---@param Maxrairty string
 ---@return System.Collections.Generic.List
 function ScriptExecutor:GetcardsByRarity(Minrarity, Maxrairty) end
+---@return System.Collections.Generic.List
+function ScriptExecutor:GetcardsOutLock() end
 ---@return DataConfig
 function ScriptExecutor:EnchGetCard() end
 ---@param card IDataConfig
@@ -4526,14 +3848,24 @@ function ScriptExecutor:EnchGetCard() end
 function ScriptExecutor:CardGetEnch(card) end
 ---@param count string
 ---@param source System.Collections.Generic.List
+---@param action System.Action | function
+---@param DelayTime number
+function ScriptExecutor:PackToDeckAction(count, source, action, DelayTime) end
+---@param count string
+---@param source System.Collections.Generic.List
+---@param action System.Action | function
+---@param DelayTime number
+---@return Cysharp.Threading.Tasks.UniTask
+function ScriptExecutor:GetDeckUIToAction(count, source, action, DelayTime) end
+---@param count string
+---@param source System.Collections.Generic.List
 ---@param tag string
 ---@return Cysharp.Threading.Tasks.UniTask
 function ScriptExecutor:AddCardByDeck(count, source, tag) end
 ---@param count string
 ---@param source System.Collections.Generic.List
-function ScriptExecutor:SelectCardAndAddTag(count, source) end
----@param id string
-function ScriptExecutor:AddCardById(id) end
+---@param cardevent System.Action | function
+function ScriptExecutor:OutFightSelectCardToAction(count, source, cardevent) end
 ---@param searchId string
 function ScriptExecutor:SetStatusById(searchId) end
 ---@overload fun(self: ScriptExecutor, filter: string) : System.Collections.Generic.List
@@ -4578,30 +3910,6 @@ function ScriptExecutor:Clear() end
 ---@param parameters System.String[]
 ---@return boolean
 function ScriptExecutor:TrySendOnlineEvent(eventName, parameters) end
----@param eventName string
----@param datafrom System.Action | function
-function ScriptExecutor:AddEvent_HurtData(eventName, datafrom) end
----@param eventName string
----@param datafrom System.Action | function
-function ScriptExecutor:AddTempEvent_HurtData(eventName, datafrom) end
----@param eventName string
----@param datafrom System.Action | function
-function ScriptExecutor:AddEvent_ActionData(eventName, datafrom) end
----@param eventName string
----@param datafrom System.Action | function
-function ScriptExecutor:AddTempEvent_ActionData(eventName, datafrom) end
----@param eventName string
----@param datafrom System.Action | function
-function ScriptExecutor:AddEvent_DamageData(eventName, datafrom) end
----@param eventName string
----@param datafrom System.Action | function
-function ScriptExecutor:AddTempEvent_DamageData(eventName, datafrom) end
----@param eventName string
----@param datafrom System.Action | function
-function ScriptExecutor:AddEvent_NewEnemyData(eventName, datafrom) end
----@param eventName string
----@param datafrom System.Action | function
-function ScriptExecutor:AddTempEvent_NewEnemyData(eventName, datafrom) end
 
 ---@class ScriptExecutor.DiceWrapper : System.Object
 ---@field OnRoll System.Action | function
@@ -4634,9 +3942,7 @@ function ScriptExecutor.DiceWrapper:WithRange(min, max) end
 ---@field CardTopCount number
 ---@field enemylevel number
 ---@field enemyCount number
----@field usedCardListCount number
 ---@field CardTotalCount number
----@field CardCount number
 ---@field BlessingCount number
 ---@field Money number
 ---@field MoneyMultiplier number
@@ -4647,9 +3953,12 @@ function ScriptExecutor.DiceWrapper:WithRange(min, max) end
 ---@field Enemy FightType
 ---@field Pattern FightType
 ---@field Player FightType
+---@field Escape FightType
 ---@field CardList System.Collections.Generic.List
+---@field UnCardList System.Collections.Generic.List
 ---@field BlessingList System.Collections.Generic.List
 ---@field RelicList System.Collections.Generic.List
+---@field PlayerCount number
 ---@field Reward number
 ---@field Strength number
 ---@field DefaultRoll number
@@ -4660,6 +3969,10 @@ function ScriptExecutor.DiceWrapper:WithRange(min, max) end
 ---@field TempLucky number
 ---@field TempWisdom number
 ---@field SkillTime System.Collections.Generic.Dictionary
+---@field ChooseVars System.Collections.Generic.List
+---@field MainVarUpperBound number
+---@field SecondaryVarUpperBound number
+---@field OtherVarUpperBound number
 ---@field TempPerceive number
 ---@field PlayerName string
 ---@field SpecialVars System.Collections.Generic.Dictionary
@@ -4671,6 +3984,9 @@ CS.ScriptExecutor.PlayerInfo = ScriptExecutor.PlayerInfo
 function ScriptExecutor.PlayerInfo.GetTagDiff() end
 ---@param text string
 function ScriptExecutor.PlayerInfo.ChangeEventSubtip(text) end
+---@param type FightType
+function ScriptExecutor.PlayerInfo.ChangeType(type) end
+function ScriptExecutor.PlayerInfo.WinTheFight() end
 function ScriptExecutor.PlayerInfo.GiveWin() end
 ---@param instanceId string
 function ScriptExecutor.PlayerInfo.CopyCard(instanceId) end
@@ -4690,6 +4006,15 @@ function ScriptExecutor.PlayerInfo.RemoveRelic(id) end
 function ScriptExecutor.PlayerInfo.AddBless(id) end
 ---@param id string
 function ScriptExecutor.PlayerInfo.RemoveBless(id) end
+---@param id string
+---@param delayFrames number
+function ScriptExecutor.PlayerInfo.DelayAddCard(id, delayFrames) end
+---@param id string
+---@param delayFrames number
+function ScriptExecutor.PlayerInfo.DelayAddRelic(id, delayFrames) end
+---@param id string
+---@param delayFrames number
+function ScriptExecutor.PlayerInfo.DelayAddBless(id, delayFrames) end
 ---@param count string
 function ScriptExecutor.PlayerInfo.RandomAddBless(count) end
 ---@param count string
@@ -4698,6 +4023,10 @@ function ScriptExecutor.PlayerInfo.RandomAddRelic(count) end
 function ScriptExecutor.PlayerInfo.Goodbless(count) end
 ---@param count string
 function ScriptExecutor.PlayerInfo.RandomAddCard(count) end
+---@param rarity string
+function ScriptExecutor.PlayerInfo.RandomrelicByRarity(rarity) end
+---@param rarity string
+function ScriptExecutor.PlayerInfo.RandomcardByRarity(rarity) end
 ---@param count string
 function ScriptExecutor.PlayerInfo.RandomAddCardByDeck(count) end
 ---@param count string
@@ -4712,7 +4041,6 @@ function ScriptExecutor.PlayerInfo.StartLevel(type, id2) end
 function ScriptExecutor.PlayerInfo.ShowReward() end
 ---@param key string
 ---@param value string
----@return string
 function ScriptExecutor.PlayerInfo.SetGameVar(key, value) end
 ---@param key string
 ---@return string
@@ -4727,8 +4055,10 @@ function ScriptExecutor.PlayerInfo.ShowDialogue(id) end
 ---@param obj System.Object
 function ScriptExecutor.PlayerInfo.AddEvent(name, action, obj) end
 function ScriptExecutor.PlayerInfo.EndDialogue() end
----@param id string
-function ScriptExecutor.PlayerInfo.ShowDialogueBox(id) end
+---@param flag boolean
+function ScriptExecutor.PlayerInfo.HideDialogue(flag) end
+---@param data DataConfig
+function ScriptExecutor.PlayerInfo.AddCardByData(data) end
 ---@param options System.ValueTuple
 function ScriptExecutor.PlayerInfo.ShowOptions(options) end
 ---@param name string
@@ -4748,6 +4078,9 @@ function ScriptExecutor.PlayerInfo.EndEvent() end
 function ScriptExecutor.PlayerInfo.LockChoice(index) end
 ---@return System.Collections.Generic.IDictionary
 function ScriptExecutor.PlayerInfo.GetCareer() end
+---@param id string
+---@param progress number
+function ScriptExecutor.PlayerInfo.UpdateAch(id, progress) end
 ---@param value string
 function ScriptExecutor.PlayerInfo.ChangeSelected(value) end
 ---@param value string
@@ -4757,6 +4090,11 @@ function ScriptExecutor.PlayerInfo.UnlockItem(id) end
 ---@param text string
 function ScriptExecutor.PlayerInfo.ShowCaption(text) end
 function ScriptExecutor.PlayerInfo.QuitAndDeleteSave() end
+---@param iconPath string
+---@param title string
+---@param description string
+---@param tips string
+function ScriptExecutor.PlayerInfo.ShowItemShowUI(iconPath, title, description, tips) end
 
 ---@class TempDataManager : Singleton
 ---@field seeds System.Single[]
@@ -4778,7 +4116,72 @@ CS.TempDataManager = TempDataManager
 ---@return TempDataManager
 function TempDataManager.New() end
 ---@param seed number
+---@return boolean
+function TempDataManager.EnsureRandomReady(seed) end
+---@param seed number
 function TempDataManager:Random(seed) end
+
+---@class VisualScriptExecutor : System.Object
+---@field luaEnv XLua.LuaEnv
+---@field luaTable XLua.LuaTable
+---@field status IStatusManager
+---@field dataConfig IDataConfig
+---@field Vars System.Collections.Generic.IDictionary
+---@field Self IStatusManager
+---@field Object System.Collections.Generic.List
+---@field Target IStatusManager
+---@field ScriptDict System.Collections.Generic.Dictionary
+VisualScriptExecutor = {}
+---@alias CS.VisualScriptExecutor VisualScriptExecutor
+CS.VisualScriptExecutor = VisualScriptExecutor
+
+---@param dataConfig IDataConfig
+---@return VisualScriptExecutor
+function VisualScriptExecutor.New(dataConfig) end
+---@param id string
+function VisualScriptExecutor.ShowDialogue(id) end
+function VisualScriptExecutor.EndDialogue() end
+---@param flag boolean
+function VisualScriptExecutor.HideDialogue(flag) end
+---@param index number
+---@param x number
+---@param time number
+---@param delay number
+function VisualScriptExecutor.DoMoveX(index, x, time, delay) end
+---@param index number
+---@param y number
+---@param time number
+---@param delay number
+function VisualScriptExecutor.DoMoveY(index, y, time, delay) end
+---@param index number
+---@param scale number
+---@param time number
+---@param delay number
+function VisualScriptExecutor.DoScale(index, scale, time, delay) end
+---@param index number
+---@param time number
+function VisualScriptExecutor.DoFadeIn(index, time) end
+---@param index number
+---@param time number
+function VisualScriptExecutor.DoFadeOut(index, time) end
+---@param ScriptsName string
+function VisualScriptExecutor:RunScript(ScriptsName) end
+---@param ScriptName string
+---@param options Microsoft.CodeAnalysis.Scripting.ScriptOptions
+function VisualScriptExecutor:PreCompileScripts(ScriptName, options) end
+---@overload fun(self: VisualScriptExecutor, filter: string) : System.Collections.Generic.List
+---@overload fun(self: VisualScriptExecutor, statuses: System.Collections.Generic.IEnumerable) : System.Collections.Generic.List
+---@param statuses ZLinq.ValueEnumerable
+---@return System.Collections.Generic.List
+function VisualScriptExecutor:SetStatus(statuses) end
+---@param eventName string
+---@param parameters System.String[]
+---@return boolean
+function VisualScriptExecutor:TrySendOnlineEvent(eventName, parameters) end
+---@param eventName string
+---@param action System.Action | function
+function VisualScriptExecutor:AddEvent(eventName, action) end
+function VisualScriptExecutor:Clear() end
 
 ---@class EffectData : System.Object
 ---@field InitScript string
@@ -4794,6 +4197,12 @@ CS.EffectData = EffectData
 function EffectData.New() end
 ---@param dataconfig DataConfig
 function EffectData:Init(dataconfig) end
+
+---@class RaycastDeepProbe : UnityEngine.MonoBehaviour
+RaycastDeepProbe = {}
+---@alias CS.RaycastDeepProbe RaycastDeepProbe
+CS.RaycastDeepProbe = RaycastDeepProbe
+
 
 ---@class WarningFilter : UnityEngine.MonoBehaviour
 WarningFilter = {}
@@ -5032,6 +4441,8 @@ function FightPlayer:Init(instanceId) end
 ---@return System.Collections.IEnumerator
 function FightPlayer:DoAction() end
 function FightPlayer:OnDestroy() end
+---@param path string
+function FightPlayer:PlayAudio(path) end
 function FightPlayer:EndRound() end
 function FightPlayer:DeadEffect() end
 ---@return boolean
@@ -5055,6 +4466,16 @@ CS.Fight_EnemyTurn = Fight_EnemyTurn
 ---@return Fight_EnemyTurn
 function Fight_EnemyTurn.New() end
 function Fight_EnemyTurn:Init() end
+
+---@class Fight_Escape : FightUnit
+---@field RewardMul number
+Fight_Escape = {}
+---@alias CS.Fight_Escape Fight_Escape
+CS.Fight_Escape = Fight_Escape
+
+---@return Fight_Escape
+function Fight_Escape.New() end
+function Fight_Escape:Init() end
 
 ---@class Fight_Loss : FightUnit
 Fight_Loss = {}
@@ -5106,7 +4527,6 @@ function Fight_Start:Init() end
 
 ---@class Fight_Win : FightUnit
 ---@field RewardMul number
----@field IsWin boolean
 Fight_Win = {}
 ---@alias CS.Fight_Win Fight_Win
 CS.Fight_Win = Fight_Win
@@ -5143,7 +4563,8 @@ CS.Enemy = Enemy
 ---@param dataConfig DataConfig
 ---@param SumOfEnemyPositive number
 ---@param index number
-function Enemy:Init(dataConfig, SumOfEnemyPositive, index) end
+---@param ExHp number
+function Enemy:Init(dataConfig, SumOfEnemyPositive, index, ExHp) end
 function Enemy:AddCardList() end
 ---@return System.Collections.IEnumerator
 function Enemy:DoAction() end
@@ -5166,6 +4587,8 @@ CS.EnemyManager = EnemyManager
 function EnemyManager.New() end
 ---@param id string
 function EnemyManager:LoadRes(id) end
+---@return boolean
+function EnemyManager:TrySpawnNextWheelEnemy() end
 ---@param id string
 ---@return string
 function EnemyManager:AddEnemy(id) end
@@ -5236,9 +4659,13 @@ CS.OtherObj = OtherObj
 ---@param SumOfEnemyPositive number
 ---@param index number
 function OtherObj:Init(fromdata, SumOfEnemyPositive, index) end
+---@param outData DataConfig
+function OtherObj:AddAction(outData) end
 ---@return System.Collections.IEnumerator
 function OtherObj:DoAction() end
 function OtherObj:EndRound() end
+---@overload fun(self: OtherObj, isShow: boolean)
+function OtherObj:ShowAction() end
 ---@param index number
 function OtherObj:AnnounceDesAction(index) end
 ---@param index number
@@ -5254,7 +4681,6 @@ function OtherObj:UpdateText(tempPar, text) end
 ---@return boolean
 function OtherObj:DoOneAction(i, isSingle) end
 function OtherObj:HideAction() end
-function OtherObj:ShowAction() end
 ---@return boolean
 function OtherObj:ActionJudge() end
 function OtherObj:AddCardList() end
@@ -5307,6 +4733,7 @@ function SkillItem:RunScript(ScriptName) end
 function SkillItem:Init(dataConfig) end
 function SkillItem:Awake() end
 function SkillItem:DataUpdate() end
+function SkillItem:UpdateSkillTime() end
 function SkillItem:RegisterEvent() end
 function SkillItem:OnDisable() end
 ---@return boolean
@@ -5332,7 +4759,6 @@ function SkillItem:OnPointerExit(eventData) end
 ---@field initPos UnityEngine.Vector3
 ---@field MiDataConfig DataConfig
 ---@field maxHp number
----@field _toughCount number
 ---@field curHp number
 ---@field defend number
 ---@field isResurrecting boolean
@@ -5346,21 +4772,57 @@ function SkillItem:OnPointerExit(eventData) end
 ---@field InstanceId string
 ---@field MirrorSc IScriptExecutor
 ---@field MaxHp number
----@field ToughOrigin number
----@field ToughCount number
 ---@field CurHp number
 ---@field Defend number
 ---@field dynamicVariables System.Collections.Generic.Dictionary
 ---@field dynamicVariablesLog System.Collections.Generic.Dictionary
+---@field HasFirstDeadReviveMark boolean
 StatusManager = {}
 ---@alias CS.StatusManager StatusManager
 CS.StatusManager = StatusManager
 
+---@param key string
+---@param value number
+---@param enqueue boolean
+function StatusManager:SetDynamicVariable(key, value, enqueue) end
+---@return IStatusManager.AnimatedState
+function StatusManager:ConsumeHitReactionAnimationState() end
+---@param key string
+---@param delta number
+---@param enqueue boolean
+function StatusManager:AddDynamicVariable(key, delta, enqueue) end
+---@param key string
+---@param value number
+---@param enqueue boolean
+function StatusManager:SetDamageFilter(key, value, enqueue) end
+---@param key string
+---@param delta number
+---@param enqueue boolean
+function StatusManager:AddDamageFilter(key, delta, enqueue) end
+---@param key string
+---@param enqueue boolean
+function StatusManager:RemoveDamageFilter(key, enqueue) end
+---@param enqueue boolean
+function StatusManager:ClearDamageFilter(enqueue) end
+---@return boolean
+function StatusManager:TryMarkFirstDeadRevive() end
+---@return boolean
+function StatusManager:TryConsumeFirstDeadReviveMark() end
+function StatusManager:ResetFirstDeadReviveMark() end
+---@param Isshow boolean
+function StatusManager:ShowSummon(Isshow) end
 ---@param sprite UnityEngine.Sprite
 function StatusManager:SetSprite(sprite) end
+function StatusManager:CancelGraveVisualPlayback() end
+function StatusManager:EnterGraveVisual() end
+---@param onComplete System.Action | function
+function StatusManager:PlayReviveFromGraveVisual(onComplete) end
 ---@param path string
 ---@param name string
 function StatusManager:AddSummon(path, name) end
+---@param name string
+---@return Witch.Core.SummonObject
+function StatusManager:FindSummon(name) end
 ---@param name string
 function StatusManager:RemoveSummon(name) end
 function StatusManager:OnSelect() end
@@ -5370,6 +4832,8 @@ function StatusManager:ResetAnimator(replaceImmediate) end
 ---@param replaceImmediate boolean
 ---@return UnityEngine.Sprite
 function StatusManager:InitAnimator(replaceImmediate) end
+---@param fromId string
+function StatusManager:ClearBuffById(fromId) end
 function StatusManager:InitVocal() end
 function StatusManager:ResetVocal() end
 ---@param father FightObject
@@ -5395,7 +4859,9 @@ function StatusManager:PlayVocal(state) end
 ---@param Delay number
 function StatusManager:EnemyDead(Delay) end
 function StatusManager:UpdateEffectList() end
-function StatusManager:UpdateTough() end
+---@param spellChain string
+function StatusManager:UpdateAllDharmasSpellList(spellChain) end
+function StatusManager:ClearAllDharmasSpellList() end
 ---@param state IStatusManager.State
 function StatusManager:ChangeState(state) end
 ---@param BaseDamage number
@@ -5438,8 +4904,6 @@ function StatusManager:OnPointerExit(eventData) end
 ---@field maxHp number
 ---@field curHp number
 ---@field defend number
----@field _toughCount number
----@field ToughOrigin number
 ---@field InstanceId string
 StatusDataTransfer = {}
 ---@alias CS.StatusDataTransfer StatusDataTransfer
@@ -5483,6 +4947,8 @@ function StatusManagerConverter:ReadJson(reader, objectType, existingValue, hasE
 ---@field NowBackground UnityEngine.GameObject
 ---@field WarmupFontAssets System.Collections.Generic.List
 ---@field MainFontAsset TMPro.TMP_FontAsset
+---@field HouseItem UnityEngine.GameObject
+---@field breakObj UnityEngine.GameObject
 GameApp = {}
 ---@alias CS.GameApp GameApp
 CS.GameApp = GameApp
@@ -5491,6 +4957,9 @@ function GameApp:ChangeTransportToSteam() end
 function GameApp:ChangeTransportToKCP() end
 function GameApp:StartMenu() end
 function GameApp:StartHouse() end
+---@param ray boolean
+function GameApp:SetHouseRay(ray) end
+function GameApp:CloseHouse() end
 function GameApp:StartBreaks() end
 function GameApp:StartGame() end
 ---@param roleTable RoleTable
@@ -5509,10 +4978,12 @@ function GameApp:OpenBackpack(context) end
 function GameApp:ReturnToMenu() end
 ---@param state string
 function GameApp:SetSteamRichState(state) end
+function GameApp:PreventCut() end
 
 ---@class AudioManager : UnityEngine.MonoBehaviour
 ---@field Instance AudioManager
 ---@field EffectVolume number
+---@field NarrationVolume number
 ---@field bgmVolume number
 ---@field NowBGMName string
 ---@field masterVolume number
@@ -5527,4486 +4998,19 @@ function AudioManager:ChangeMasterVolume(volume) end
 function AudioManager:ChangeBgmVolume(volume) end
 ---@param volume number
 function AudioManager:ChangeEffectVolume(volume) end
+---@param volume number
+function AudioManager:ChangeNarration(volume) end
 ---@overload fun(self: AudioManager, name: string, next: boolean)
 ---@overload fun(self: AudioManager, bgmList: BGMList, next: boolean)
 ---@param bgmList System.Collections.Generic.List
 ---@param bgmListName string
 ---@param next boolean
-function AudioManager:PlayBGMList(bgmList, bgmListName, next) end
+---@param keepPlayingInBackground boolean
+function AudioManager:PlayBGMList(bgmList, bgmListName, next, keepPlayingInBackground) end
 ---@overload fun(self: AudioManager, name: string)
 ---@param clip UnityEngine.AudioClip
 function AudioManager:PlayEffect(clip) end
+---@overload fun(self: AudioManager, roleId: string, clip: UnityEngine.AudioClip)
 ---@param roleId string
----@param clip UnityEngine.AudioClip
-function AudioManager:PlayVocal(roleId, clip) end
-
----@class DialogueManager : Singleton
----@field Identity System.Collections.Generic.Dictionary
----@field IsChat boolean
----@field Instance DialogueManager -- infered from Singleton`1[DialogueManager]
----@field GetInstance DialogueManager -- infered from Singleton`1[DialogueManager]
-DialogueManager = {}
----@alias CS.DialogueManager DialogueManager
-CS.DialogueManager = DialogueManager
-
----@return DialogueManager
-function DialogueManager.New() end
-function DialogueManager:Init() end
----@param id string
-function DialogueManager:ShowDialogue(id) end
----@param id string
-function DialogueManager:ShowDialogueBox(id) end
----@param instanceId string
----@param emoji GifAsset
-function DialogueManager:ShowEmoji(instanceId, emoji) end
-function DialogueManager:NextDialogue() end
-function DialogueManager:NextDialogueBox() end
----@param options System.ValueTuple
-function DialogueManager:ShowOptions(options) end
-function DialogueManager:EndDialogue() end
-
----@class FightCardManager : System.Object
----@field cardList System.Collections.ObjectModel.ObservableCollection
----@field tempList System.Collections.Generic.List
----@field usedCardList System.Collections.ObjectModel.ObservableCollection
----@field FightcardList System.Collections.Generic.List
----@field CardTags System.Collections.Generic.Dictionary
----@field Instance FightCardManager
-FightCardManager = {}
----@alias CS.FightCardManager FightCardManager
-CS.FightCardManager = FightCardManager
-
----@return FightCardManager
-function FightCardManager.New() end
-function FightCardManager:Init() end
-function FightCardManager:RandomIndex() end
----@return boolean
-function FightCardManager:HasCard() end
----@return DataConfig
-function FightCardManager:DrawCard() end
-
----@class FightManager : Mirror.NetworkBehaviour
----@field Instance FightManager
----@field IsFake boolean
----@field fightType FightType
----@field level string
----@field ValueDice ScriptExecutor.DiceWrapper
----@field CheckDice ScriptExecutor.DiceWrapper
----@field DefaultDice ScriptExecutor.DiceWrapper
----@field roleQueue System.Collections.Generic.List
----@field ActionQueue System.Collections.Generic.List
----@field statuses System.Collections.Generic.Dictionary
----@field statusData System.Collections.Generic.Dictionary
----@field TempVarsMap System.Collections.Generic.Dictionary
----@field eventList System.Collections.Generic.Queue
----@field targetList System.Collections.Generic.Queue
----@field enemyManager EnemyManager
----@field patternManager PatternManager
----@field SumOfEnemyPositive number
----@field NowActionRole string
----@field waitCount number
----@field wantLevel string
----@field ReSetCount number
----@field TempRoleList System.Collections.Generic.Dictionary
----@field IsRet boolean
----@field selfIndex string
----@field NetworkNowActionRole string
-FightManager = {}
----@alias CS.FightManager FightManager
-CS.FightManager = FightManager
-
-function FightManager:ResetWaitCount() end
----@param level string
-function FightManager:ReadyToInit(level) end
-function FightManager:RpcFightCheck() end
-function FightManager:ReadyToStart() end
----@param level string
-function FightManager:ReSetFight(level) end
-function FightManager:ClearFightui() end
----@param action string
----@param Id string
----@param fromId string
----@param theData string
----@param Vars System.String[]
-function FightManager:CmdSendEvent(action, Id, fromId, theData, Vars) end
----@param level string
----@param roleQueueStream System.Byte[]
----@param fromtempRoleListStream System.Byte[]
----@param positive number
-function FightManager:Init(level, roleQueueStream, fromtempRoleListStream, positive) end
----@param enemyId string
-function FightManager:CmdAddEnemy(enemyId) end
----@param enemyId string
-function FightManager:RpcAddEnemy(enemyId) end
----@param statusData StatusDataTransfer
-function FightManager:SyncStatus(statusData) end
----@param type FightType
-function FightManager:CmdChangeType(type) end
----@param instanceId string
-function FightManager:CmdPlayChange(instanceId) end
----@param instanceId string
----@param isDead boolean
-function FightManager:CmdAnnounceDone(instanceId, isDead) end
-function FightManager:EndPlayerturn() end
-function FightManager:TurnEnd() end
----@param conn Mirror.NetworkConnection
----@param newType FightType
----@param nowAction string
-function FightManager:TargetChangeUnit(conn, newType, nowAction) end
----@param newType FightType
-function FightManager:ChangeUnit(newType) end
----@overload fun(self: FightManager, statusCommand: IStatusCommand)
----@param statusCommand IStatusCommand
----@param conn Mirror.NetworkConnection
-function FightManager:EnqueueEvent(statusCommand, conn) end
----@param target Mirror.NetworkConnection
----@param objCommand Fight.ObjTarget.ObjTargetBase
-function FightManager:TargetEnqueueEvent(target, objCommand) end
----@param statusCommand Fight.StatusCommand.ClientCommandBase
-function FightManager:CmdEnqueueEvent(statusCommand) end
----@param conn Mirror.NetworkConnectionToClient
-function FightManager:CmdCheckDead(conn) end
----@return System.Collections.IEnumerator
-function FightManager:DOAllAction() end
----@param CareerId string
----@param playerIdentity string
-function FightManager:CmdChangeCareer(CareerId, playerIdentity) end
----@param CareerId string
----@param playerIdentity string
-function FightManager:RpcChangeCareer(CareerId, playerIdentity) end
----@param instanceId string
----@param index string
-function FightManager:CmdActionChange(instanceId, index) end
----@param instanceId string
----@param index string
-function FightManager:RpcActionChange(instanceId, index) end
----@param fightObject FightObject
----@return System.Collections.IEnumerator
-function FightManager:DoAction(fightObject) end
----@return boolean
-function FightManager:Weaved() end
----@param writer Mirror.NetworkWriter
----@param forceAll boolean
-function FightManager:SerializeSyncVars(writer, forceAll) end
----@param reader Mirror.NetworkReader
----@param initialState boolean
-function FightManager:DeserializeSyncVars(reader, initialState) end
-
----@class FightManager.RoleData : System.Object
----@field InstanceId string
----@field MaxHp number
----@field CurHp number
----@field Defend number
----@field State IStatusManager.State
----@field career DataConfig
-FightManager.RoleData = {}
----@alias CS.FightManager.RoleData FightManager.RoleData
-CS.FightManager.RoleData = FightManager.RoleData
-
----@overload fun() : FightManager.RoleData
----@param instanceId string
----@return FightManager.RoleData
-function FightManager.RoleData.New(instanceId) end
-
----@class MapManager : Mirror.NetworkBehaviour
----@field ModeMapManager Witch.IModeManager
----@field CurrentMode string
----@field mapList System.String[]
----@field mapData System.String[]
----@field SumOfEnemyPositive number
----@field eventWait number
----@field eventDone number
----@field Instance MapManager
----@field MapTree MapTree
----@field Level number
----@field NowDice Dice
----@field NetworkSumOfEnemyPositive number
-MapManager = {}
----@alias CS.MapManager MapManager
-CS.MapManager = MapManager
-
-function MapManager:Awake() end
-function MapManager:RpcTryChange() end
----@param mapManager string
-function MapManager:SetMap(mapManager) end
-function MapManager:TryChange() end
----@param conn Mirror.NetworkConnectionToClient
-function MapManager:ReadyToChangeMap(conn) end
----@param conn Mirror.NetworkConnectionToClient
-function MapManager:CmdReadyToNextMap(conn) end
-function MapManager:CmdNextMap() end
----@param mapSelectUI Witch.UI.Window.MapSelectUI
-function MapManager:MapUIStart(mapSelectUI) end
-function MapManager:RpcNextMap() end
-function MapManager:ResetEvent() end
-function MapManager:CmdAnnounceEventWait() end
-function MapManager:CmdEventWait() end
----@param type string
----@param id string
-function MapManager:RpcLoadMap(type, id) end
-function MapManager:CloseMapUI() end
----@param diceJSON string
-function MapManager:RpcSyncDice(diceJSON) end
----@param level number
-function MapManager:SetLevel(level) end
----@param seed number
-function MapManager:RpcSyncRandom(seed) end
----@param mapSelectUI Witch.UI.Window.MapSelectUI
-function MapManager:MapItemInit(mapSelectUI) end
----@param maps System.String[]
----@param mapdata System.String[]
----@param conn Mirror.NetworkConnectionToClient
-function MapManager:CmdSelectMap(maps, mapdata, conn) end
----@param conn Mirror.NetworkConnection
----@param maps System.String[]
----@param mapdata System.String[]
-function MapManager:TargetUpdateMap(conn, maps, mapdata) end
----@param battleRewardsUI Witch.UI.Window.BattleRewardsUI
-function MapManager:SetReward(battleRewardsUI) end
----@param identity Mirror.NetworkIdentity
-function MapManager:RemoveReady(identity) end
----@return boolean
-function MapManager:WinTheGame() end
----@return boolean
-function MapManager:Weaved() end
----@param writer Mirror.NetworkWriter
----@param forceAll boolean
-function MapManager:SerializeSyncVars(writer, forceAll) end
----@param reader Mirror.NetworkReader
----@param initialState boolean
-function MapManager:DeserializeSyncVars(reader, initialState) end
-
----@class TutorialManager : Singleton
----@field Instance TutorialManager -- infered from Singleton`1[TutorialManager]
----@field GetInstance TutorialManager -- infered from Singleton`1[TutorialManager]
-TutorialManager = {}
----@alias CS.TutorialManager TutorialManager
-CS.TutorialManager = TutorialManager
-
----@return TutorialManager
-function TutorialManager.New() end
-function TutorialManager:Init() end
-
----@class GameServer : Mirror.NetworkBehaviour
----@field EndCommit boolean
----@field LobbyInfo LobbyInfo
----@field RoleTables System.Collections.Generic.Dictionary
----@field isAcceptJoin boolean
----@field IsRoleTableSynced boolean
----@field EnemyDone boolean
----@field PatDone boolean
----@field Instance GameServer
-GameServer = {}
----@alias CS.GameServer GameServer
-CS.GameServer = GameServer
-
----@param roleTables System.Collections.Generic.Dictionary
-function GameServer:StartRole(roleTables) end
-function GameServer:StartGame() end
-function GameServer:RoleRes() end
----@param tomap System.Collections.Generic.Dictionary
-function GameServer:GetRoles(tomap) end
----@param roleTable RoleTable
-function GameServer:ReceiveRoleTable(roleTable) end
----@param onAllReceived System.Action | function
-function GameServer:CollectRoleTables(onAllReceived) end
-function GameServer:SaveGame() end
-function GameServer:EndGame() end
----@param playerId string
----@return boolean
-function GameServer:CheckOnline(playerId) end
----@return boolean
-function GameServer:Weaved() end
-
----@class PingSelection : Supabase.Postgrest.Models.BaseModel
----@field max_ping number
----@field average_ping number
----@field min_ping number
-PingSelection = {}
----@alias CS.PingSelection PingSelection
-CS.PingSelection = PingSelection
-
----@return PingSelection
-function PingSelection.New() end
-
----@class LatencyRecorder : UnityEngine.MonoBehaviour
----@field Instance LatencyRecorder
----@field AvgMs number
----@field MaxMs number
----@field MinMs number
----@field SampleCount number
-LatencyRecorder = {}
----@alias CS.LatencyRecorder LatencyRecorder
-CS.LatencyRecorder = LatencyRecorder
-
-function LatencyRecorder:StopAndReport() end
-
----@class LobbyInfo : System.Object
----@field AddedPlayers System.Collections.Generic.List
-LobbyInfo = {}
----@alias CS.LobbyInfo LobbyInfo
-CS.LobbyInfo = LobbyInfo
-
----@return LobbyInfo
-function LobbyInfo.New() end
-
----@class LobbyInfo.PlayerInfo : System.Object
----@field Name string
----@field Id string
----@field IsSyncedRole boolean
----@field Version string
----@field Mods ModConfig[]
----@field Connection Mirror.NetworkConnectionToClient
-LobbyInfo.PlayerInfo = {}
----@alias CS.LobbyInfo.PlayerInfo LobbyInfo.PlayerInfo
-CS.LobbyInfo.PlayerInfo = LobbyInfo.PlayerInfo
-
----@return LobbyInfo.PlayerInfo
-function LobbyInfo.PlayerInfo.New() end
-
----@class LobbyManager : Mirror.NetworkManager
----@field lobbyId number
----@field Instance LobbyManager
-LobbyManager = {}
----@alias CS.LobbyManager LobbyManager
-CS.LobbyManager = LobbyManager
-
-function LobbyManager:Awake() end
----@param conn Mirror.NetworkConnectionToClient
-function LobbyManager:OnServerDisconnect(conn) end
-function LobbyManager:OnClientDisconnect() end
----@param joined boolean
-function LobbyManager:UpdateSteamLobyState(joined) end
-function LobbyManager:QuitLobby() end
-function LobbyManager:OnApplicationQuit() end
----@param conn Mirror.NetworkConnectionToClient
-function LobbyManager:OnServerConnect(conn) end
-
----@class PlayerManager : Mirror.NetworkBehaviour
----@field playerInfo LobbyInfo.PlayerInfo
----@field LobbyInfos LobbyInfo
----@field ShareCards Mirror.SyncList
----@field ShareRelics Mirror.SyncList
----@field ShareFood Mirror.SyncList
----@field Instance PlayerManager
----@field PlayerId string
----@field NetworkplayerInfo LobbyInfo.PlayerInfo
----@field NetworkLobbyInfos LobbyInfo
-PlayerManager = {}
----@alias CS.PlayerManager PlayerManager
-CS.PlayerManager = PlayerManager
-
-function PlayerManager:StartGame() end
----@param conn Mirror.NetworkConnectionToClient
----@param message string
-function PlayerManager:ShowMessage(conn, message) end
----@param conn Mirror.NetworkConnectionToClient
----@param roleTable RoleTable
-function PlayerManager:RpcContinueToGame(conn, roleTable) end
----@param info LobbyInfo.PlayerInfo
----@param conn Mirror.NetworkConnectionToClient
-function PlayerManager:CmdJoinLobby(info, conn) end
----@param info LobbyInfo.PlayerInfo
-function PlayerManager:LeaveLobby(info) end
----@param players System.Collections.Generic.List
-function PlayerManager:RpcUpdateLobby(players) end
----@param ready boolean
----@param playerId string
-function PlayerManager:CmdReady(ready, playerId) end
----@param ready boolean
----@param playerId string
-function PlayerManager:RpcReady(ready, playerId) end
-function PlayerManager:RpcSyncRoleTables() end
-function PlayerManager:CmdChangeHide() end
----@param target Mirror.NetworkConnection
----@param roleTable RoleTable
----@param GetSaveType string
-function PlayerManager:RpcNewGameInit(target, roleTable, GetSaveType) end
-function PlayerManager:ChangeHide() end
----@param roleTable RoleTable
-function PlayerManager:CmdSyncRoleTable(roleTable) end
-function PlayerManager:CmdSendSave() end
-function PlayerManager:GameOver() end
----@param dataConfig string
----@param fromId string
-function PlayerManager:CmdSendCareer(dataConfig, fromId) end
----@param dataConfig string
----@param fromId string
-function PlayerManager:RpcSendCareer(dataConfig, fromId) end
----@param mapMode string
-function PlayerManager:RpcSetMapMode(mapMode) end
-function PlayerManager:OnStartClient() end
-function PlayerManager:CreateChatPanel() end
----@param value string
----@param fromId string
----@param type string
-function PlayerManager:CmdSendRoleTable(value, fromId, type) end
----@param value string
----@param fromId string
----@param type string
-function PlayerManager:RpcSendRoleTable(value, fromId, type) end
-function PlayerManager:RpcGameOver() end
----@param saveJson System.Byte[]
-function PlayerManager:CmdSyncHostSave(saveJson) end
----@param compressed System.Byte[]
-function PlayerManager:RpcHostSave(compressed) end
-function PlayerManager:OnPlayerDisconnected() end
----@param command Network.Command.RpcCommandBase
-function PlayerManager:SendRpcCommand(command) end
----@param command Network.Command.RpcCommandBase
-function PlayerManager:SendRpcCommandExcludeOwner(command) end
----@return boolean
-function PlayerManager:Weaved() end
----@param writer Mirror.NetworkWriter
----@param forceAll boolean
-function PlayerManager:SerializeSyncVars(writer, forceAll) end
----@param reader Mirror.NetworkReader
----@param initialState boolean
-function PlayerManager:DeserializeSyncVars(reader, initialState) end
-
----@class BlessingRelic : Singleton
----@field Instance BlessingRelic -- infered from Singleton`1[BlessingRelic]
----@field GetInstance BlessingRelic -- infered from Singleton`1[BlessingRelic]
-BlessingRelic = {}
----@alias CS.BlessingRelic BlessingRelic
-CS.BlessingRelic = BlessingRelic
-
----@return BlessingRelic
-function BlessingRelic.New() end
----@return BlessingRelic
-function BlessingRelic:Init() end
----@param status StatusManager
----@return BlessingRelic
-function BlessingRelic:Apply(status) end
----@return BlessingRelic
-function BlessingRelic:Clear() end
-
----@class AnimatorRole : UnityEngine.MonoBehaviour
----@field animationPerFrame number
----@field dataConfig DataConfig
----@field SpecialScale boolean
----@field OriPos UnityEngine.Vector2
----@field InstanceId string
----@field animationTimeCounter number
----@field BottomDistance number
----@field TopDistance number
-AnimatorRole = {}
----@alias CS.AnimatorRole AnimatorRole
-CS.AnimatorRole = AnimatorRole
-
----@param fromData DataConfig
----@param instanceId string
----@param needDialogueBox boolean
-function AnimatorRole:Init(fromData, instanceId, needDialogueBox) end
----@param path string
----@return string
-function AnimatorRole:TryGetAnimationConfig(path) end
----@param sprite UnityEngine.Sprite
----@param instanceId string
-function AnimatorRole:InitSprite(sprite, instanceId) end
-function AnimatorRole:GetConfig() end
-
----@class RandomMove : UnityEngine.MonoBehaviour
-RandomMove = {}
----@alias CS.RandomMove RandomMove
-CS.RandomMove = RandomMove
-
-
----@class RorationFix : UnityEngine.MonoBehaviour
-RorationFix = {}
----@alias CS.RorationFix RorationFix
-CS.RorationFix = RorationFix
-
-
----@class UIAnimation : UnityEngine.MonoBehaviour
----@field FPS number
----@field SpriteFrames System.Collections.Generic.List
----@field FrameDurations System.Collections.Generic.List
----@field GifAsset GifAsset
----@field IsPlaying boolean
----@field Foward boolean
----@field AutoPlay boolean
----@field Loop boolean
----@field OnComplete System.Action | function
----@field SourceSize boolean
----@field SliceImage boolean
----@field FrameCount number
-UIAnimation = {}
----@alias CS.UIAnimation UIAnimation
-CS.UIAnimation = UIAnimation
-
----@param idx number
-function UIAnimation:SetSprite(idx) end
----@param gif GifAsset
-function UIAnimation:SetGif(gif) end
-function UIAnimation:Play() end
-function UIAnimation:PlayReverse() end
-function UIAnimation:Pause() end
-function UIAnimation:Resume() end
-function UIAnimation:Stop() end
-function UIAnimation:Rewind() end
-
----@class UIParallax : UnityEngine.MonoBehaviour
----@field uiElements UnityEngine.RectTransform[]
----@field parallaxSpeeds System.Single[]
----@field minPositions UnityEngine.Vector2[]
----@field maxPositions UnityEngine.Vector2[]
-UIParallax = {}
----@alias CS.UIParallax UIParallax
-CS.UIParallax = UIParallax
-
-
----@class AnimationManager : System.Object
----@field Instance AnimationManager
-AnimationManager = {}
----@alias CS.AnimationManager AnimationManager
-CS.AnimationManager = AnimationManager
-
----@return AnimationManager
-function AnimationManager.New() end
----@param obj UnityEngine.GameObject
-function AnimationManager:AnimationPlay(obj) end
----@param obj UnityEngine.Transform
-function AnimationManager:Tailing(obj) end
-
----@class ProgressButton : UnityEngine.MonoBehaviour
----@field isLongPress boolean
----@field OnPress System.Action | function
----@field progress number
----@field pressTime number
----@field maxA number
----@field acc number
----@field text TMPro.TMP_Text
-ProgressButton = {}
----@alias CS.ProgressButton ProgressButton
-CS.ProgressButton = ProgressButton
-
-function ProgressButton:Awake() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function ProgressButton:OnPointerDown(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function ProgressButton:OnPointerUp(eventData) end
-
----@class SelectGroup : SwitchButton
-SelectGroup = {}
----@alias CS.SelectGroup SelectGroup
-CS.SelectGroup = SelectGroup
-
-
----@class SwitchButton : UnityEngine.MonoBehaviour
----@field Normal UnityEngine.CanvasGroup
----@field Pressed UnityEngine.CanvasGroup
----@field Highlighted UnityEngine.CanvasGroup
----@field isSingle boolean
----@field allowSwitchOff boolean
----@field animationType SwitchButton.AnimationType
----@field transitionTime number
----@field isAnimated boolean
----@field interactable boolean
----@field onValueChanged UnityEngine.Events.UnityEvent
----@field onClick UnityEngine.Events.UnityEvent
----@field isOn boolean
-SwitchButton = {}
----@alias CS.SwitchButton SwitchButton
-CS.SwitchButton = SwitchButton
-
-function SwitchButton:Awake() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function SwitchButton:OnPointerEnter(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function SwitchButton:OnPointerExit(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function SwitchButton:OnPointerClick(eventData) end
----@param action System.Action | function
-function SwitchButton:SetElement(action) end
-
----@class SwitchButton.AnimationType
----@field None SwitchButton.AnimationType
----@field Fade SwitchButton.AnimationType
-SwitchButton.AnimationType = {}
----@alias CS.SwitchButton.AnimationType SwitchButton.AnimationType
-CS.SwitchButton.AnimationType = SwitchButton.AnimationType
-
-
----@class SwitchButtonGroup : UnityEngine.MonoBehaviour
-SwitchButtonGroup = {}
----@alias CS.SwitchButtonGroup SwitchButtonGroup
-CS.SwitchButtonGroup = SwitchButtonGroup
-
-
----@class AnimatedHorizontalLayout : AnimatedLayout
-AnimatedHorizontalLayout = {}
----@alias CS.AnimatedHorizontalLayout AnimatedHorizontalLayout
-CS.AnimatedHorizontalLayout = AnimatedHorizontalLayout
-
----@param rectTransform UnityEngine.RectTransform
----@param pos number
----@param duration number
-function AnimatedHorizontalLayout:SetLayout(rectTransform, pos, duration) end
-
----@class AnimatedLayout : UnityEngine.MonoBehaviour
----@field duration number
----@field ease DG.Tweening.Ease
----@field spacing number
----@field useScaleX boolean
----@field useScaleY boolean
-AnimatedLayout = {}
----@alias CS.AnimatedLayout AnimatedLayout
-CS.AnimatedLayout = AnimatedLayout
-
-function AnimatedLayout:Start() end
-function AnimatedLayout:OnTransformChildrenChanged() end
----@param duration number
-function AnimatedLayout:LayoutChildren(duration) end
----@param rectTransform UnityEngine.RectTransform
----@param pos number
----@param duration number
-function AnimatedLayout:SetLayout(rectTransform, pos, duration) end
-function AnimatedLayout:Update() end
-
----@class AnimatedLayout.EnableListener : UnityEngine.MonoBehaviour
----@field layout AnimatedLayout
-AnimatedLayout.EnableListener = {}
----@alias CS.AnimatedLayout.EnableListener AnimatedLayout.EnableListener
-CS.AnimatedLayout.EnableListener = AnimatedLayout.EnableListener
-
-function AnimatedLayout.EnableListener:OnEnable() end
-function AnimatedLayout.EnableListener:OnDisable() end
-function AnimatedLayout.EnableListener:OnDestroy() end
-
----@class TextWithKeyword : UnityEngine.MonoBehaviour
----@field maxDistance number
-TextWithKeyword = {}
----@alias CS.TextWithKeyword TextWithKeyword
-CS.TextWithKeyword = TextWithKeyword
-
-function TextWithKeyword:Init() end
----@param pos UnityEngine.Vector2
----@param text string
-function TextWithKeyword:ShowTooltip(pos, text) end
-function TextWithKeyword:HideTooltip() end
-
----@class AchievementBase : System.Object
----@field info AchievementBase.AchievementInfo
-AchievementBase = {}
----@alias CS.AchievementBase AchievementBase
-CS.AchievementBase = AchievementBase
-
----@overload fun() : AchievementBase
----@param info AchievementBase.AchievementInfo
----@return AchievementBase
-function AchievementBase.New(info) end
----@param status string
-function AchievementBase:SetStatus(status) end
-
----@class AchievementBase.AchievementInfo : System.ValueType
----@field name string
----@field description string
----@field tip string
----@field level string
----@field status string
-AchievementBase.AchievementInfo = {}
----@alias CS.AchievementBase.AchievementInfo AchievementBase.AchievementInfo
-CS.AchievementBase.AchievementInfo = AchievementBase.AchievementInfo
-
----@param name string
----@param description string
----@param tip string
----@param level string
----@param status string
----@return AchievementBase.AchievementInfo
-function AchievementBase.AchievementInfo.New(name, description, tip, level, status) end
-
----@class AchivementTable : System.Object
----@field table System.Collections.Generic.Dictionary
----@field ItemDic System.Collections.Generic.Dictionary
----@field count System.Collections.Generic.Dictionary
-AchivementTable = {}
----@alias CS.AchivementTable AchivementTable
-CS.AchivementTable = AchivementTable
-
----@return AchivementTable
-function AchivementTable.New() end
-function AchivementTable:Init() end
----@param type string
----@param achievement AchievementBase
----@return AchivementTable
-function AchivementTable:Add(type, achievement) end
----@param type string
----@param name string
----@return AchivementTable
-function AchivementTable:Del(type, name) end
----@param type string
----@param name string
----@param status string
----@return AchivementTable
-function AchivementTable:SetAchievementStatus(type, name, status) end
----@param type string
----@return AchivementTable
-function AchivementTable:SortByStatus(type) end
----@return AchivementTable
-function AchivementTable:CountCalculate() end
-
----@class BuffItem : UnityEngine.MonoBehaviour
----@field buffBarUI Witch.UI.Window.BuffBarUI
----@field keywordDisplay Witch.UI.KeywordDisplay
----@field HasClear boolean
----@field buffConfig IBuffItemConfig
----@field status IStatusManager
----@field effectList System.Collections.ObjectModel.ObservableCollection
----@field scriptExecutor IScriptExecutor
-BuffItem = {}
----@alias CS.BuffItem BuffItem
-CS.BuffItem = BuffItem
-
----@param config BuffItemConfig
----@param Status StatusManager
----@param buffBarUI Witch.UI.Window.BuffBarUI
-function BuffItem:Init(config, Status, buffBarUI) end
----@param isacting boolean
-function BuffItem:BuffProcess(isacting) end
-function BuffItem:EffectAnimation() end
-function BuffItem:UpdateMsg() end
----@param index number
-function BuffItem:UpdateSorting(index) end
-function BuffItem:UpdateTooltip() end
-function BuffItem:ApplyBuff() end
----@param way string
-function BuffItem:DurationCheck(way) end
-function BuffItem:ClearBuff() end
----@param fromId string
-function BuffItem:ClearDynamicVar(fromId) end
-
----@class HouseItem : UnityEngine.MonoBehaviour
----@field houseUI Witch.UI.Window.HouseUI
----@field TargetCount number
----@field oriStr string
----@field houseItemType HouseItem.HouseItemType
-HouseItem = {}
----@alias CS.HouseItem HouseItem
-CS.HouseItem = HouseItem
-
-function HouseItem:RegisterEvent() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function HouseItem:OnPointerClick(eventData) end
-
----@class HouseItem.HouseItemType
----@field CardEditor HouseItem.HouseItemType
----@field OutsiderShop HouseItem.HouseItemType
----@field ModManager HouseItem.HouseItemType
----@field GameMenu HouseItem.HouseItemType
----@field crystalBall HouseItem.HouseItemType
----@field store HouseItem.HouseItemType
----@field Dictionary HouseItem.HouseItemType
----@field shadow HouseItem.HouseItemType
----@field announcement HouseItem.HouseItemType
----@field task HouseItem.HouseItemType
-HouseItem.HouseItemType = {}
----@alias CS.HouseItem.HouseItemType HouseItem.HouseItemType
-CS.HouseItem.HouseItemType = HouseItem.HouseItemType
-
-
----@class MapFrame : UnityEngine.MonoBehaviour
-MapFrame = {}
----@alias CS.MapFrame MapFrame
-CS.MapFrame = MapFrame
-
----@param eventData UnityEngine.EventSystems.PointerEventData
-function MapFrame:OnPointerEnter(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function MapFrame:OnPointerExit(eventData) end
-
----@class MapItem : Witch.UI.Window.Item
----@field node MapTree.Node
----@field animationController CardAnimationController
----@field hasSelected boolean
----@field des boolean
----@field ignore boolean
----@field isReverse boolean
----@field initPosition UnityEngine.Vector2
----@field initAngle UnityEngine.Vector3
----@field draging boolean
----@field index number
----@field initScale number
----@field selectScale number
-MapItem = {}
----@alias CS.MapItem MapItem
-CS.MapItem = MapItem
-
-function MapItem:Awake() end
----@param node1 MapTree.Node
-function MapItem:Init(node1) end
-function MapItem:DataUpdate() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function MapItem:OnPointerEnter(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function MapItem:OnPointerExit(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function MapItem:OnPointerClick(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function MapItem:OnPointerDown(eventData) end
----@return Cysharp.Threading.Tasks.UniTask
-function MapItem:StartLine() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function MapItem:OnEndDrag(eventData) end
-function MapItem:OnDestroy() end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function MapItem:OnDrag(eventData) end
-function MapItem:RayCheck() end
-function MapItem:RemoveFromParent() end
-function MapItem:OnTransformParentChanged() end
----@param item SwapContentIdentity
-function MapItem:AddToList(item) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function MapItem:OnBeginDrag(eventData) end
----@param Index number
-function MapItem:SetIndex(Index) end
-
----@class MapTree : System.Object
----@field root MapTree.Node
----@field currentNode MapTree.Node
----@field treedice Dice
----@field SelectNode System.Collections.Generic.List
----@field DefaultNode System.Collections.Generic.List
----@field hasUsed System.Collections.Generic.List
-MapTree = {}
----@alias CS.MapTree MapTree
-CS.MapTree = MapTree
-
----@return MapTree
-function MapTree.New() end
----@param type string
----@return MapTree.Node
-function MapTree:TypeGenerate(type) end
----@param nodeId string
----@return MapTree.Node
-function MapTree:GetNodeByNodeId(nodeId) end
-
----@class MapTree.Node : System.Object
----@field depth number
----@field type string
----@field data System.Collections.Generic.Dictionary
----@field NodeDice Dice
----@field childrens MapTree.Node[]
-MapTree.Node = {}
----@alias CS.MapTree.Node MapTree.Node
-CS.MapTree.Node = MapTree.Node
-
----@param type string
----@return MapTree.Node
-function MapTree.Node.New(type) end
----@param index number
----@param child MapTree.Node
----@return MapTree.Node
-function MapTree.Node:SetChild(index, child) end
----@param index number
----@return MapTree.Node
-function MapTree.Node:GetChild(index) end
-
----@class SettingMapper : UnityEngine.MonoBehaviour
-SettingMapper = {}
----@alias CS.SettingMapper SettingMapper
-CS.SettingMapper = SettingMapper
-
-
----@class DialogueBox : UnityEngine.MonoBehaviour
-DialogueBox = {}
----@alias CS.DialogueBox DialogueBox
-CS.DialogueBox = DialogueBox
-
----@param dataConfig DataConfig
-function DialogueBox:ShowDialogue(dataConfig) end
----@param id string
----@param emoji GifAsset
-function DialogueBox:ShowEmoji(id, emoji) end
-function DialogueBox:Close() end
-function DialogueBox:PlayTalkEffect() end
-
----@class DialogueBoxIdentity : UnityEngine.MonoBehaviour
----@field Name string
-DialogueBoxIdentity = {}
----@alias CS.DialogueBoxIdentity DialogueBoxIdentity
-CS.DialogueBoxIdentity = DialogueBoxIdentity
-
-function DialogueBoxIdentity:Start() end
-function DialogueBoxIdentity:OnDestroy() end
----@param id string
-function DialogueBoxIdentity:SetInstanceId(id) end
-
----@class DiceIcon : UnityEngine.MonoBehaviour
----@field result TMPro.TextMeshProUGUI
----@field bonusText TMPro.TextMeshProUGUI
----@field range TMPro.TextMeshProUGUI
----@field Target string
----@field canvasGroup UnityEngine.CanvasGroup
----@field rollDuration number
----@field value number
----@field bonus number
----@field rangeValue System.Nullable
-DiceIcon = {}
----@alias CS.DiceIcon DiceIcon
-CS.DiceIcon = DiceIcon
-
----@param title string
-function DiceIcon:Roll(title) end
-
----@class FightLine : UnityEngine.MonoBehaviour
----@field curvature number
----@field arrowLength number
----@field show boolean
-FightLine = {}
----@alias CS.FightLine FightLine
-CS.FightLine = FightLine
-
----@param localPos UnityEngine.Vector3
-function FightLine:SetStartPos(localPos) end
-function FightLine:OnEnable() end
----@param uiObject UnityEngine.Transform
-function FightLine:Combine(uiObject) end
----@param uiWorldPos UnityEngine.Vector3
-function FightLine:SetEndPos(uiWorldPos) end
----@param start UnityEngine.Vector3
----@param control UnityEngine.Vector3
----@param _end UnityEngine.Vector3
----@param t number
----@return UnityEngine.Vector3
-function FightLine:GetBezier(start, control, _end, t) end
-
----@class FloatingWindow : UnityEngine.MonoBehaviour
----@field buttons System.Collections.Generic.List
----@field showItem UnityEngine.Transform
----@field subitemContent UnityEngine.Transform
-FloatingWindow = {}
----@alias CS.FloatingWindow FloatingWindow
-CS.FloatingWindow = FloatingWindow
-
----@overload fun(self: FloatingWindow, obj: UnityEngine.Transform)
----@param pos UnityEngine.Vector3
-function FloatingWindow:Show(pos) end
-function FloatingWindow:Hide() end
----@overload fun(self: FloatingWindow, basename: string, action: UnityEngine.Events.UnityAction, subItems: System.Collections.Generic.List) : FloatingWindow
----@param button1 FloatingWindow.button
-function FloatingWindow:AddButton(button1) end
----@return FloatingWindow
-function FloatingWindow:Clear() end
----@return FloatingWindow
-function FloatingWindow:ResetWindow() end
-
----@class FloatingWindow.button : System.Object
----@field name string
----@field action UnityEngine.Events.UnityAction
----@field subButtons System.Collections.Generic.List
-FloatingWindow.button = {}
----@alias CS.FloatingWindow.button FloatingWindow.button
-CS.FloatingWindow.button = FloatingWindow.button
-
----@return FloatingWindow.button
-function FloatingWindow.button.New() end
-
----@class SelectMessage : UnityEngine.MonoBehaviour
----@field msg string
----@field ClickAction System.Action | function
-SelectMessage = {}
----@alias CS.SelectMessage SelectMessage
-CS.SelectMessage = SelectMessage
-
----@param eventData UnityEngine.EventSystems.PointerEventData
-function SelectMessage:OnPointerEnter(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function SelectMessage:OnPointerExit(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function SelectMessage:OnPointerClick(eventData) end
-
----@class SelectOutline : UnityEngine.MonoBehaviour
-SelectOutline = {}
----@alias CS.SelectOutline SelectOutline
-CS.SelectOutline = SelectOutline
-
----@param eventData UnityEngine.EventSystems.PointerEventData
-function SelectOutline:OnPointerEnter(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function SelectOutline:OnPointerExit(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function SelectOutline:OnPointerClick(eventData) end
-
----@class SwapContentIdentity : UnityEngine.MonoBehaviour
----@field ItemName string
----@field Content UnityEngine.Transform
----@field CheckType boolean
-SwapContentIdentity = {}
----@alias CS.SwapContentIdentity SwapContentIdentity
-CS.SwapContentIdentity = SwapContentIdentity
-
-
----@class Tooltip : UnityEngine.MonoBehaviour
----@field spacingX number
----@field spacingY number
----@field subWidth number
----@field subHeight number
----@field transitionTime number
-Tooltip = {}
----@alias CS.Tooltip Tooltip
-CS.Tooltip = Tooltip
-
----@param obj UnityEngine.Transform
----@param title string
----@param text string
----@param keywords System.Collections.Generic.List
----@param msg string
----@param icon UnityEngine.Sprite
----@param type string
----@param Main boolean
----@param Sub boolean
-function Tooltip:Show(obj, title, text, keywords, msg, icon, type, Main, Sub) end
-function Tooltip:Hide() end
-
----@class XluaEventVarUse : System.Object
----@field XLua_CSharpCallLua_Delegates System.Collections.Generic.List
-XluaEventVarUse = {}
----@alias CS.XluaEventVarUse XluaEventVarUse
-CS.XluaEventVarUse = XluaEventVarUse
-
-
----@class ExampleGenConfig : System.Object
----@field LuaCallCSharp System.Collections.Generic.List
----@field CSharpCallLua System.Collections.Generic.List
----@field BlackList System.Collections.Generic.List
----@field BlackGenericTypeList System.Collections.Generic.List
----@field GenericTypeFilter System.Func
-ExampleGenConfig = {}
----@alias CS.ExampleGenConfig ExampleGenConfig
-CS.ExampleGenConfig = ExampleGenConfig
-
-
----@class LuaCallCs : UnityEngine.MonoBehaviour
-LuaCallCs = {}
----@alias CS.LuaCallCs LuaCallCs
-CS.LuaCallCs = LuaCallCs
-
-
----@class DataConfigFormatterInitializer : System.Object
-DataConfigFormatterInitializer = {}
----@alias CS.DataConfigFormatterInitializer DataConfigFormatterInitializer
-CS.DataConfigFormatterInitializer = DataConfigFormatterInitializer
-
-function DataConfigFormatterInitializer.RegisterFormatter() end
-
----@class UnitySourceGeneratedAssemblyMonoScriptTypes_v1 : System.Object
-UnitySourceGeneratedAssemblyMonoScriptTypes_v1 = {}
----@alias CS.UnitySourceGeneratedAssemblyMonoScriptTypes_v1 UnitySourceGeneratedAssemblyMonoScriptTypes_v1
-CS.UnitySourceGeneratedAssemblyMonoScriptTypes_v1 = UnitySourceGeneratedAssemblyMonoScriptTypes_v1
-
----@return UnitySourceGeneratedAssemblyMonoScriptTypes_v1
-function UnitySourceGeneratedAssemblyMonoScriptTypes_v1.New() end
-
----@class UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData : System.ValueType
----@field FilePathsData System.Byte[]
----@field TypesData System.Byte[]
----@field TotalTypes number
----@field TotalFiles number
----@field IsEditorOnly boolean
-UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData = {}
----@alias CS.UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData
-CS.UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData = UnitySourceGeneratedAssemblyMonoScriptTypes_v1.MonoScriptData
-
-
----@class Tutorial.CSCallLua : UnityEngine.MonoBehaviour
-Tutorial.CSCallLua = {}
----@alias CS.Tutorial.CSCallLua Tutorial.CSCallLua
-CS.Tutorial.CSCallLua = Tutorial.CSCallLua
-
-
----@class Tutorial.CSCallLua.DClass : System.Object
----@field f1 number
----@field f2 number
-Tutorial.CSCallLua.DClass = {}
----@alias CS.Tutorial.CSCallLua.DClass Tutorial.CSCallLua.DClass
-CS.Tutorial.CSCallLua.DClass = Tutorial.CSCallLua.DClass
-
----@return Tutorial.CSCallLua.DClass
-function Tutorial.CSCallLua.DClass.New() end
-
----@class Tutorial.CSCallLua.ItfD
----@field f1 number
----@field f2 number
-Tutorial.CSCallLua.ItfD = {}
----@alias CS.Tutorial.CSCallLua.ItfD Tutorial.CSCallLua.ItfD
-CS.Tutorial.CSCallLua.ItfD = Tutorial.CSCallLua.ItfD
-
----@param a number
----@param b number
----@return number
-function Tutorial.CSCallLua.ItfD:add(a, b) end
-
----@class Tutorial.CSCallLua.FDelegate : System.MulticastDelegate
-Tutorial.CSCallLua.FDelegate = {}
----@alias CS.Tutorial.CSCallLua.FDelegate Tutorial.CSCallLua.FDelegate
-CS.Tutorial.CSCallLua.FDelegate = Tutorial.CSCallLua.FDelegate
-
----@param object System.Object
----@param method System.IntPtr
----@return Tutorial.CSCallLua.FDelegate
-function Tutorial.CSCallLua.FDelegate.New(object, method) end
----@param a number
----@param b string
----@param out_c Tutorial.CSCallLua.DClass
----@return number,Tutorial.CSCallLua.DClass
-function Tutorial.CSCallLua.FDelegate:Invoke(a, b, out_c) end
----@param a number
----@param b string
----@param out_c Tutorial.CSCallLua.DClass
----@param callback System.AsyncCallback
----@param object System.Object
----@return System.IAsyncResult,Tutorial.CSCallLua.DClass
-function Tutorial.CSCallLua.FDelegate:BeginInvoke(a, b, out_c, callback, object) end
----@param out_c Tutorial.CSCallLua.DClass
----@param result System.IAsyncResult
----@return number,Tutorial.CSCallLua.DClass
-function Tutorial.CSCallLua.FDelegate:EndInvoke(out_c, result) end
-
----@class Tutorial.CSCallLua.GetE : System.MulticastDelegate
-Tutorial.CSCallLua.GetE = {}
----@alias CS.Tutorial.CSCallLua.GetE Tutorial.CSCallLua.GetE
-CS.Tutorial.CSCallLua.GetE = Tutorial.CSCallLua.GetE
-
----@param object System.Object
----@param method System.IntPtr
----@return Tutorial.CSCallLua.GetE
-function Tutorial.CSCallLua.GetE.New(object, method) end
----@return System.Action | function
-function Tutorial.CSCallLua.GetE:Invoke() end
----@param callback System.AsyncCallback
----@param object System.Object
----@return System.IAsyncResult
-function Tutorial.CSCallLua.GetE:BeginInvoke(callback, object) end
----@param result System.IAsyncResult
----@return System.Action | function
-function Tutorial.CSCallLua.GetE:EndInvoke(result) end
-
----@class Tutorial.ByFile : UnityEngine.MonoBehaviour
-Tutorial.ByFile = {}
----@alias CS.Tutorial.ByFile Tutorial.ByFile
-CS.Tutorial.ByFile = Tutorial.ByFile
-
-
----@class Tutorial.ByString : UnityEngine.MonoBehaviour
-Tutorial.ByString = {}
----@alias CS.Tutorial.ByString Tutorial.ByString
-CS.Tutorial.ByString = Tutorial.ByString
-
-
----@class Tutorial.CustomLoader : UnityEngine.MonoBehaviour
-Tutorial.CustomLoader = {}
----@alias CS.Tutorial.CustomLoader Tutorial.CustomLoader
-CS.Tutorial.CustomLoader = Tutorial.CustomLoader
-
-
----@class Tutorial.BaseClass : System.Object
----@field BSF number
----@field BMF number
-Tutorial.BaseClass = {}
----@alias CS.Tutorial.BaseClass Tutorial.BaseClass
-CS.Tutorial.BaseClass = Tutorial.BaseClass
-
----@return Tutorial.BaseClass
-function Tutorial.BaseClass.New() end
-function Tutorial.BaseClass.BSFunc() end
-function Tutorial.BaseClass:BMFunc() end
----@return number
-function Tutorial.BaseClass:GetSomeBaseData() end
-
----@class Tutorial.Param1 : System.ValueType
----@field x number
----@field y string
-Tutorial.Param1 = {}
----@alias CS.Tutorial.Param1 Tutorial.Param1
-CS.Tutorial.Param1 = Tutorial.Param1
-
-
----@class Tutorial.TestEnum
----@field E1 Tutorial.TestEnum
----@field E2 Tutorial.TestEnum
-Tutorial.TestEnum = {}
----@alias CS.Tutorial.TestEnum Tutorial.TestEnum
-CS.Tutorial.TestEnum = Tutorial.TestEnum
-
-
----@class Tutorial.DerivedClass : Tutorial.BaseClass
----@field TestDelegate System.Action | function
----@field DMF number
-Tutorial.DerivedClass = {}
----@alias CS.Tutorial.DerivedClass Tutorial.DerivedClass
-CS.Tutorial.DerivedClass = Tutorial.DerivedClass
-
----@return Tutorial.DerivedClass
-function Tutorial.DerivedClass.New() end
-function Tutorial.DerivedClass:DMFunc() end
----@param p1 Tutorial.Param1
----@param ref_p2 number
----@param out_p3 string
----@param luafunc System.Action | function
----@param out_csfunc System.Action | function
----@return number,number,string,System.Action
-function Tutorial.DerivedClass:ComplexFunc(p1, ref_p2, out_p3, luafunc, out_csfunc) end
----@overload fun(self: Tutorial.DerivedClass, i: number)
----@param i string
-function Tutorial.DerivedClass:TestFunc(i) end
----@param a number
----@param b string
----@param c string
-function Tutorial.DerivedClass:DefaultValueFunc(a, b, c) end
----@param a number
----@param strs System.String[]
-function Tutorial.DerivedClass:VariableParamsFunc(a, strs) end
----@param e Tutorial.TestEnum
----@return Tutorial.TestEnum
-function Tutorial.DerivedClass:EnumTestFunc(e) end
-function Tutorial.DerivedClass:CallEvent() end
----@param n number
----@return number
-function Tutorial.DerivedClass:TestLong(n) end
----@return Tutorial.ICalc
-function Tutorial.DerivedClass:GetCalc() end
----@return number
-function Tutorial.DerivedClass:GetSomeData() end
-function Tutorial.DerivedClass:GenericMethodOfString() end
-
----@class Tutorial.DerivedClass.TestEnumInner
----@field E3 Tutorial.DerivedClass.TestEnumInner
----@field E4 Tutorial.DerivedClass.TestEnumInner
-Tutorial.DerivedClass.TestEnumInner = {}
----@alias CS.Tutorial.DerivedClass.TestEnumInner Tutorial.DerivedClass.TestEnumInner
-CS.Tutorial.DerivedClass.TestEnumInner = Tutorial.DerivedClass.TestEnumInner
-
-
----@class Tutorial.DerivedClass.InnerCalc : System.Object
----@field id number
-Tutorial.DerivedClass.InnerCalc = {}
----@alias CS.Tutorial.DerivedClass.InnerCalc Tutorial.DerivedClass.InnerCalc
-CS.Tutorial.DerivedClass.InnerCalc = Tutorial.DerivedClass.InnerCalc
-
----@return Tutorial.DerivedClass.InnerCalc
-function Tutorial.DerivedClass.InnerCalc.New() end
----@param a number
----@param b number
----@return number
-function Tutorial.DerivedClass.InnerCalc:add(a, b) end
-
----@class Tutorial.ICalc
-Tutorial.ICalc = {}
----@alias CS.Tutorial.ICalc Tutorial.ICalc
-CS.Tutorial.ICalc = Tutorial.ICalc
-
----@param a number
----@param b number
----@return number
-function Tutorial.ICalc:add(a, b) end
-
----@class Tutorial.DerivedClassExtensions : System.Object
-Tutorial.DerivedClassExtensions = {}
----@alias CS.Tutorial.DerivedClassExtensions Tutorial.DerivedClassExtensions
-CS.Tutorial.DerivedClassExtensions = Tutorial.DerivedClassExtensions
-
----@param obj Tutorial.DerivedClass
----@return number
-function Tutorial.DerivedClassExtensions.GetSomeData(obj) end
----@param obj Tutorial.BaseClass
----@return number
-function Tutorial.DerivedClassExtensions.GetSomeBaseData(obj) end
----@param obj Tutorial.DerivedClass
-function Tutorial.DerivedClassExtensions.GenericMethodOfString(obj) end
-
----@class XLua.DelegateBridge : XLua.DelegateBridgeBase
----@field Gen_Flag boolean
-XLua.DelegateBridge = {}
----@alias CS.XLua.DelegateBridge XLua.DelegateBridge
-CS.XLua.DelegateBridge = XLua.DelegateBridge
-
----@param reference number
----@param luaenv XLua.LuaEnv
----@return XLua.DelegateBridge
-function XLua.DelegateBridge.New(reference, luaenv) end
----@param p0 ActionData
-function XLua.DelegateBridge:__Gen_Delegate_Imp0(p0) end
----@param p0 HurtData
-function XLua.DelegateBridge:__Gen_Delegate_Imp1(p0) end
----@param p0 DamageData
-function XLua.DelegateBridge:__Gen_Delegate_Imp2(p0) end
----@param p0 NewEnemyData
-function XLua.DelegateBridge:__Gen_Delegate_Imp3(p0) end
-function XLua.DelegateBridge:__Gen_Delegate_Imp4() end
----@param p0 number
----@param p1 number
----@return number
-function XLua.DelegateBridge:__Gen_Delegate_Imp5(p0, p1) end
----@param p0 string
-function XLua.DelegateBridge:__Gen_Delegate_Imp6(p0) end
----@param p0 number
-function XLua.DelegateBridge:__Gen_Delegate_Imp7(p0) end
----@param p0 number
----@param p1 string
----@param out_p2 Tutorial.CSCallLua.DClass
----@return number,Tutorial.CSCallLua.DClass
-function XLua.DelegateBridge:__Gen_Delegate_Imp8(p0, p1, out_p2) end
----@return System.Action | function
-function XLua.DelegateBridge:__Gen_Delegate_Imp9() end
----@param type System.Type
----@return System.Delegate
-function XLua.DelegateBridge:GetDelegateByType(type) end
----@param L System.IntPtr
----@param nArgs number
----@param nResults number
----@param errFunc number
-function XLua.DelegateBridge:PCall(L, nArgs, nResults, errFunc) end
-function XLua.DelegateBridge:Action() end
-
----@class XLua.CopyByValue : System.Object
-XLua.CopyByValue = {}
----@alias CS.XLua.CopyByValue XLua.CopyByValue
-CS.XLua.CopyByValue = XLua.CopyByValue
-
----@overload fun(translator: XLua.ObjectTranslator, L: System.IntPtr, idx: number, out_val: UnityEngine.Vector2) : UnityEngine.Vector2
----@overload fun(buff: System.IntPtr, offset: number, out_field: UnityEngine.Vector2) : boolean, UnityEngine.Vector2
----@overload fun(translator: XLua.ObjectTranslator, L: System.IntPtr, idx: number, out_val: UnityEngine.Vector3) : UnityEngine.Vector3
----@overload fun(buff: System.IntPtr, offset: number, out_field: UnityEngine.Vector3) : boolean, UnityEngine.Vector3
----@overload fun(translator: XLua.ObjectTranslator, L: System.IntPtr, idx: number, out_val: UnityEngine.Vector4) : UnityEngine.Vector4
----@overload fun(buff: System.IntPtr, offset: number, out_field: UnityEngine.Vector4) : boolean, UnityEngine.Vector4
----@overload fun(translator: XLua.ObjectTranslator, L: System.IntPtr, idx: number, out_val: UnityEngine.Color) : UnityEngine.Color
----@overload fun(buff: System.IntPtr, offset: number, out_field: UnityEngine.Color) : boolean, UnityEngine.Color
----@overload fun(translator: XLua.ObjectTranslator, L: System.IntPtr, idx: number, out_val: UnityEngine.Quaternion) : UnityEngine.Quaternion
----@overload fun(buff: System.IntPtr, offset: number, out_field: UnityEngine.Quaternion) : boolean, UnityEngine.Quaternion
----@overload fun(translator: XLua.ObjectTranslator, L: System.IntPtr, idx: number, out_val: UnityEngine.Ray) : UnityEngine.Ray
----@overload fun(buff: System.IntPtr, offset: number, out_field: UnityEngine.Ray) : boolean, UnityEngine.Ray
----@overload fun(translator: XLua.ObjectTranslator, L: System.IntPtr, idx: number, out_val: UnityEngine.Bounds) : UnityEngine.Bounds
----@overload fun(buff: System.IntPtr, offset: number, out_field: UnityEngine.Bounds) : boolean, UnityEngine.Bounds
----@overload fun(translator: XLua.ObjectTranslator, L: System.IntPtr, idx: number, out_val: UnityEngine.Ray2D) : UnityEngine.Ray2D
----@overload fun(buff: System.IntPtr, offset: number, out_field: UnityEngine.Ray2D) : boolean, UnityEngine.Ray2D
----@overload fun(buff: System.IntPtr, offset: number, out_field: number) : boolean, number
----@overload fun(buff: System.IntPtr, offset: number, out_field: number) : boolean, number
----@overload fun(buff: System.IntPtr, offset: number, out_field: number) : boolean, number
----@overload fun(buff: System.IntPtr, offset: number, out_field: number) : boolean, number
----@overload fun(buff: System.IntPtr, offset: number, out_field: number) : boolean, number
----@overload fun(buff: System.IntPtr, offset: number, out_field: number) : boolean, number
----@overload fun(buff: System.IntPtr, offset: number, out_field: number) : boolean, number
----@overload fun(buff: System.IntPtr, offset: number, out_field: number) : boolean, number
----@overload fun(buff: System.IntPtr, offset: number, out_field: number) : boolean, number
----@overload fun(buff: System.IntPtr, offset: number, out_field: number) : boolean, number
----@param buff System.IntPtr
----@param offset number
----@param out_field System.Decimal
----@return boolean,System.Decimal
-function XLua.CopyByValue.UnPack(buff, offset, out_field) end
----@overload fun(buff: System.IntPtr, offset: number, field: UnityEngine.Vector2) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: UnityEngine.Vector3) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: UnityEngine.Vector4) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: UnityEngine.Color) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: UnityEngine.Quaternion) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: UnityEngine.Ray) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: UnityEngine.Bounds) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: UnityEngine.Ray2D) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: number) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: number) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: number) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: number) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: number) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: number) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: number) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: number) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: number) : boolean
----@overload fun(buff: System.IntPtr, offset: number, field: number) : boolean
----@param buff System.IntPtr
----@param offset number
----@param field System.Decimal
----@return boolean
-function XLua.CopyByValue.Pack(buff, offset, field) end
----@param type System.Type
----@return boolean
-function XLua.CopyByValue.IsStruct(type) end
-
----@class XLua.ObjectTranslator : System.Object
----@field cacheRef number
-XLua.ObjectTranslator = {}
----@alias CS.XLua.ObjectTranslator XLua.ObjectTranslator
-CS.XLua.ObjectTranslator = XLua.ObjectTranslator
-
----@param luaenv XLua.LuaEnv
----@param L System.IntPtr
----@return XLua.ObjectTranslator
-function XLua.ObjectTranslator.New(luaenv, L) end
----@param L System.IntPtr
----@param val UnityEngine.Vector2
-function XLua.ObjectTranslator:PushUnityEngineVector2(L, val) end
----@overload fun(self: XLua.ObjectTranslator, L: System.IntPtr, index: number, out_val: UnityEngine.Vector2) : UnityEngine.Vector2
----@overload fun(self: XLua.ObjectTranslator, L: System.IntPtr, index: number, out_val: UnityEngine.Vector3) : UnityEngine.Vector3
----@overload fun(self: XLua.ObjectTranslator, L: System.IntPtr, index: number, out_val: UnityEngine.Vector4) : UnityEngine.Vector4
----@overload fun(self: XLua.ObjectTranslator, L: System.IntPtr, index: number, out_val: UnityEngine.Color) : UnityEngine.Color
----@overload fun(self: XLua.ObjectTranslator, L: System.IntPtr, index: number, out_val: UnityEngine.Quaternion) : UnityEngine.Quaternion
----@overload fun(self: XLua.ObjectTranslator, L: System.IntPtr, index: number, out_val: UnityEngine.Ray) : UnityEngine.Ray
----@overload fun(self: XLua.ObjectTranslator, L: System.IntPtr, index: number, out_val: UnityEngine.Bounds) : UnityEngine.Bounds
----@overload fun(self: XLua.ObjectTranslator, L: System.IntPtr, index: number, out_val: UnityEngine.Ray2D) : UnityEngine.Ray2D
----@overload fun(self: XLua.ObjectTranslator, L: System.IntPtr, index: number, out_val: Tutorial.TestEnum) : Tutorial.TestEnum
----@overload fun(self: XLua.ObjectTranslator, L: System.IntPtr, index: number, out_val: Tutorial.DerivedClass.TestEnumInner) : Tutorial.DerivedClass.TestEnumInner
----@param L System.IntPtr
----@param index number
----@param out_val System.Decimal
----@return ,System.Decimal
-function XLua.ObjectTranslator:Get(L, index, out_val) end
----@param L System.IntPtr
----@param index number
----@param val UnityEngine.Vector2
-function XLua.ObjectTranslator:UpdateUnityEngineVector2(L, index, val) end
----@param L System.IntPtr
----@param val UnityEngine.Vector3
-function XLua.ObjectTranslator:PushUnityEngineVector3(L, val) end
----@param L System.IntPtr
----@param index number
----@param val UnityEngine.Vector3
-function XLua.ObjectTranslator:UpdateUnityEngineVector3(L, index, val) end
----@param L System.IntPtr
----@param val UnityEngine.Vector4
-function XLua.ObjectTranslator:PushUnityEngineVector4(L, val) end
----@param L System.IntPtr
----@param index number
----@param val UnityEngine.Vector4
-function XLua.ObjectTranslator:UpdateUnityEngineVector4(L, index, val) end
----@param L System.IntPtr
----@param val UnityEngine.Color
-function XLua.ObjectTranslator:PushUnityEngineColor(L, val) end
----@param L System.IntPtr
----@param index number
----@param val UnityEngine.Color
-function XLua.ObjectTranslator:UpdateUnityEngineColor(L, index, val) end
----@param L System.IntPtr
----@param val UnityEngine.Quaternion
-function XLua.ObjectTranslator:PushUnityEngineQuaternion(L, val) end
----@param L System.IntPtr
----@param index number
----@param val UnityEngine.Quaternion
-function XLua.ObjectTranslator:UpdateUnityEngineQuaternion(L, index, val) end
----@param L System.IntPtr
----@param val UnityEngine.Ray
-function XLua.ObjectTranslator:PushUnityEngineRay(L, val) end
----@param L System.IntPtr
----@param index number
----@param val UnityEngine.Ray
-function XLua.ObjectTranslator:UpdateUnityEngineRay(L, index, val) end
----@param L System.IntPtr
----@param val UnityEngine.Bounds
-function XLua.ObjectTranslator:PushUnityEngineBounds(L, val) end
----@param L System.IntPtr
----@param index number
----@param val UnityEngine.Bounds
-function XLua.ObjectTranslator:UpdateUnityEngineBounds(L, index, val) end
----@param L System.IntPtr
----@param val UnityEngine.Ray2D
-function XLua.ObjectTranslator:PushUnityEngineRay2D(L, val) end
----@param L System.IntPtr
----@param index number
----@param val UnityEngine.Ray2D
-function XLua.ObjectTranslator:UpdateUnityEngineRay2D(L, index, val) end
----@param L System.IntPtr
----@param val Tutorial.TestEnum
-function XLua.ObjectTranslator:PushTutorialTestEnum(L, val) end
----@param L System.IntPtr
----@param index number
----@param val Tutorial.TestEnum
-function XLua.ObjectTranslator:UpdateTutorialTestEnum(L, index, val) end
----@param L System.IntPtr
----@param val Tutorial.DerivedClass.TestEnumInner
-function XLua.ObjectTranslator:PushTutorialDerivedClassTestEnumInner(L, val) end
----@param L System.IntPtr
----@param index number
----@param val Tutorial.DerivedClass.TestEnumInner
-function XLua.ObjectTranslator:UpdateTutorialDerivedClassTestEnumInner(L, index, val) end
----@param type System.Type
----@param loader System.Action | function
-function XLua.ObjectTranslator:DelayWrapLoader(type, loader) end
----@param type System.Type
----@param creator System.Func
-function XLua.ObjectTranslator:AddInterfaceBridgeCreator(type, creator) end
----@param L System.IntPtr
----@param type System.Type
----@return boolean
-function XLua.ObjectTranslator:TryDelayWrapLoader(L, type) end
----@param type System.Type
----@param alias string
-function XLua.ObjectTranslator:Alias(type, alias) end
----@param L System.IntPtr
----@param delegateType System.Type
----@param idx number
----@return System.Object
-function XLua.ObjectTranslator:CreateDelegateBridge(L, delegateType, idx) end
----@return boolean
-function XLua.ObjectTranslator:AllDelegateBridgeReleased() end
----@param L System.IntPtr
----@param reference number
----@param is_delegate boolean
-function XLua.ObjectTranslator:ReleaseLuaBase(L, reference, is_delegate) end
----@param L System.IntPtr
----@param interfaceType System.Type
----@param idx number
----@return System.Object
-function XLua.ObjectTranslator:CreateInterfaceBridge(L, interfaceType, idx) end
----@param L System.IntPtr
-function XLua.ObjectTranslator:CreateArrayMetatable(L) end
----@param L System.IntPtr
-function XLua.ObjectTranslator:CreateDelegateMetatable(L) end
----@param L System.IntPtr
-function XLua.ObjectTranslator:OpenLib(L) end
----@param L System.IntPtr
----@param idx number
----@return System.Type
-function XLua.ObjectTranslator:GetTypeOf(L, idx) end
----@param L System.IntPtr
----@param index number
----@param type System.Type
----@return boolean
-function XLua.ObjectTranslator:Assignable(L, index, type) end
----@param L System.IntPtr
----@param index number
----@param type System.Type
----@return System.Object
-function XLua.ObjectTranslator:GetObject(L, index, type) end
----@param L System.IntPtr
----@param index number
----@param type System.Type
----@return System.Array
-function XLua.ObjectTranslator:GetParams(L, index, type) end
----@param L System.IntPtr
----@param ary System.Array
-function XLua.ObjectTranslator:PushParams(L, ary) end
----@param L System.IntPtr
----@param type System.Type
----@return number
-function XLua.ObjectTranslator:GetTypeId(L, type) end
----@param L System.IntPtr
----@param type System.Type
-function XLua.ObjectTranslator:PrivateAccessible(L, type) end
----@param L System.IntPtr
----@param o System.Object
-function XLua.ObjectTranslator:PushAny(L, o) end
----@param L System.IntPtr
----@param type System.Type
----@param idx number
----@return number
-function XLua.ObjectTranslator:TranslateToEnumToTop(L, type, idx) end
----@overload fun(self: XLua.ObjectTranslator, L: System.IntPtr, o: XLua.LuaDLL.lua_CSFunction)
----@overload fun(self: XLua.ObjectTranslator, L: System.IntPtr, o: XLua.LuaBase)
----@param L System.IntPtr
----@param o System.Object
-function XLua.ObjectTranslator:Push(L, o) end
----@param L System.IntPtr
----@param o System.Object
----@param type_id number
-function XLua.ObjectTranslator:PushObject(L, o, type_id) end
----@param L System.IntPtr
----@param index number
----@param obj System.Object
-function XLua.ObjectTranslator:Update(L, index, obj) end
----@param type System.Type
----@return boolean
-function XLua.ObjectTranslator:HasCustomOp(type) end
----@param L System.IntPtr
----@param val System.Decimal
-function XLua.ObjectTranslator:PushDecimal(L, val) end
----@param L System.IntPtr
----@param index number
----@return boolean
-function XLua.ObjectTranslator:IsDecimal(L, index) end
----@param L System.IntPtr
----@param index number
----@return System.Decimal
-function XLua.ObjectTranslator:GetDecimal(L, index) end
-
----@class XLua.ObjectTranslator.IniterAdderUnityEngineVector2 : System.Object
-XLua.ObjectTranslator.IniterAdderUnityEngineVector2 = {}
----@alias CS.XLua.ObjectTranslator.IniterAdderUnityEngineVector2 XLua.ObjectTranslator.IniterAdderUnityEngineVector2
-CS.XLua.ObjectTranslator.IniterAdderUnityEngineVector2 = XLua.ObjectTranslator.IniterAdderUnityEngineVector2
-
----@return XLua.ObjectTranslator.IniterAdderUnityEngineVector2
-function XLua.ObjectTranslator.IniterAdderUnityEngineVector2.New() end
-
----@class XLua.ObjectTranslator.LOGLEVEL
----@field NO XLua.ObjectTranslator.LOGLEVEL
----@field INFO XLua.ObjectTranslator.LOGLEVEL
----@field WARN XLua.ObjectTranslator.LOGLEVEL
----@field ERROR XLua.ObjectTranslator.LOGLEVEL
-XLua.ObjectTranslator.LOGLEVEL = {}
----@alias CS.XLua.ObjectTranslator.LOGLEVEL XLua.ObjectTranslator.LOGLEVEL
-CS.XLua.ObjectTranslator.LOGLEVEL = XLua.ObjectTranslator.LOGLEVEL
-
-
----@class XLua.ObjectTranslator.CompareByArgRet : System.Object
-XLua.ObjectTranslator.CompareByArgRet = {}
----@alias CS.XLua.ObjectTranslator.CompareByArgRet XLua.ObjectTranslator.CompareByArgRet
-CS.XLua.ObjectTranslator.CompareByArgRet = XLua.ObjectTranslator.CompareByArgRet
-
----@return XLua.ObjectTranslator.CompareByArgRet
-function XLua.ObjectTranslator.CompareByArgRet.New() end
----@param x System.Reflection.MethodInfo
----@param y System.Reflection.MethodInfo
----@return boolean
-function XLua.ObjectTranslator.CompareByArgRet:Equals(x, y) end
----@param method System.Reflection.MethodInfo
----@return number
-function XLua.ObjectTranslator.CompareByArgRet:GetHashCode(method) end
-
----@class XLua.ObjectTranslator.PushCSObject : System.MulticastDelegate
-XLua.ObjectTranslator.PushCSObject = {}
----@alias CS.XLua.ObjectTranslator.PushCSObject XLua.ObjectTranslator.PushCSObject
-CS.XLua.ObjectTranslator.PushCSObject = XLua.ObjectTranslator.PushCSObject
-
----@param object System.Object
----@param method System.IntPtr
----@return XLua.ObjectTranslator.PushCSObject
-function XLua.ObjectTranslator.PushCSObject.New(object, method) end
----@param L System.IntPtr
----@param obj System.Object
-function XLua.ObjectTranslator.PushCSObject:Invoke(L, obj) end
----@param L System.IntPtr
----@param obj System.Object
----@param callback System.AsyncCallback
----@param object System.Object
----@return System.IAsyncResult
-function XLua.ObjectTranslator.PushCSObject:BeginInvoke(L, obj, callback, object) end
----@param result System.IAsyncResult
-function XLua.ObjectTranslator.PushCSObject:EndInvoke(result) end
-
----@class XLua.ObjectTranslator.GetCSObject : System.MulticastDelegate
-XLua.ObjectTranslator.GetCSObject = {}
----@alias CS.XLua.ObjectTranslator.GetCSObject XLua.ObjectTranslator.GetCSObject
-CS.XLua.ObjectTranslator.GetCSObject = XLua.ObjectTranslator.GetCSObject
-
----@param object System.Object
----@param method System.IntPtr
----@return XLua.ObjectTranslator.GetCSObject
-function XLua.ObjectTranslator.GetCSObject.New(object, method) end
----@param L System.IntPtr
----@param idx number
----@return System.Object
-function XLua.ObjectTranslator.GetCSObject:Invoke(L, idx) end
----@param L System.IntPtr
----@param idx number
----@param callback System.AsyncCallback
----@param object System.Object
----@return System.IAsyncResult
-function XLua.ObjectTranslator.GetCSObject:BeginInvoke(L, idx, callback, object) end
----@param result System.IAsyncResult
----@return System.Object
-function XLua.ObjectTranslator.GetCSObject:EndInvoke(result) end
-
----@class XLua.ObjectTranslator.UpdateCSObject : System.MulticastDelegate
-XLua.ObjectTranslator.UpdateCSObject = {}
----@alias CS.XLua.ObjectTranslator.UpdateCSObject XLua.ObjectTranslator.UpdateCSObject
-CS.XLua.ObjectTranslator.UpdateCSObject = XLua.ObjectTranslator.UpdateCSObject
-
----@param object System.Object
----@param method System.IntPtr
----@return XLua.ObjectTranslator.UpdateCSObject
-function XLua.ObjectTranslator.UpdateCSObject.New(object, method) end
----@param L System.IntPtr
----@param idx number
----@param obj System.Object
-function XLua.ObjectTranslator.UpdateCSObject:Invoke(L, idx, obj) end
----@param L System.IntPtr
----@param idx number
----@param obj System.Object
----@param callback System.AsyncCallback
----@param object System.Object
----@return System.IAsyncResult
-function XLua.ObjectTranslator.UpdateCSObject:BeginInvoke(L, idx, obj, callback, object) end
----@param result System.IAsyncResult
-function XLua.ObjectTranslator.UpdateCSObject:EndInvoke(result) end
-
----@class XLua.ObjectTranslator.CheckFunc : System.MulticastDelegate
-XLua.ObjectTranslator.CheckFunc = {}
----@alias CS.XLua.ObjectTranslator.CheckFunc XLua.ObjectTranslator.CheckFunc
-CS.XLua.ObjectTranslator.CheckFunc = XLua.ObjectTranslator.CheckFunc
-
----@param object System.Object
----@param method System.IntPtr
----@return XLua.ObjectTranslator.CheckFunc
-function XLua.ObjectTranslator.CheckFunc.New(object, method) end
----@param L System.IntPtr
----@param idx number
----@return boolean
-function XLua.ObjectTranslator.CheckFunc:Invoke(L, idx) end
----@param L System.IntPtr
----@param idx number
----@param callback System.AsyncCallback
----@param object System.Object
----@return System.IAsyncResult
-function XLua.ObjectTranslator.CheckFunc:BeginInvoke(L, idx, callback, object) end
----@param result System.IAsyncResult
----@return boolean
-function XLua.ObjectTranslator.CheckFunc:EndInvoke(result) end
-
----@class XLua.ObjectTranslator.GetFunc : System.MulticastDelegate
-XLua.ObjectTranslator.GetFunc = {}
----@alias CS.XLua.ObjectTranslator.GetFunc XLua.ObjectTranslator.GetFunc
-CS.XLua.ObjectTranslator.GetFunc = XLua.ObjectTranslator.GetFunc
-
----@param object System.Object
----@param method System.IntPtr
----@return XLua.ObjectTranslator.GetFunc
-function XLua.ObjectTranslator.GetFunc.New(object, method) end
----@param L System.IntPtr
----@param idx number
----@param out_val T
----@return ,T
-function XLua.ObjectTranslator.GetFunc:Invoke(L, idx, out_val) end
----@param L System.IntPtr
----@param idx number
----@param out_val T
----@param callback System.AsyncCallback
----@param object System.Object
----@return System.IAsyncResult,T
-function XLua.ObjectTranslator.GetFunc:BeginInvoke(L, idx, out_val, callback, object) end
----@param out_val T
----@param result System.IAsyncResult
----@return ,T
-function XLua.ObjectTranslator.GetFunc:EndInvoke(out_val, result) end
-
----@class XLua.StaticLuaCallbacks : System.Object
-XLua.StaticLuaCallbacks = {}
----@alias CS.XLua.StaticLuaCallbacks XLua.StaticLuaCallbacks
-CS.XLua.StaticLuaCallbacks = XLua.StaticLuaCallbacks
-
----@return XLua.StaticLuaCallbacks
-function XLua.StaticLuaCallbacks.New() end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.EnumAnd(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.EnumOr(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.DelegateCall(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.LuaGC(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.ToString(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.DelegateCombine(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.DelegateRemove(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.ArrayIndexer(L) end
----@param type System.Type
----@param L System.IntPtr
----@param obj System.Object
----@param array_idx number
----@param obj_idx number
----@return boolean
-function XLua.StaticLuaCallbacks.TryPrimitiveArraySet(type, L, obj, array_idx, obj_idx) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.ArrayNewIndexer(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.ArrayLength(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.MetaFuncIndex(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.LoadAssembly(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.ImportType(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.ImportGenericType(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.Cast(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.XLuaAccess(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.XLuaPrivateAccessible(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.XLuaMetatableOperation(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.DelegateConstructor(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.ToFunction(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.GenericMethodWraper(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.GetGenericMethod(L) end
----@param L System.IntPtr
----@return number
-function XLua.StaticLuaCallbacks.ReleaseCsObject(L) end
-
----@class XLua.InternalGlobals : System.Object
-XLua.InternalGlobals = {}
----@alias CS.XLua.InternalGlobals XLua.InternalGlobals
-CS.XLua.InternalGlobals = XLua.InternalGlobals
-
----@return XLua.InternalGlobals
-function XLua.InternalGlobals.New() end
-
----@class XLua.InternalGlobals.TryArrayGet : System.MulticastDelegate
-XLua.InternalGlobals.TryArrayGet = {}
----@alias CS.XLua.InternalGlobals.TryArrayGet XLua.InternalGlobals.TryArrayGet
-CS.XLua.InternalGlobals.TryArrayGet = XLua.InternalGlobals.TryArrayGet
-
----@param object System.Object
----@param method System.IntPtr
----@return XLua.InternalGlobals.TryArrayGet
-function XLua.InternalGlobals.TryArrayGet.New(object, method) end
----@param type System.Type
----@param L System.IntPtr
----@param translator XLua.ObjectTranslator
----@param obj System.Object
----@param index number
----@return boolean
-function XLua.InternalGlobals.TryArrayGet:Invoke(type, L, translator, obj, index) end
----@param type System.Type
----@param L System.IntPtr
----@param translator XLua.ObjectTranslator
----@param obj System.Object
----@param index number
----@param callback System.AsyncCallback
----@param object System.Object
----@return System.IAsyncResult
-function XLua.InternalGlobals.TryArrayGet:BeginInvoke(type, L, translator, obj, index, callback, object) end
----@param result System.IAsyncResult
----@return boolean
-function XLua.InternalGlobals.TryArrayGet:EndInvoke(result) end
-
----@class XLua.InternalGlobals.TryArraySet : System.MulticastDelegate
-XLua.InternalGlobals.TryArraySet = {}
----@alias CS.XLua.InternalGlobals.TryArraySet XLua.InternalGlobals.TryArraySet
-CS.XLua.InternalGlobals.TryArraySet = XLua.InternalGlobals.TryArraySet
-
----@param object System.Object
----@param method System.IntPtr
----@return XLua.InternalGlobals.TryArraySet
-function XLua.InternalGlobals.TryArraySet.New(object, method) end
----@param type System.Type
----@param L System.IntPtr
----@param translator XLua.ObjectTranslator
----@param obj System.Object
----@param array_idx number
----@param obj_idx number
----@return boolean
-function XLua.InternalGlobals.TryArraySet:Invoke(type, L, translator, obj, array_idx, obj_idx) end
----@param type System.Type
----@param L System.IntPtr
----@param translator XLua.ObjectTranslator
----@param obj System.Object
----@param array_idx number
----@param obj_idx number
----@param callback System.AsyncCallback
----@param object System.Object
----@return System.IAsyncResult
-function XLua.InternalGlobals.TryArraySet:BeginInvoke(type, L, translator, obj, array_idx, obj_idx, callback, object) end
----@param result System.IAsyncResult
----@return boolean
-function XLua.InternalGlobals.TryArraySet:EndInvoke(result) end
-
----@class XLua.CodeEmit : System.Object
-XLua.CodeEmit = {}
----@alias CS.XLua.CodeEmit XLua.CodeEmit
-CS.XLua.CodeEmit = XLua.CodeEmit
-
----@return XLua.CodeEmit
-function XLua.CodeEmit.New() end
----@param groups System.Collections.Generic.IEnumerable
----@return System.Type
-function XLua.CodeEmit:EmitDelegateImpl(groups) end
----@param gen_interfaces System.Collections.Generic.List
-function XLua.CodeEmit:SetGenInterfaces(gen_interfaces) end
----@param to_be_impl System.Type
----@return System.Type
-function XLua.CodeEmit:EmitInterfaceImpl(to_be_impl) end
----@param typeBuilder System.Reflection.Emit.TypeBuilder
----@param field System.Reflection.FieldInfo
----@param genGetter boolean
----@return System.Reflection.Emit.MethodBuilder
-function XLua.CodeEmit:emitFieldWrap(typeBuilder, field, genGetter) end
----@param typeBuilder System.Reflection.Emit.TypeBuilder
----@param prop System.Reflection.PropertyInfo
----@param op System.Reflection.MethodInfo
----@param genGetter boolean
----@return System.Reflection.Emit.MethodBuilder
-function XLua.CodeEmit:emitPropertyWrap(typeBuilder, prop, op, genGetter) end
----@param toBeWrap System.Type
----@return System.Type
-function XLua.CodeEmit:EmitTypeWrap(toBeWrap) end
-
----@class XLua.DelegateBridgeBase : XLua.LuaBase
-XLua.DelegateBridgeBase = {}
----@alias CS.XLua.DelegateBridgeBase XLua.DelegateBridgeBase
-CS.XLua.DelegateBridgeBase = XLua.DelegateBridgeBase
-
----@param reference number
----@param luaenv XLua.LuaEnv
----@return XLua.DelegateBridgeBase
-function XLua.DelegateBridgeBase.New(reference, luaenv) end
----@param key System.Type
----@param out_value System.Delegate
----@return boolean,System.Delegate
-function XLua.DelegateBridgeBase:TryGetDelegate(key, out_value) end
----@param key System.Type
----@param value System.Delegate
-function XLua.DelegateBridgeBase:AddDelegate(key, value) end
----@param type System.Type
----@return System.Delegate
-function XLua.DelegateBridgeBase:GetDelegateByType(type) end
-
----@class XLua.HotfixDelegateBridge : System.Object
-XLua.HotfixDelegateBridge = {}
----@alias CS.XLua.HotfixDelegateBridge XLua.HotfixDelegateBridge
-CS.XLua.HotfixDelegateBridge = XLua.HotfixDelegateBridge
-
----@param idx number
----@return boolean
-function XLua.HotfixDelegateBridge.xlua_get_hotfix_flag(idx) end
----@param idx number
----@return XLua.DelegateBridge
-function XLua.HotfixDelegateBridge.Get(idx) end
----@param idx number
----@param val XLua.DelegateBridge
-function XLua.HotfixDelegateBridge.Set(idx, val) end
-
----@class XLua.GenFlag
----@field No XLua.GenFlag
-XLua.GenFlag = {}
----@alias CS.XLua.GenFlag XLua.GenFlag
-CS.XLua.GenFlag = XLua.GenFlag
-
-
----@class XLua.LuaCallCSharpAttribute : System.Attribute
----@field Flag XLua.GenFlag
-XLua.LuaCallCSharpAttribute = {}
----@alias CS.XLua.LuaCallCSharpAttribute XLua.LuaCallCSharpAttribute
-CS.XLua.LuaCallCSharpAttribute = XLua.LuaCallCSharpAttribute
-
----@param flag XLua.GenFlag
----@return XLua.LuaCallCSharpAttribute
-function XLua.LuaCallCSharpAttribute.New(flag) end
-
----@class XLua.CSharpCallLuaAttribute : System.Attribute
-XLua.CSharpCallLuaAttribute = {}
----@alias CS.XLua.CSharpCallLuaAttribute XLua.CSharpCallLuaAttribute
-CS.XLua.CSharpCallLuaAttribute = XLua.CSharpCallLuaAttribute
-
----@return XLua.CSharpCallLuaAttribute
-function XLua.CSharpCallLuaAttribute.New() end
-
----@class XLua.BlackListAttribute : System.Attribute
-XLua.BlackListAttribute = {}
----@alias CS.XLua.BlackListAttribute XLua.BlackListAttribute
-CS.XLua.BlackListAttribute = XLua.BlackListAttribute
-
----@return XLua.BlackListAttribute
-function XLua.BlackListAttribute.New() end
-
----@class XLua.OptimizeFlag
----@field Default XLua.OptimizeFlag
----@field PackAsTable XLua.OptimizeFlag
-XLua.OptimizeFlag = {}
----@alias CS.XLua.OptimizeFlag XLua.OptimizeFlag
-CS.XLua.OptimizeFlag = XLua.OptimizeFlag
-
-
----@class XLua.GCOptimizeAttribute : System.Attribute
----@field Flag XLua.OptimizeFlag
-XLua.GCOptimizeAttribute = {}
----@alias CS.XLua.GCOptimizeAttribute XLua.GCOptimizeAttribute
-CS.XLua.GCOptimizeAttribute = XLua.GCOptimizeAttribute
-
----@param flag XLua.OptimizeFlag
----@return XLua.GCOptimizeAttribute
-function XLua.GCOptimizeAttribute.New(flag) end
-
----@class XLua.ReflectionUseAttribute : System.Attribute
-XLua.ReflectionUseAttribute = {}
----@alias CS.XLua.ReflectionUseAttribute XLua.ReflectionUseAttribute
-CS.XLua.ReflectionUseAttribute = XLua.ReflectionUseAttribute
-
----@return XLua.ReflectionUseAttribute
-function XLua.ReflectionUseAttribute.New() end
-
----@class XLua.DoNotGenAttribute : System.Attribute
-XLua.DoNotGenAttribute = {}
----@alias CS.XLua.DoNotGenAttribute XLua.DoNotGenAttribute
-CS.XLua.DoNotGenAttribute = XLua.DoNotGenAttribute
-
----@return XLua.DoNotGenAttribute
-function XLua.DoNotGenAttribute.New() end
-
----@class XLua.AdditionalPropertiesAttribute : System.Attribute
-XLua.AdditionalPropertiesAttribute = {}
----@alias CS.XLua.AdditionalPropertiesAttribute XLua.AdditionalPropertiesAttribute
-CS.XLua.AdditionalPropertiesAttribute = XLua.AdditionalPropertiesAttribute
-
----@return XLua.AdditionalPropertiesAttribute
-function XLua.AdditionalPropertiesAttribute.New() end
-
----@class XLua.HotfixFlag
----@field Stateless XLua.HotfixFlag
----@field ValueTypeBoxing XLua.HotfixFlag
----@field IgnoreProperty XLua.HotfixFlag
----@field IgnoreNotPublic XLua.HotfixFlag
----@field Inline XLua.HotfixFlag
----@field IntKey XLua.HotfixFlag
----@field AdaptByDelegate XLua.HotfixFlag
----@field IgnoreCompilerGenerated XLua.HotfixFlag
----@field NoBaseProxy XLua.HotfixFlag
-XLua.HotfixFlag = {}
----@alias CS.XLua.HotfixFlag XLua.HotfixFlag
-CS.XLua.HotfixFlag = XLua.HotfixFlag
-
-
----@class XLua.HotfixAttribute : System.Attribute
----@field Flag XLua.HotfixFlag
-XLua.HotfixAttribute = {}
----@alias CS.XLua.HotfixAttribute XLua.HotfixAttribute
-CS.XLua.HotfixAttribute = XLua.HotfixAttribute
-
----@param e XLua.HotfixFlag
----@return XLua.HotfixAttribute
-function XLua.HotfixAttribute.New(e) end
-
----@class XLua.HotfixDelegateAttribute : System.Attribute
-XLua.HotfixDelegateAttribute = {}
----@alias CS.XLua.HotfixDelegateAttribute XLua.HotfixDelegateAttribute
-CS.XLua.HotfixDelegateAttribute = XLua.HotfixDelegateAttribute
-
----@return XLua.HotfixDelegateAttribute
-function XLua.HotfixDelegateAttribute.New() end
-
----@class XLua.SysGenConfig : System.Object
-XLua.SysGenConfig = {}
----@alias CS.XLua.SysGenConfig XLua.SysGenConfig
-CS.XLua.SysGenConfig = XLua.SysGenConfig
-
-
----@class XLua.LuaBase : System.Object
-XLua.LuaBase = {}
----@alias CS.XLua.LuaBase XLua.LuaBase
-CS.XLua.LuaBase = XLua.LuaBase
-
----@param reference number
----@param luaenv XLua.LuaEnv
----@return XLua.LuaBase
-function XLua.LuaBase.New(reference, luaenv) end
----@overload fun()
----@param disposeManagedResources boolean
-function XLua.LuaBase:Dispose(disposeManagedResources) end
----@param o System.Object
----@return boolean
-function XLua.LuaBase:Equals(o) end
----@return number
-function XLua.LuaBase:GetHashCode() end
-
----@class XLua.LuaEnv : System.Object
----@field CSHARP_NAMESPACE string
----@field MAIN_SHREAD string
----@field Global XLua.LuaTable
----@field GcPause number
----@field GcStepmul number
----@field Memroy number
-XLua.LuaEnv = {}
----@alias CS.XLua.LuaEnv XLua.LuaEnv
-CS.XLua.LuaEnv = XLua.LuaEnv
-
----@return XLua.LuaEnv
-function XLua.LuaEnv.New() end
----@param initer System.Action | function
-function XLua.LuaEnv.AddIniter(initer) end
----@param chunk string
----@param chunkName string
----@param env XLua.LuaTable
----@return XLua.LuaFunction
-function XLua.LuaEnv:LoadString(chunk, chunkName, env) end
----@overload fun(self: XLua.LuaEnv, chunk: System.Byte[], chunkName: string, env: XLua.LuaTable) : System.Object[]
----@param chunk string
----@param chunkName string
----@param env XLua.LuaTable
----@return System.Object[]
-function XLua.LuaEnv:DoString(chunk, chunkName, env) end
----@param type System.Type
----@param alias string
-function XLua.LuaEnv:Alias(type, alias) end
-function XLua.LuaEnv:Tick() end
-function XLua.LuaEnv:GC() end
----@return XLua.LuaTable
-function XLua.LuaEnv:NewTable() end
----@overload fun()
----@param dispose boolean
-function XLua.LuaEnv:Dispose(dispose) end
----@param oldTop number
-function XLua.LuaEnv:ThrowExceptionFromError(oldTop) end
----@param loader XLua.LuaEnv.CustomLoader
-function XLua.LuaEnv:AddLoader(loader) end
----@param name string
----@param initer XLua.LuaDLL.lua_CSFunction
-function XLua.LuaEnv:AddBuildin(name, initer) end
-function XLua.LuaEnv:FullGc() end
-function XLua.LuaEnv:StopGc() end
-function XLua.LuaEnv:RestartGc() end
----@param data number
----@return boolean
-function XLua.LuaEnv:GcStep(data) end
-
----@class XLua.LuaEnv.GCAction : System.ValueType
----@field Reference number
----@field IsDelegate boolean
-XLua.LuaEnv.GCAction = {}
----@alias CS.XLua.LuaEnv.GCAction XLua.LuaEnv.GCAction
-CS.XLua.LuaEnv.GCAction = XLua.LuaEnv.GCAction
-
-
----@class XLua.LuaEnv.CustomLoader : System.MulticastDelegate
-XLua.LuaEnv.CustomLoader = {}
----@alias CS.XLua.LuaEnv.CustomLoader XLua.LuaEnv.CustomLoader
-CS.XLua.LuaEnv.CustomLoader = XLua.LuaEnv.CustomLoader
-
----@param object System.Object
----@param method System.IntPtr
----@return XLua.LuaEnv.CustomLoader
-function XLua.LuaEnv.CustomLoader.New(object, method) end
----@param ref_filepath string
----@return System.Byte[],string
-function XLua.LuaEnv.CustomLoader:Invoke(ref_filepath) end
----@param ref_filepath string
----@param callback System.AsyncCallback
----@param object System.Object
----@return System.IAsyncResult,string
-function XLua.LuaEnv.CustomLoader:BeginInvoke(ref_filepath, callback, object) end
----@param ref_filepath string
----@param result System.IAsyncResult
----@return System.Byte[],string
-function XLua.LuaEnv.CustomLoader:EndInvoke(ref_filepath, result) end
-
----@class XLua.LuaException : System.Exception
-XLua.LuaException = {}
----@alias CS.XLua.LuaException XLua.LuaException
-CS.XLua.LuaException = XLua.LuaException
-
----@param message string
----@return XLua.LuaException
-function XLua.LuaException.New(message) end
-
----@class XLua.LuaFunction : XLua.LuaBase
-XLua.LuaFunction = {}
----@alias CS.XLua.LuaFunction XLua.LuaFunction
-CS.XLua.LuaFunction = XLua.LuaFunction
-
----@param reference number
----@param luaenv XLua.LuaEnv
----@return XLua.LuaFunction
-function XLua.LuaFunction.New(reference, luaenv) end
----@overload fun(self: XLua.LuaFunction, args: System.Object[], returnTypes: System.Type[]) : System.Object[]
----@param args System.Object[]
----@return System.Object[]
-function XLua.LuaFunction:Call(args) end
----@param env XLua.LuaTable
-function XLua.LuaFunction:SetEnv(env) end
----@return string
-function XLua.LuaFunction:ToString() end
-
----@class XLua.LuaTable : XLua.LuaBase
----@field Length number
-XLua.LuaTable = {}
----@alias CS.XLua.LuaTable XLua.LuaTable
-CS.XLua.LuaTable = XLua.LuaTable
-
----@param reference number
----@param luaenv XLua.LuaEnv
----@return XLua.LuaTable
-function XLua.LuaTable.New(reference, luaenv) end
----@return System.Collections.IEnumerable
-function XLua.LuaTable:GetKeys() end
----@param metaTable XLua.LuaTable
-function XLua.LuaTable:SetMetaTable(metaTable) end
----@return string
-function XLua.LuaTable:ToString() end
-
----@class XLua.OverloadMethodWrap : System.Object
----@field HasDefalutValue boolean
-XLua.OverloadMethodWrap = {}
----@alias CS.XLua.OverloadMethodWrap XLua.OverloadMethodWrap
-CS.XLua.OverloadMethodWrap = XLua.OverloadMethodWrap
-
----@param translator XLua.ObjectTranslator
----@param targetType System.Type
----@param method System.Reflection.MethodBase
----@return XLua.OverloadMethodWrap
-function XLua.OverloadMethodWrap.New(translator, targetType, method) end
----@param objCheckers XLua.ObjectCheckers
----@param objCasters XLua.ObjectCasters
-function XLua.OverloadMethodWrap:Init(objCheckers, objCasters) end
----@param L System.IntPtr
----@return boolean
-function XLua.OverloadMethodWrap:Check(L) end
----@param L System.IntPtr
----@return number
-function XLua.OverloadMethodWrap:Call(L) end
-
----@class XLua.MethodWrap : System.Object
-XLua.MethodWrap = {}
----@alias CS.XLua.MethodWrap XLua.MethodWrap
-CS.XLua.MethodWrap = XLua.MethodWrap
-
----@param methodName string
----@param overloads System.Collections.Generic.List
----@param forceCheck boolean
----@return XLua.MethodWrap
-function XLua.MethodWrap.New(methodName, overloads, forceCheck) end
----@param L System.IntPtr
----@return number
-function XLua.MethodWrap:Call(L) end
-
----@class XLua.MethodWrapsCache : System.Object
-XLua.MethodWrapsCache = {}
----@alias CS.XLua.MethodWrapsCache XLua.MethodWrapsCache
-CS.XLua.MethodWrapsCache = XLua.MethodWrapsCache
-
----@param translator XLua.ObjectTranslator
----@param objCheckers XLua.ObjectCheckers
----@param objCasters XLua.ObjectCasters
----@return XLua.MethodWrapsCache
-function XLua.MethodWrapsCache.New(translator, objCheckers, objCasters) end
----@param type System.Type
----@return XLua.LuaDLL.lua_CSFunction
-function XLua.MethodWrapsCache:GetConstructorWrap(type) end
----@param type System.Type
----@param methodName string
----@return XLua.LuaDLL.lua_CSFunction
-function XLua.MethodWrapsCache:GetMethodWrap(type, methodName) end
----@param type System.Type
----@param methodName string
----@return XLua.LuaDLL.lua_CSFunction
-function XLua.MethodWrapsCache:GetMethodWrapInCache(type, methodName) end
----@param type System.Type
----@return XLua.LuaDLL.lua_CSFunction
-function XLua.MethodWrapsCache:GetDelegateWrap(type) end
----@param type System.Type
----@param eventName string
----@return XLua.LuaDLL.lua_CSFunction
-function XLua.MethodWrapsCache:GetEventWrap(type, eventName) end
----@param type System.Type
----@param methodName string
----@param methodBases System.Collections.Generic.IEnumerable
----@param forceCheck boolean
----@return XLua.MethodWrap
-function XLua.MethodWrapsCache:_GenMethodWrap(type, methodName, methodBases, forceCheck) end
-
----@class XLua.ObjectCheck : System.MulticastDelegate
-XLua.ObjectCheck = {}
----@alias CS.XLua.ObjectCheck XLua.ObjectCheck
-CS.XLua.ObjectCheck = XLua.ObjectCheck
-
----@param object System.Object
----@param method System.IntPtr
----@return XLua.ObjectCheck
-function XLua.ObjectCheck.New(object, method) end
----@param L System.IntPtr
----@param idx number
----@return boolean
-function XLua.ObjectCheck:Invoke(L, idx) end
----@param L System.IntPtr
----@param idx number
----@param callback System.AsyncCallback
----@param object System.Object
----@return System.IAsyncResult
-function XLua.ObjectCheck:BeginInvoke(L, idx, callback, object) end
----@param result System.IAsyncResult
----@return boolean
-function XLua.ObjectCheck:EndInvoke(result) end
-
----@class XLua.ObjectCast : System.MulticastDelegate
-XLua.ObjectCast = {}
----@alias CS.XLua.ObjectCast XLua.ObjectCast
-CS.XLua.ObjectCast = XLua.ObjectCast
-
----@param object System.Object
----@param method System.IntPtr
----@return XLua.ObjectCast
-function XLua.ObjectCast.New(object, method) end
----@param L System.IntPtr
----@param idx number
----@param target System.Object
----@return System.Object
-function XLua.ObjectCast:Invoke(L, idx, target) end
----@param L System.IntPtr
----@param idx number
----@param target System.Object
----@param callback System.AsyncCallback
----@param object System.Object
----@return System.IAsyncResult
-function XLua.ObjectCast:BeginInvoke(L, idx, target, callback, object) end
----@param result System.IAsyncResult
----@return System.Object
-function XLua.ObjectCast:EndInvoke(result) end
-
----@class XLua.ObjectCheckers : System.Object
-XLua.ObjectCheckers = {}
----@alias CS.XLua.ObjectCheckers XLua.ObjectCheckers
-CS.XLua.ObjectCheckers = XLua.ObjectCheckers
-
----@param translator XLua.ObjectTranslator
----@return XLua.ObjectCheckers
-function XLua.ObjectCheckers.New(translator) end
----@param oc XLua.ObjectCheck
----@return XLua.ObjectCheck
-function XLua.ObjectCheckers:genNullableChecker(oc) end
----@param type System.Type
----@param oc XLua.ObjectCheck
-function XLua.ObjectCheckers:AddChecker(type, oc) end
----@param type System.Type
----@return XLua.ObjectCheck
-function XLua.ObjectCheckers:GetChecker(type) end
-
----@class XLua.ObjectCasters : System.Object
-XLua.ObjectCasters = {}
----@alias CS.XLua.ObjectCasters XLua.ObjectCasters
-CS.XLua.ObjectCasters = XLua.ObjectCasters
-
----@param translator XLua.ObjectTranslator
----@return XLua.ObjectCasters
-function XLua.ObjectCasters.New(translator) end
----@param type System.Type
----@param oc XLua.ObjectCast
-function XLua.ObjectCasters:AddCaster(type, oc) end
----@param type System.Type
----@return XLua.ObjectCast
-function XLua.ObjectCasters:GetCaster(type) end
-
----@class XLua.ObjectPool : System.Object
----@field Item System.Object
-XLua.ObjectPool = {}
----@alias CS.XLua.ObjectPool XLua.ObjectPool
-CS.XLua.ObjectPool = XLua.ObjectPool
-
----@return XLua.ObjectPool
-function XLua.ObjectPool.New() end
-function XLua.ObjectPool:Clear() end
----@param obj System.Object
----@return number
-function XLua.ObjectPool:Add(obj) end
----@param index number
----@param out_obj System.Object
----@return boolean,System.Object
-function XLua.ObjectPool:TryGetValue(index, out_obj) end
----@param index number
----@return System.Object
-function XLua.ObjectPool:Get(index) end
----@param index number
----@return System.Object
-function XLua.ObjectPool:Remove(index) end
----@param index number
----@param o System.Object
----@return System.Object
-function XLua.ObjectPool:Replace(index, o) end
----@param check_pos number
----@param max_check number
----@param checker System.Func
----@param reverse_map System.Collections.Generic.Dictionary
----@return number
-function XLua.ObjectPool:Check(check_pos, max_check, checker, reverse_map) end
-
----@class XLua.ObjectPool.Slot : System.ValueType
----@field next number
----@field obj System.Object
-XLua.ObjectPool.Slot = {}
----@alias CS.XLua.ObjectPool.Slot XLua.ObjectPool.Slot
-CS.XLua.ObjectPool.Slot = XLua.ObjectPool.Slot
-
----@param next number
----@param obj System.Object
----@return XLua.ObjectPool.Slot
-function XLua.ObjectPool.Slot.New(next, obj) end
-
----@class XLua.ReferenceEqualsComparer : System.Object
-XLua.ReferenceEqualsComparer = {}
----@alias CS.XLua.ReferenceEqualsComparer XLua.ReferenceEqualsComparer
-CS.XLua.ReferenceEqualsComparer = XLua.ReferenceEqualsComparer
-
----@return XLua.ReferenceEqualsComparer
-function XLua.ReferenceEqualsComparer.New() end
----@param o1 System.Object
----@param o2 System.Object
----@return boolean
-function XLua.ReferenceEqualsComparer:Equals(o1, o2) end
----@param obj System.Object
----@return number
-function XLua.ReferenceEqualsComparer:GetHashCode(obj) end
-
----@class XLua.MonoPInvokeCallbackAttribute : System.Attribute
-XLua.MonoPInvokeCallbackAttribute = {}
----@alias CS.XLua.MonoPInvokeCallbackAttribute XLua.MonoPInvokeCallbackAttribute
-CS.XLua.MonoPInvokeCallbackAttribute = XLua.MonoPInvokeCallbackAttribute
-
----@param t System.Type
----@return XLua.MonoPInvokeCallbackAttribute
-function XLua.MonoPInvokeCallbackAttribute.New(t) end
-
----@class XLua.LuaTypes
----@field LUA_TNONE XLua.LuaTypes
----@field LUA_TNIL XLua.LuaTypes
----@field LUA_TNUMBER XLua.LuaTypes
----@field LUA_TSTRING XLua.LuaTypes
----@field LUA_TBOOLEAN XLua.LuaTypes
----@field LUA_TTABLE XLua.LuaTypes
----@field LUA_TFUNCTION XLua.LuaTypes
----@field LUA_TUSERDATA XLua.LuaTypes
----@field LUA_TTHREAD XLua.LuaTypes
----@field LUA_TLIGHTUSERDATA XLua.LuaTypes
-XLua.LuaTypes = {}
----@alias CS.XLua.LuaTypes XLua.LuaTypes
-CS.XLua.LuaTypes = XLua.LuaTypes
-
-
----@class XLua.LuaGCOptions
----@field LUA_GCSTOP XLua.LuaGCOptions
----@field LUA_GCRESTART XLua.LuaGCOptions
----@field LUA_GCCOLLECT XLua.LuaGCOptions
----@field LUA_GCCOUNT XLua.LuaGCOptions
----@field LUA_GCCOUNTB XLua.LuaGCOptions
----@field LUA_GCSTEP XLua.LuaGCOptions
----@field LUA_GCSETPAUSE XLua.LuaGCOptions
----@field LUA_GCSETSTEPMUL XLua.LuaGCOptions
-XLua.LuaGCOptions = {}
----@alias CS.XLua.LuaGCOptions XLua.LuaGCOptions
-CS.XLua.LuaGCOptions = XLua.LuaGCOptions
-
-
----@class XLua.LuaThreadStatus
----@field LUA_RESUME_ERROR XLua.LuaThreadStatus
----@field LUA_OK XLua.LuaThreadStatus
----@field LUA_YIELD XLua.LuaThreadStatus
----@field LUA_ERRRUN XLua.LuaThreadStatus
----@field LUA_ERRSYNTAX XLua.LuaThreadStatus
----@field LUA_ERRMEM XLua.LuaThreadStatus
----@field LUA_ERRERR XLua.LuaThreadStatus
-XLua.LuaThreadStatus = {}
----@alias CS.XLua.LuaThreadStatus XLua.LuaThreadStatus
-CS.XLua.LuaThreadStatus = XLua.LuaThreadStatus
-
-
----@class XLua.LuaIndexes : System.Object
----@field LUA_REGISTRYINDEX number
-XLua.LuaIndexes = {}
----@alias CS.XLua.LuaIndexes XLua.LuaIndexes
-CS.XLua.LuaIndexes = XLua.LuaIndexes
-
----@return XLua.LuaIndexes
-function XLua.LuaIndexes.New() end
-
----@class XLua.ObjectTranslatorPool : System.Object
----@field Instance XLua.ObjectTranslatorPool
-XLua.ObjectTranslatorPool = {}
----@alias CS.XLua.ObjectTranslatorPool XLua.ObjectTranslatorPool
-CS.XLua.ObjectTranslatorPool = XLua.ObjectTranslatorPool
-
----@return XLua.ObjectTranslatorPool
-function XLua.ObjectTranslatorPool.New() end
----@param L System.IntPtr
----@return XLua.ObjectTranslator
-function XLua.ObjectTranslatorPool.FindTranslator(L) end
----@param L System.IntPtr
----@param translator XLua.ObjectTranslator
-function XLua.ObjectTranslatorPool:Add(L, translator) end
----@param L System.IntPtr
----@return XLua.ObjectTranslator
-function XLua.ObjectTranslatorPool:Find(L) end
----@param L System.IntPtr
-function XLua.ObjectTranslatorPool:Remove(L) end
-
----@class XLua.RawObject
----@field Target System.Object
-XLua.RawObject = {}
----@alias CS.XLua.RawObject XLua.RawObject
-CS.XLua.RawObject = XLua.RawObject
-
-
----@class XLua.SignatureLoader : System.Object
-XLua.SignatureLoader = {}
----@alias CS.XLua.SignatureLoader XLua.SignatureLoader
-CS.XLua.SignatureLoader = XLua.SignatureLoader
-
----@param publicKey string
----@param loader XLua.LuaEnv.CustomLoader
----@return XLua.SignatureLoader
-function XLua.SignatureLoader.New(publicKey, loader) end
-
----@class XLua.TypeExtensions : System.Object
-XLua.TypeExtensions = {}
----@alias CS.XLua.TypeExtensions XLua.TypeExtensions
-CS.XLua.TypeExtensions = XLua.TypeExtensions
-
----@param type System.Type
----@return boolean
-function XLua.TypeExtensions.IsValueType(type) end
----@param type System.Type
----@return boolean
-function XLua.TypeExtensions.IsEnum(type) end
----@param type System.Type
----@return boolean
-function XLua.TypeExtensions.IsPrimitive(type) end
----@param type System.Type
----@return boolean
-function XLua.TypeExtensions.IsAbstract(type) end
----@param type System.Type
----@return boolean
-function XLua.TypeExtensions.IsSealed(type) end
----@param type System.Type
----@return boolean
-function XLua.TypeExtensions.IsInterface(type) end
----@param type System.Type
----@return boolean
-function XLua.TypeExtensions.IsClass(type) end
----@param type System.Type
----@return System.Type
-function XLua.TypeExtensions.BaseType(type) end
----@param type System.Type
----@return boolean
-function XLua.TypeExtensions.IsGenericType(type) end
----@param type System.Type
----@return boolean
-function XLua.TypeExtensions.IsGenericTypeDefinition(type) end
----@param type System.Type
----@return boolean
-function XLua.TypeExtensions.IsNestedPublic(type) end
----@param type System.Type
----@return boolean
-function XLua.TypeExtensions.IsPublic(type) end
----@param type System.Type
----@return string
-function XLua.TypeExtensions.GetFriendlyName(type) end
-
----@class XLua.LazyMemberTypes
----@field Method XLua.LazyMemberTypes
----@field FieldGet XLua.LazyMemberTypes
----@field FieldSet XLua.LazyMemberTypes
----@field PropertyGet XLua.LazyMemberTypes
----@field PropertySet XLua.LazyMemberTypes
----@field Event XLua.LazyMemberTypes
-XLua.LazyMemberTypes = {}
----@alias CS.XLua.LazyMemberTypes XLua.LazyMemberTypes
-CS.XLua.LazyMemberTypes = XLua.LazyMemberTypes
-
-
----@class XLua.Utils : System.Object
----@field OBJ_META_IDX number
----@field METHOD_IDX number
----@field GETTER_IDX number
----@field SETTER_IDX number
----@field CLS_IDX number
----@field CLS_META_IDX number
----@field CLS_GETTER_IDX number
----@field CLS_SETTER_IDX number
----@field LuaIndexsFieldName string
----@field LuaNewIndexsFieldName string
----@field LuaClassIndexsFieldName string
----@field LuaClassNewIndexsFieldName string
-XLua.Utils = {}
----@alias CS.XLua.Utils XLua.Utils
-CS.XLua.Utils = XLua.Utils
-
----@param L System.IntPtr
----@param idx number
----@param field_name string
----@return boolean
-function XLua.Utils.LoadField(L, idx, field_name) end
----@param L System.IntPtr
----@return System.IntPtr
-function XLua.Utils.GetMainState(L) end
----@param exclude_generic_definition boolean
----@return System.Collections.Generic.List
-function XLua.Utils.GetAllTypes(exclude_generic_definition) end
----@param L System.IntPtr
----@param type System.Type
----@param metafunc string
----@param index number
-function XLua.Utils.loadUpvalue(L, type, metafunc, index) end
----@param L System.IntPtr
----@param type System.Type
-function XLua.Utils.RegisterEnumType(L, type) end
----@param L System.IntPtr
----@param type System.Type
-function XLua.Utils.MakePrivateAccessible(L, type) end
----@param L System.IntPtr
----@param type System.Type
----@param privateAccessible boolean
-function XLua.Utils.ReflectionWrap(L, type, privateAccessible) end
----@param type System.Type
----@param L System.IntPtr
----@param translator XLua.ObjectTranslator
----@param meta_count number
----@param method_count number
----@param getter_count number
----@param setter_count number
----@param type_id number
-function XLua.Utils.BeginObjectRegister(type, L, translator, meta_count, method_count, getter_count, setter_count, type_id) end
----@param type System.Type
----@param L System.IntPtr
----@param translator XLua.ObjectTranslator
----@param csIndexer XLua.LuaDLL.lua_CSFunction
----@param csNewIndexer XLua.LuaDLL.lua_CSFunction
----@param base_type System.Type
----@param arrayIndexer XLua.LuaDLL.lua_CSFunction
----@param arrayNewIndexer XLua.LuaDLL.lua_CSFunction
-function XLua.Utils.EndObjectRegister(type, L, translator, csIndexer, csNewIndexer, base_type, arrayIndexer, arrayNewIndexer) end
----@param L System.IntPtr
----@param idx number
----@param name string
----@param func XLua.LuaDLL.lua_CSFunction
-function XLua.Utils.RegisterFunc(L, idx, name, func) end
----@param L System.IntPtr
----@param idx number
----@param name string
----@param type System.Type
----@param memberType XLua.LazyMemberTypes
----@param isStatic boolean
-function XLua.Utils.RegisterLazyFunc(L, idx, name, type, memberType, isStatic) end
----@param L System.IntPtr
----@param translator XLua.ObjectTranslator
----@param idx number
----@param name string
----@param obj System.Object
-function XLua.Utils.RegisterObject(L, translator, idx, name, obj) end
----@param type System.Type
----@param L System.IntPtr
----@param creator XLua.LuaDLL.lua_CSFunction
----@param class_field_count number
----@param static_getter_count number
----@param static_setter_count number
-function XLua.Utils.BeginClassRegister(type, L, creator, class_field_count, static_getter_count, static_setter_count) end
----@param type System.Type
----@param L System.IntPtr
----@param translator XLua.ObjectTranslator
-function XLua.Utils.EndClassRegister(type, L, translator) end
----@param L System.IntPtr
----@param type System.Type
-function XLua.Utils.LoadCSTable(L, type) end
----@param L System.IntPtr
----@param type System.Type
----@param cls_table number
-function XLua.Utils.SetCSTable(L, type, cls_table) end
----@param delegateMethod System.Reflection.MethodInfo
----@param bridgeMethod System.Reflection.MethodInfo
----@return boolean
-function XLua.Utils.IsParamsMatch(delegateMethod, bridgeMethod) end
----@param method System.Reflection.MethodInfo
----@return boolean
-function XLua.Utils.IsSupportedMethod(method) end
----@param method System.Reflection.MethodInfo
----@return System.Reflection.MethodInfo
-function XLua.Utils.MakeGenericMethodWithConstraints(method) end
----@param csFunction XLua.LuaDLL.lua_CSFunction
----@return boolean
-function XLua.Utils.IsStaticPInvokeCSFunction(csFunction) end
----@param type System.Type
----@return boolean
-function XLua.Utils.IsPublic(type) end
-
----@class XLua.Utils.MethodKey : System.ValueType
----@field Name string
----@field IsStatic boolean
-XLua.Utils.MethodKey = {}
----@alias CS.XLua.Utils.MethodKey XLua.Utils.MethodKey
-CS.XLua.Utils.MethodKey = XLua.Utils.MethodKey
-
-
----@class XLua.TemplateEngine.TokenType
----@field Code XLua.TemplateEngine.TokenType
----@field Eval XLua.TemplateEngine.TokenType
----@field Text XLua.TemplateEngine.TokenType
-XLua.TemplateEngine.TokenType = {}
----@alias CS.XLua.TemplateEngine.TokenType XLua.TemplateEngine.TokenType
-CS.XLua.TemplateEngine.TokenType = XLua.TemplateEngine.TokenType
-
-
----@class XLua.TemplateEngine.Chunk : System.Object
----@field Type XLua.TemplateEngine.TokenType
----@field Text string
-XLua.TemplateEngine.Chunk = {}
----@alias CS.XLua.TemplateEngine.Chunk XLua.TemplateEngine.Chunk
-CS.XLua.TemplateEngine.Chunk = XLua.TemplateEngine.Chunk
-
----@param type XLua.TemplateEngine.TokenType
----@param text string
----@return XLua.TemplateEngine.Chunk
-function XLua.TemplateEngine.Chunk.New(type, text) end
-
----@class XLua.TemplateEngine.TemplateFormatException : System.Exception
-XLua.TemplateEngine.TemplateFormatException = {}
----@alias CS.XLua.TemplateEngine.TemplateFormatException XLua.TemplateEngine.TemplateFormatException
-CS.XLua.TemplateEngine.TemplateFormatException = XLua.TemplateEngine.TemplateFormatException
-
----@param message string
----@return XLua.TemplateEngine.TemplateFormatException
-function XLua.TemplateEngine.TemplateFormatException.New(message) end
-
----@class XLua.TemplateEngine.Parser : System.Object
----@field RegexString string
-XLua.TemplateEngine.Parser = {}
----@alias CS.XLua.TemplateEngine.Parser XLua.TemplateEngine.Parser
-CS.XLua.TemplateEngine.Parser = XLua.TemplateEngine.Parser
-
----@return XLua.TemplateEngine.Parser
-function XLua.TemplateEngine.Parser.New() end
----@param snippet string
----@return System.Collections.Generic.List
-function XLua.TemplateEngine.Parser.Parse(snippet) end
-
----@class XLua.TemplateEngine.LuaTemplate : System.Object
-XLua.TemplateEngine.LuaTemplate = {}
----@alias CS.XLua.TemplateEngine.LuaTemplate XLua.TemplateEngine.LuaTemplate
-CS.XLua.TemplateEngine.LuaTemplate = XLua.TemplateEngine.LuaTemplate
-
----@return XLua.TemplateEngine.LuaTemplate
-function XLua.TemplateEngine.LuaTemplate.New() end
----@param chunks System.Collections.Generic.List
----@return string
-function XLua.TemplateEngine.LuaTemplate.ComposeCode(chunks) end
----@overload fun(luaenv: XLua.LuaEnv, snippet: string) : XLua.LuaFunction
----@param L System.IntPtr
----@return number
-function XLua.TemplateEngine.LuaTemplate.Compile(L) end
----@overload fun(compiledTemplate: XLua.LuaFunction, parameters: XLua.LuaTable) : string
----@overload fun(compiledTemplate: XLua.LuaFunction) : string
----@param L System.IntPtr
----@return number
-function XLua.TemplateEngine.LuaTemplate.Execute(L) end
----@param L System.IntPtr
-function XLua.TemplateEngine.LuaTemplate.OpenLib(L) end
-
----@class XLua.Cast.Any : System.Object
----@field Target System.Object
-XLua.Cast.Any = {}
----@alias CS.XLua.Cast.Any XLua.Cast.Any
-CS.XLua.Cast.Any = XLua.Cast.Any
-
----@param i T
----@return XLua.Cast.Any
-function XLua.Cast.Any.New(i) end
-
----@class XLua.Cast.Byte : XLua.Cast.Any
-XLua.Cast.Byte = {}
----@alias CS.XLua.Cast.Byte XLua.Cast.Byte
-CS.XLua.Cast.Byte = XLua.Cast.Byte
-
----@param i number
----@return XLua.Cast.Byte
-function XLua.Cast.Byte.New(i) end
-
----@class XLua.Cast.SByte : XLua.Cast.Any
-XLua.Cast.SByte = {}
----@alias CS.XLua.Cast.SByte XLua.Cast.SByte
-CS.XLua.Cast.SByte = XLua.Cast.SByte
-
----@param i number
----@return XLua.Cast.SByte
-function XLua.Cast.SByte.New(i) end
-
----@class XLua.Cast.Char : XLua.Cast.Any
-XLua.Cast.Char = {}
----@alias CS.XLua.Cast.Char XLua.Cast.Char
-CS.XLua.Cast.Char = XLua.Cast.Char
-
----@param i System.Char
----@return XLua.Cast.Char
-function XLua.Cast.Char.New(i) end
-
----@class XLua.Cast.Int16 : XLua.Cast.Any
-XLua.Cast.Int16 = {}
----@alias CS.XLua.Cast.Int16 XLua.Cast.Int16
-CS.XLua.Cast.Int16 = XLua.Cast.Int16
-
----@param i number
----@return XLua.Cast.Int16
-function XLua.Cast.Int16.New(i) end
-
----@class XLua.Cast.UInt16 : XLua.Cast.Any
-XLua.Cast.UInt16 = {}
----@alias CS.XLua.Cast.UInt16 XLua.Cast.UInt16
-CS.XLua.Cast.UInt16 = XLua.Cast.UInt16
-
----@param i number
----@return XLua.Cast.UInt16
-function XLua.Cast.UInt16.New(i) end
-
----@class XLua.Cast.Int32 : XLua.Cast.Any
-XLua.Cast.Int32 = {}
----@alias CS.XLua.Cast.Int32 XLua.Cast.Int32
-CS.XLua.Cast.Int32 = XLua.Cast.Int32
-
----@param i number
----@return XLua.Cast.Int32
-function XLua.Cast.Int32.New(i) end
-
----@class XLua.Cast.UInt32 : XLua.Cast.Any
-XLua.Cast.UInt32 = {}
----@alias CS.XLua.Cast.UInt32 XLua.Cast.UInt32
-CS.XLua.Cast.UInt32 = XLua.Cast.UInt32
-
----@param i number
----@return XLua.Cast.UInt32
-function XLua.Cast.UInt32.New(i) end
-
----@class XLua.Cast.Int64 : XLua.Cast.Any
-XLua.Cast.Int64 = {}
----@alias CS.XLua.Cast.Int64 XLua.Cast.Int64
-CS.XLua.Cast.Int64 = XLua.Cast.Int64
-
----@param i number
----@return XLua.Cast.Int64
-function XLua.Cast.Int64.New(i) end
-
----@class XLua.Cast.UInt64 : XLua.Cast.Any
-XLua.Cast.UInt64 = {}
----@alias CS.XLua.Cast.UInt64 XLua.Cast.UInt64
-CS.XLua.Cast.UInt64 = XLua.Cast.UInt64
-
----@param i number
----@return XLua.Cast.UInt64
-function XLua.Cast.UInt64.New(i) end
-
----@class XLua.Cast.Float : XLua.Cast.Any
-XLua.Cast.Float = {}
----@alias CS.XLua.Cast.Float XLua.Cast.Float
-CS.XLua.Cast.Float = XLua.Cast.Float
-
----@param i number
----@return XLua.Cast.Float
-function XLua.Cast.Float.New(i) end
-
----@class XLua.LuaDLL.lua_CSFunction : System.MulticastDelegate
-XLua.LuaDLL.lua_CSFunction = {}
----@alias CS.XLua.LuaDLL.lua_CSFunction XLua.LuaDLL.lua_CSFunction
-CS.XLua.LuaDLL.lua_CSFunction = XLua.LuaDLL.lua_CSFunction
-
----@param object System.Object
----@param method System.IntPtr
----@return XLua.LuaDLL.lua_CSFunction
-function XLua.LuaDLL.lua_CSFunction.New(object, method) end
----@param L System.IntPtr
----@return number
-function XLua.LuaDLL.lua_CSFunction:Invoke(L) end
----@param L System.IntPtr
----@param callback System.AsyncCallback
----@param object System.Object
----@return System.IAsyncResult
-function XLua.LuaDLL.lua_CSFunction:BeginInvoke(L, callback, object) end
----@param result System.IAsyncResult
----@return number
-function XLua.LuaDLL.lua_CSFunction:EndInvoke(result) end
-
----@class XLua.LuaDLL.Lua : System.Object
-XLua.LuaDLL.Lua = {}
----@alias CS.XLua.LuaDLL.Lua XLua.LuaDLL.Lua
-CS.XLua.LuaDLL.Lua = XLua.LuaDLL.Lua
-
----@return XLua.LuaDLL.Lua
-function XLua.LuaDLL.Lua.New() end
----@param L System.IntPtr
----@param index number
----@return System.IntPtr
-function XLua.LuaDLL.Lua.lua_tothread(L, index) end
----@return number
-function XLua.LuaDLL.Lua.xlua_get_lib_version() end
----@param L System.IntPtr
----@param what XLua.LuaGCOptions
----@param data number
----@return number
-function XLua.LuaDLL.Lua.lua_gc(L, what, data) end
----@param L System.IntPtr
----@param funcindex number
----@param n number
----@return System.IntPtr
-function XLua.LuaDLL.Lua.lua_getupvalue(L, funcindex, n) end
----@param L System.IntPtr
----@param funcindex number
----@param n number
----@return System.IntPtr
-function XLua.LuaDLL.Lua.lua_setupvalue(L, funcindex, n) end
----@param L System.IntPtr
----@return number
-function XLua.LuaDLL.Lua.lua_pushthread(L) end
----@param L System.IntPtr
----@param stackPos number
----@return boolean
-function XLua.LuaDLL.Lua.lua_isfunction(L, stackPos) end
----@param L System.IntPtr
----@param stackPos number
----@return boolean
-function XLua.LuaDLL.Lua.lua_islightuserdata(L, stackPos) end
----@param L System.IntPtr
----@param stackPos number
----@return boolean
-function XLua.LuaDLL.Lua.lua_istable(L, stackPos) end
----@param L System.IntPtr
----@param stackPos number
----@return boolean
-function XLua.LuaDLL.Lua.lua_isthread(L, stackPos) end
----@param L System.IntPtr
----@param message string
----@return number
-function XLua.LuaDLL.Lua.luaL_error(L, message) end
----@param L System.IntPtr
----@param stackPos number
----@return number
-function XLua.LuaDLL.Lua.lua_setfenv(L, stackPos) end
----@return System.IntPtr
-function XLua.LuaDLL.Lua.luaL_newstate() end
----@param L System.IntPtr
-function XLua.LuaDLL.Lua.lua_close(L) end
----@param L System.IntPtr
-function XLua.LuaDLL.Lua.luaopen_xlua(L) end
----@param L System.IntPtr
-function XLua.LuaDLL.Lua.luaL_openlibs(L) end
----@param L System.IntPtr
----@param stackPos number
----@return number
-function XLua.LuaDLL.Lua.xlua_objlen(L, stackPos) end
----@param L System.IntPtr
----@param narr number
----@param nrec number
-function XLua.LuaDLL.Lua.lua_createtable(L, narr, nrec) end
----@param L System.IntPtr
-function XLua.LuaDLL.Lua.lua_newtable(L) end
----@param L System.IntPtr
----@param name string
----@return number
-function XLua.LuaDLL.Lua.xlua_getglobal(L, name) end
----@param L System.IntPtr
----@param name string
----@return number
-function XLua.LuaDLL.Lua.xlua_setglobal(L, name) end
----@param L System.IntPtr
-function XLua.LuaDLL.Lua.xlua_getloaders(L) end
----@param L System.IntPtr
----@param newTop number
-function XLua.LuaDLL.Lua.lua_settop(L, newTop) end
----@param L System.IntPtr
----@param amount number
-function XLua.LuaDLL.Lua.lua_pop(L, amount) end
----@param L System.IntPtr
----@param newTop number
-function XLua.LuaDLL.Lua.lua_insert(L, newTop) end
----@param L System.IntPtr
----@param index number
-function XLua.LuaDLL.Lua.lua_remove(L, index) end
----@param L System.IntPtr
----@param index number
----@return number
-function XLua.LuaDLL.Lua.lua_rawget(L, index) end
----@param L System.IntPtr
----@param index number
-function XLua.LuaDLL.Lua.lua_rawset(L, index) end
----@param L System.IntPtr
----@param objIndex number
----@return number
-function XLua.LuaDLL.Lua.lua_setmetatable(L, objIndex) end
----@param L System.IntPtr
----@param index1 number
----@param index2 number
----@return number
-function XLua.LuaDLL.Lua.lua_rawequal(L, index1, index2) end
----@param L System.IntPtr
----@param index number
-function XLua.LuaDLL.Lua.lua_pushvalue(L, index) end
----@param L System.IntPtr
----@param fn System.IntPtr
----@param n number
-function XLua.LuaDLL.Lua.lua_pushcclosure(L, fn, n) end
----@param L System.IntPtr
----@param index number
-function XLua.LuaDLL.Lua.lua_replace(L, index) end
----@param L System.IntPtr
----@return number
-function XLua.LuaDLL.Lua.lua_gettop(L) end
----@param L System.IntPtr
----@param index number
----@return XLua.LuaTypes
-function XLua.LuaDLL.Lua.lua_type(L, index) end
----@param L System.IntPtr
----@param index number
----@return boolean
-function XLua.LuaDLL.Lua.lua_isnil(L, index) end
----@param L System.IntPtr
----@param index number
----@return boolean
-function XLua.LuaDLL.Lua.lua_isnumber(L, index) end
----@param L System.IntPtr
----@param index number
----@return boolean
-function XLua.LuaDLL.Lua.lua_isboolean(L, index) end
----@overload fun(L: System.IntPtr, registryIndex: number) : number
----@param L System.IntPtr
----@return number
-function XLua.LuaDLL.Lua.luaL_ref(L) end
----@param L System.IntPtr
----@param tableIndex number
----@param index number
-function XLua.LuaDLL.Lua.xlua_rawgeti(L, tableIndex, index) end
----@param L System.IntPtr
----@param tableIndex number
----@param index number
-function XLua.LuaDLL.Lua.xlua_rawseti(L, tableIndex, index) end
----@param L System.IntPtr
----@param reference number
-function XLua.LuaDLL.Lua.lua_getref(L, reference) end
----@param L System.IntPtr
----@param error_func_ref number
----@param func_ref number
----@return number
-function XLua.LuaDLL.Lua.pcall_prepare(L, error_func_ref, func_ref) end
----@param L System.IntPtr
----@param registryIndex number
----@param reference number
-function XLua.LuaDLL.Lua.luaL_unref(L, registryIndex, reference) end
----@param L System.IntPtr
----@param reference number
-function XLua.LuaDLL.Lua.lua_unref(L, reference) end
----@param L System.IntPtr
----@param index number
----@return boolean
-function XLua.LuaDLL.Lua.lua_isstring(L, index) end
----@param L System.IntPtr
----@param index number
----@return boolean
-function XLua.LuaDLL.Lua.lua_isinteger(L, index) end
----@param L System.IntPtr
-function XLua.LuaDLL.Lua.lua_pushnil(L) end
----@param L System.IntPtr
----@param _function XLua.LuaDLL.lua_CSFunction
----@param n number
-function XLua.LuaDLL.Lua.lua_pushstdcallcfunction(L, _function, n) end
----@param n number
----@return number
-function XLua.LuaDLL.Lua.xlua_upvalueindex(n) end
----@param L System.IntPtr
----@param nArgs number
----@param nResults number
----@param errfunc number
----@return number
-function XLua.LuaDLL.Lua.lua_pcall(L, nArgs, nResults, errfunc) end
----@param L System.IntPtr
----@param index number
----@return number
-function XLua.LuaDLL.Lua.lua_tonumber(L, index) end
----@param L System.IntPtr
----@param index number
----@return number
-function XLua.LuaDLL.Lua.xlua_tointeger(L, index) end
----@param L System.IntPtr
----@param index number
----@return number
-function XLua.LuaDLL.Lua.xlua_touint(L, index) end
----@param L System.IntPtr
----@param index number
----@return boolean
-function XLua.LuaDLL.Lua.lua_toboolean(L, index) end
----@param L System.IntPtr
----@param index number
----@return System.IntPtr
-function XLua.LuaDLL.Lua.lua_topointer(L, index) end
----@param L System.IntPtr
----@param index number
----@param out_strLen System.IntPtr
----@return System.IntPtr,System.IntPtr
-function XLua.LuaDLL.Lua.lua_tolstring(L, index, out_strLen) end
----@param L System.IntPtr
----@param index number
----@return string
-function XLua.LuaDLL.Lua.lua_tostring(L, index) end
----@param L System.IntPtr
----@param panicf XLua.LuaDLL.lua_CSFunction
----@return System.IntPtr
-function XLua.LuaDLL.Lua.lua_atpanic(L, panicf) end
----@param L System.IntPtr
----@param number number
-function XLua.LuaDLL.Lua.lua_pushnumber(L, number) end
----@param L System.IntPtr
----@param value boolean
-function XLua.LuaDLL.Lua.lua_pushboolean(L, value) end
----@param L System.IntPtr
----@param value number
-function XLua.LuaDLL.Lua.xlua_pushinteger(L, value) end
----@param L System.IntPtr
----@param value number
-function XLua.LuaDLL.Lua.xlua_pushuint(L, value) end
----@overload fun(L: System.IntPtr, str: string)
----@param L System.IntPtr
----@param str System.Byte[]
-function XLua.LuaDLL.Lua.lua_pushstring(L, str) end
----@param L System.IntPtr
----@param str System.Byte[]
----@param size number
-function XLua.LuaDLL.Lua.xlua_pushlstring(L, str, size) end
----@param L System.IntPtr
----@param str string
-function XLua.LuaDLL.Lua.xlua_pushasciistring(L, str) end
----@param L System.IntPtr
----@param index number
----@return System.Byte[]
-function XLua.LuaDLL.Lua.lua_tobytes(L, index) end
----@param L System.IntPtr
----@param meta string
----@return number
-function XLua.LuaDLL.Lua.luaL_newmetatable(L, meta) end
----@param L System.IntPtr
----@param idx number
----@return number
-function XLua.LuaDLL.Lua.xlua_pgettable(L, idx) end
----@param L System.IntPtr
----@param idx number
----@return number
-function XLua.LuaDLL.Lua.xlua_psettable(L, idx) end
----@param L System.IntPtr
----@param meta string
-function XLua.LuaDLL.Lua.luaL_getmetatable(L, meta) end
----@param L System.IntPtr
----@param buff System.Byte[]
----@param size number
----@param name string
----@return number
-function XLua.LuaDLL.Lua.xluaL_loadbuffer(L, buff, size, name) end
----@param L System.IntPtr
----@param buff string
----@param name string
----@return number
-function XLua.LuaDLL.Lua.luaL_loadbuffer(L, buff, name) end
----@param L System.IntPtr
----@param obj number
----@return number
-function XLua.LuaDLL.Lua.xlua_tocsobj_safe(L, obj) end
----@param L System.IntPtr
----@param obj number
----@return number
-function XLua.LuaDLL.Lua.xlua_tocsobj_fast(L, obj) end
----@param L System.IntPtr
----@return number
-function XLua.LuaDLL.Lua.lua_error(L) end
----@param L System.IntPtr
----@param extra number
----@return boolean
-function XLua.LuaDLL.Lua.lua_checkstack(L, extra) end
----@param L System.IntPtr
----@param index number
----@return number
-function XLua.LuaDLL.Lua.lua_next(L, index) end
----@param L System.IntPtr
----@param udata System.IntPtr
-function XLua.LuaDLL.Lua.lua_pushlightuserdata(L, udata) end
----@return System.IntPtr
-function XLua.LuaDLL.Lua.xlua_tag() end
----@param L System.IntPtr
----@param level number
-function XLua.LuaDLL.Lua.luaL_where(L, level) end
----@param L System.IntPtr
----@param key number
----@param cache_ref number
----@return number
-function XLua.LuaDLL.Lua.xlua_tryget_cachedud(L, key, cache_ref) end
----@param L System.IntPtr
----@param key number
----@param meta_ref number
----@param need_cache boolean
----@param cache_ref number
-function XLua.LuaDLL.Lua.xlua_pushcsobj(L, key, meta_ref, need_cache, cache_ref) end
----@param L System.IntPtr
----@return number
-function XLua.LuaDLL.Lua.gen_obj_indexer(L) end
----@param L System.IntPtr
----@return number
-function XLua.LuaDLL.Lua.gen_obj_newindexer(L) end
----@param L System.IntPtr
----@return number
-function XLua.LuaDLL.Lua.gen_cls_indexer(L) end
----@param L System.IntPtr
----@return number
-function XLua.LuaDLL.Lua.gen_cls_newindexer(L) end
----@param L System.IntPtr
----@param Ref number
----@return number
-function XLua.LuaDLL.Lua.load_error_func(L, Ref) end
----@param L System.IntPtr
----@return number
-function XLua.LuaDLL.Lua.luaopen_i64lib(L) end
----@param L System.IntPtr
----@return number
-function XLua.LuaDLL.Lua.luaopen_socket_core(L) end
----@param L System.IntPtr
----@param n number
-function XLua.LuaDLL.Lua.lua_pushint64(L, n) end
----@param L System.IntPtr
----@param n number
-function XLua.LuaDLL.Lua.lua_pushuint64(L, n) end
----@param L System.IntPtr
----@param idx number
----@return boolean
-function XLua.LuaDLL.Lua.lua_isint64(L, idx) end
----@param L System.IntPtr
----@param idx number
----@return boolean
-function XLua.LuaDLL.Lua.lua_isuint64(L, idx) end
----@param L System.IntPtr
----@param idx number
----@return number
-function XLua.LuaDLL.Lua.lua_toint64(L, idx) end
----@param L System.IntPtr
----@param idx number
----@return number
-function XLua.LuaDLL.Lua.lua_touint64(L, idx) end
----@param L System.IntPtr
----@param fn System.IntPtr
----@param n number
-function XLua.LuaDLL.Lua.xlua_push_csharp_function(L, fn, n) end
----@param L System.IntPtr
----@param message string
----@return number
-function XLua.LuaDLL.Lua.xlua_csharp_str_error(L, message) end
----@param L System.IntPtr
----@return number
-function XLua.LuaDLL.Lua.xlua_csharp_error(L) end
----@param buff System.IntPtr
----@param offset number
----@param field number
----@return boolean
-function XLua.LuaDLL.Lua.xlua_pack_int8_t(buff, offset, field) end
----@param buff System.IntPtr
----@param offset number
----@param out_field number
----@return boolean,number
-function XLua.LuaDLL.Lua.xlua_unpack_int8_t(buff, offset, out_field) end
----@param buff System.IntPtr
----@param offset number
----@param field number
----@return boolean
-function XLua.LuaDLL.Lua.xlua_pack_int16_t(buff, offset, field) end
----@param buff System.IntPtr
----@param offset number
----@param out_field number
----@return boolean,number
-function XLua.LuaDLL.Lua.xlua_unpack_int16_t(buff, offset, out_field) end
----@param buff System.IntPtr
----@param offset number
----@param field number
----@return boolean
-function XLua.LuaDLL.Lua.xlua_pack_int32_t(buff, offset, field) end
----@param buff System.IntPtr
----@param offset number
----@param out_field number
----@return boolean,number
-function XLua.LuaDLL.Lua.xlua_unpack_int32_t(buff, offset, out_field) end
----@param buff System.IntPtr
----@param offset number
----@param field number
----@return boolean
-function XLua.LuaDLL.Lua.xlua_pack_int64_t(buff, offset, field) end
----@param buff System.IntPtr
----@param offset number
----@param out_field number
----@return boolean,number
-function XLua.LuaDLL.Lua.xlua_unpack_int64_t(buff, offset, out_field) end
----@param buff System.IntPtr
----@param offset number
----@param field number
----@return boolean
-function XLua.LuaDLL.Lua.xlua_pack_float(buff, offset, field) end
----@param buff System.IntPtr
----@param offset number
----@param out_field number
----@return boolean,number
-function XLua.LuaDLL.Lua.xlua_unpack_float(buff, offset, out_field) end
----@param buff System.IntPtr
----@param offset number
----@param field number
----@return boolean
-function XLua.LuaDLL.Lua.xlua_pack_double(buff, offset, field) end
----@param buff System.IntPtr
----@param offset number
----@param out_field number
----@return boolean,number
-function XLua.LuaDLL.Lua.xlua_unpack_double(buff, offset, out_field) end
----@param L System.IntPtr
----@param size number
----@param meta_ref number
----@return System.IntPtr
-function XLua.LuaDLL.Lua.xlua_pushstruct(L, size, meta_ref) end
----@param L System.IntPtr
----@param field_count number
----@param meta_ref number
-function XLua.LuaDLL.Lua.xlua_pushcstable(L, field_count, meta_ref) end
----@param L System.IntPtr
----@param idx number
----@return System.IntPtr
-function XLua.LuaDLL.Lua.lua_touserdata(L, idx) end
----@param L System.IntPtr
----@param idx number
----@return number
-function XLua.LuaDLL.Lua.xlua_gettypeid(L, idx) end
----@return number
-function XLua.LuaDLL.Lua.xlua_get_registry_index() end
----@param L System.IntPtr
----@param idx number
----@param path string
----@return number
-function XLua.LuaDLL.Lua.xlua_pgettable_bypath(L, idx, path) end
----@param L System.IntPtr
----@param idx number
----@param path string
----@return number
-function XLua.LuaDLL.Lua.xlua_psettable_bypath(L, idx, path) end
----@param buff System.IntPtr
----@param offset number
----@param f1 number
----@param f2 number
----@return boolean
-function XLua.LuaDLL.Lua.xlua_pack_float2(buff, offset, f1, f2) end
----@param buff System.IntPtr
----@param offset number
----@param out_f1 number
----@param out_f2 number
----@return boolean,number,number
-function XLua.LuaDLL.Lua.xlua_unpack_float2(buff, offset, out_f1, out_f2) end
----@param buff System.IntPtr
----@param offset number
----@param f1 number
----@param f2 number
----@param f3 number
----@return boolean
-function XLua.LuaDLL.Lua.xlua_pack_float3(buff, offset, f1, f2, f3) end
----@param buff System.IntPtr
----@param offset number
----@param out_f1 number
----@param out_f2 number
----@param out_f3 number
----@return boolean,number,number,number
-function XLua.LuaDLL.Lua.xlua_unpack_float3(buff, offset, out_f1, out_f2, out_f3) end
----@param buff System.IntPtr
----@param offset number
----@param f1 number
----@param f2 number
----@param f3 number
----@param f4 number
----@return boolean
-function XLua.LuaDLL.Lua.xlua_pack_float4(buff, offset, f1, f2, f3, f4) end
----@param buff System.IntPtr
----@param offset number
----@param out_f1 number
----@param out_f2 number
----@param out_f3 number
----@param out_f4 number
----@return boolean,number,number,number,number
-function XLua.LuaDLL.Lua.xlua_unpack_float4(buff, offset, out_f1, out_f2, out_f3, out_f4) end
----@param buff System.IntPtr
----@param offset number
----@param f1 number
----@param f2 number
----@param f3 number
----@param f4 number
----@param f5 number
----@return boolean
-function XLua.LuaDLL.Lua.xlua_pack_float5(buff, offset, f1, f2, f3, f4, f5) end
----@param buff System.IntPtr
----@param offset number
----@param out_f1 number
----@param out_f2 number
----@param out_f3 number
----@param out_f4 number
----@param out_f5 number
----@return boolean,number,number,number,number,number
-function XLua.LuaDLL.Lua.xlua_unpack_float5(buff, offset, out_f1, out_f2, out_f3, out_f4, out_f5) end
----@param buff System.IntPtr
----@param offset number
----@param f1 number
----@param f2 number
----@param f3 number
----@param f4 number
----@param f5 number
----@param f6 number
----@return boolean
-function XLua.LuaDLL.Lua.xlua_pack_float6(buff, offset, f1, f2, f3, f4, f5, f6) end
----@param buff System.IntPtr
----@param offset number
----@param out_f1 number
----@param out_f2 number
----@param out_f3 number
----@param out_f4 number
----@param out_f5 number
----@param out_f6 number
----@return boolean,number,number,number,number,number,number
-function XLua.LuaDLL.Lua.xlua_unpack_float6(buff, offset, out_f1, out_f2, out_f3, out_f4, out_f5, out_f6) end
----@param buff System.IntPtr
----@param offset number
----@param ref_dec System.Decimal
----@return boolean,System.Decimal
-function XLua.LuaDLL.Lua.xlua_pack_decimal(buff, offset, ref_dec) end
----@param buff System.IntPtr
----@param offset number
----@param out_scale number
----@param out_sign number
----@param out_hi32 number
----@param out_lo64 number
----@return boolean,number,number,number,number
-function XLua.LuaDLL.Lua.xlua_unpack_decimal(buff, offset, out_scale, out_sign, out_hi32, out_lo64) end
----@overload fun(L: System.IntPtr, index: number, str: string) : boolean
----@param L System.IntPtr
----@param index number
----@param str string
----@param str_len number
----@return boolean
-function XLua.LuaDLL.Lua.xlua_is_eq_str(L, index, str, str_len) end
----@param L System.IntPtr
----@return System.IntPtr
-function XLua.LuaDLL.Lua.xlua_gl(L) end
-
----@class XLua.CSObjectWrap.TutorialTestEnumWrap : System.Object
-XLua.CSObjectWrap.TutorialTestEnumWrap = {}
----@alias CS.XLua.CSObjectWrap.TutorialTestEnumWrap XLua.CSObjectWrap.TutorialTestEnumWrap
-CS.XLua.CSObjectWrap.TutorialTestEnumWrap = XLua.CSObjectWrap.TutorialTestEnumWrap
-
----@return XLua.CSObjectWrap.TutorialTestEnumWrap
-function XLua.CSObjectWrap.TutorialTestEnumWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.TutorialTestEnumWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.TutorialDerivedClassTestEnumInnerWrap : System.Object
-XLua.CSObjectWrap.TutorialDerivedClassTestEnumInnerWrap = {}
----@alias CS.XLua.CSObjectWrap.TutorialDerivedClassTestEnumInnerWrap XLua.CSObjectWrap.TutorialDerivedClassTestEnumInnerWrap
-CS.XLua.CSObjectWrap.TutorialDerivedClassTestEnumInnerWrap = XLua.CSObjectWrap.TutorialDerivedClassTestEnumInnerWrap
-
----@return XLua.CSObjectWrap.TutorialDerivedClassTestEnumInnerWrap
-function XLua.CSObjectWrap.TutorialDerivedClassTestEnumInnerWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.TutorialDerivedClassTestEnumInnerWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.ModConfigWrap : System.Object
-XLua.CSObjectWrap.ModConfigWrap = {}
----@alias CS.XLua.CSObjectWrap.ModConfigWrap XLua.CSObjectWrap.ModConfigWrap
-CS.XLua.CSObjectWrap.ModConfigWrap = XLua.CSObjectWrap.ModConfigWrap
-
----@return XLua.CSObjectWrap.ModConfigWrap
-function XLua.CSObjectWrap.ModConfigWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.ModConfigWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.ScriptExecutorWrap : System.Object
-XLua.CSObjectWrap.ScriptExecutorWrap = {}
----@alias CS.XLua.CSObjectWrap.ScriptExecutorWrap XLua.CSObjectWrap.ScriptExecutorWrap
-CS.XLua.CSObjectWrap.ScriptExecutorWrap = XLua.CSObjectWrap.ScriptExecutorWrap
-
----@return XLua.CSObjectWrap.ScriptExecutorWrap
-function XLua.CSObjectWrap.ScriptExecutorWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.ScriptExecutorWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.StatusManagerWrap : System.Object
-XLua.CSObjectWrap.StatusManagerWrap = {}
----@alias CS.XLua.CSObjectWrap.StatusManagerWrap XLua.CSObjectWrap.StatusManagerWrap
-CS.XLua.CSObjectWrap.StatusManagerWrap = XLua.CSObjectWrap.StatusManagerWrap
-
----@return XLua.CSObjectWrap.StatusManagerWrap
-function XLua.CSObjectWrap.StatusManagerWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.StatusManagerWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.StringValueWrap : System.Object
-XLua.CSObjectWrap.StringValueWrap = {}
----@alias CS.XLua.CSObjectWrap.StringValueWrap XLua.CSObjectWrap.StringValueWrap
-CS.XLua.CSObjectWrap.StringValueWrap = XLua.CSObjectWrap.StringValueWrap
-
----@return XLua.CSObjectWrap.StringValueWrap
-function XLua.CSObjectWrap.StringValueWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.StringValueWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.SystemCollectionsGenericDictionary_2_SystemStringSystemString_Wrap : System.Object
-XLua.CSObjectWrap.SystemCollectionsGenericDictionary_2_SystemStringSystemString_Wrap = {}
----@alias CS.XLua.CSObjectWrap.SystemCollectionsGenericDictionary_2_SystemStringSystemString_Wrap XLua.CSObjectWrap.SystemCollectionsGenericDictionary_2_SystemStringSystemString_Wrap
-CS.XLua.CSObjectWrap.SystemCollectionsGenericDictionary_2_SystemStringSystemString_Wrap = XLua.CSObjectWrap.SystemCollectionsGenericDictionary_2_SystemStringSystemString_Wrap
-
----@return XLua.CSObjectWrap.SystemCollectionsGenericDictionary_2_SystemStringSystemString_Wrap
-function XLua.CSObjectWrap.SystemCollectionsGenericDictionary_2_SystemStringSystemString_Wrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.SystemCollectionsGenericDictionary_2_SystemStringSystemString_Wrap.__Register(L) end
-
----@class XLua.CSObjectWrap.SystemCollectionsGenericList_1_SystemInt32_Wrap : System.Object
-XLua.CSObjectWrap.SystemCollectionsGenericList_1_SystemInt32_Wrap = {}
----@alias CS.XLua.CSObjectWrap.SystemCollectionsGenericList_1_SystemInt32_Wrap XLua.CSObjectWrap.SystemCollectionsGenericList_1_SystemInt32_Wrap
-CS.XLua.CSObjectWrap.SystemCollectionsGenericList_1_SystemInt32_Wrap = XLua.CSObjectWrap.SystemCollectionsGenericList_1_SystemInt32_Wrap
-
----@return XLua.CSObjectWrap.SystemCollectionsGenericList_1_SystemInt32_Wrap
-function XLua.CSObjectWrap.SystemCollectionsGenericList_1_SystemInt32_Wrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.SystemCollectionsGenericList_1_SystemInt32_Wrap.__Register(L) end
----@param L System.IntPtr
----@return number
-function XLua.CSObjectWrap.SystemCollectionsGenericList_1_SystemInt32_Wrap.__CSIndexer(L) end
----@param L System.IntPtr
----@return number
-function XLua.CSObjectWrap.SystemCollectionsGenericList_1_SystemInt32_Wrap.__NewIndexer(L) end
-
----@class XLua.CSObjectWrap.SystemCollectionsIEnumeratorBridge : XLua.LuaBase
-XLua.CSObjectWrap.SystemCollectionsIEnumeratorBridge = {}
----@alias CS.XLua.CSObjectWrap.SystemCollectionsIEnumeratorBridge XLua.CSObjectWrap.SystemCollectionsIEnumeratorBridge
-CS.XLua.CSObjectWrap.SystemCollectionsIEnumeratorBridge = XLua.CSObjectWrap.SystemCollectionsIEnumeratorBridge
-
----@param reference number
----@param luaenv XLua.LuaEnv
----@return XLua.CSObjectWrap.SystemCollectionsIEnumeratorBridge
-function XLua.CSObjectWrap.SystemCollectionsIEnumeratorBridge.New(reference, luaenv) end
----@param reference number
----@param luaenv XLua.LuaEnv
----@return XLua.LuaBase
-function XLua.CSObjectWrap.SystemCollectionsIEnumeratorBridge.__Create(reference, luaenv) end
-
----@class XLua.CSObjectWrap.SystemObjectWrap : System.Object
-XLua.CSObjectWrap.SystemObjectWrap = {}
----@alias CS.XLua.CSObjectWrap.SystemObjectWrap XLua.CSObjectWrap.SystemObjectWrap
-CS.XLua.CSObjectWrap.SystemObjectWrap = XLua.CSObjectWrap.SystemObjectWrap
-
----@return XLua.CSObjectWrap.SystemObjectWrap
-function XLua.CSObjectWrap.SystemObjectWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.SystemObjectWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.TutorialBaseClassWrap : System.Object
-XLua.CSObjectWrap.TutorialBaseClassWrap = {}
----@alias CS.XLua.CSObjectWrap.TutorialBaseClassWrap XLua.CSObjectWrap.TutorialBaseClassWrap
-CS.XLua.CSObjectWrap.TutorialBaseClassWrap = XLua.CSObjectWrap.TutorialBaseClassWrap
-
----@return XLua.CSObjectWrap.TutorialBaseClassWrap
-function XLua.CSObjectWrap.TutorialBaseClassWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.TutorialBaseClassWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.TutorialCSCallLuaItfDBridge : XLua.LuaBase
-XLua.CSObjectWrap.TutorialCSCallLuaItfDBridge = {}
----@alias CS.XLua.CSObjectWrap.TutorialCSCallLuaItfDBridge XLua.CSObjectWrap.TutorialCSCallLuaItfDBridge
-CS.XLua.CSObjectWrap.TutorialCSCallLuaItfDBridge = XLua.CSObjectWrap.TutorialCSCallLuaItfDBridge
-
----@param reference number
----@param luaenv XLua.LuaEnv
----@return XLua.CSObjectWrap.TutorialCSCallLuaItfDBridge
-function XLua.CSObjectWrap.TutorialCSCallLuaItfDBridge.New(reference, luaenv) end
----@param reference number
----@param luaenv XLua.LuaEnv
----@return XLua.LuaBase
-function XLua.CSObjectWrap.TutorialCSCallLuaItfDBridge.__Create(reference, luaenv) end
-
----@class XLua.CSObjectWrap.TutorialDerivedClassExtensionsWrap : System.Object
-XLua.CSObjectWrap.TutorialDerivedClassExtensionsWrap = {}
----@alias CS.XLua.CSObjectWrap.TutorialDerivedClassExtensionsWrap XLua.CSObjectWrap.TutorialDerivedClassExtensionsWrap
-CS.XLua.CSObjectWrap.TutorialDerivedClassExtensionsWrap = XLua.CSObjectWrap.TutorialDerivedClassExtensionsWrap
-
----@return XLua.CSObjectWrap.TutorialDerivedClassExtensionsWrap
-function XLua.CSObjectWrap.TutorialDerivedClassExtensionsWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.TutorialDerivedClassExtensionsWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.TutorialDerivedClassWrap : System.Object
-XLua.CSObjectWrap.TutorialDerivedClassWrap = {}
----@alias CS.XLua.CSObjectWrap.TutorialDerivedClassWrap XLua.CSObjectWrap.TutorialDerivedClassWrap
-CS.XLua.CSObjectWrap.TutorialDerivedClassWrap = XLua.CSObjectWrap.TutorialDerivedClassWrap
-
----@return XLua.CSObjectWrap.TutorialDerivedClassWrap
-function XLua.CSObjectWrap.TutorialDerivedClassWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.TutorialDerivedClassWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.TutorialICalcWrap : System.Object
-XLua.CSObjectWrap.TutorialICalcWrap = {}
----@alias CS.XLua.CSObjectWrap.TutorialICalcWrap XLua.CSObjectWrap.TutorialICalcWrap
-CS.XLua.CSObjectWrap.TutorialICalcWrap = XLua.CSObjectWrap.TutorialICalcWrap
-
----@return XLua.CSObjectWrap.TutorialICalcWrap
-function XLua.CSObjectWrap.TutorialICalcWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.TutorialICalcWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.UnityEngineBehaviourWrap : System.Object
-XLua.CSObjectWrap.UnityEngineBehaviourWrap = {}
----@alias CS.XLua.CSObjectWrap.UnityEngineBehaviourWrap XLua.CSObjectWrap.UnityEngineBehaviourWrap
-CS.XLua.CSObjectWrap.UnityEngineBehaviourWrap = XLua.CSObjectWrap.UnityEngineBehaviourWrap
-
----@return XLua.CSObjectWrap.UnityEngineBehaviourWrap
-function XLua.CSObjectWrap.UnityEngineBehaviourWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.UnityEngineBehaviourWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.UnityEngineColorWrap : System.Object
-XLua.CSObjectWrap.UnityEngineColorWrap = {}
----@alias CS.XLua.CSObjectWrap.UnityEngineColorWrap XLua.CSObjectWrap.UnityEngineColorWrap
-CS.XLua.CSObjectWrap.UnityEngineColorWrap = XLua.CSObjectWrap.UnityEngineColorWrap
-
----@return XLua.CSObjectWrap.UnityEngineColorWrap
-function XLua.CSObjectWrap.UnityEngineColorWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.UnityEngineColorWrap.__Register(L) end
----@param L System.IntPtr
----@return number
-function XLua.CSObjectWrap.UnityEngineColorWrap.__CSIndexer(L) end
----@param L System.IntPtr
----@return number
-function XLua.CSObjectWrap.UnityEngineColorWrap.__NewIndexer(L) end
-
----@class XLua.CSObjectWrap.UnityEngineComponentWrap : System.Object
-XLua.CSObjectWrap.UnityEngineComponentWrap = {}
----@alias CS.XLua.CSObjectWrap.UnityEngineComponentWrap XLua.CSObjectWrap.UnityEngineComponentWrap
-CS.XLua.CSObjectWrap.UnityEngineComponentWrap = XLua.CSObjectWrap.UnityEngineComponentWrap
-
----@return XLua.CSObjectWrap.UnityEngineComponentWrap
-function XLua.CSObjectWrap.UnityEngineComponentWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.UnityEngineComponentWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.UnityEngineDebugWrap : System.Object
-XLua.CSObjectWrap.UnityEngineDebugWrap = {}
----@alias CS.XLua.CSObjectWrap.UnityEngineDebugWrap XLua.CSObjectWrap.UnityEngineDebugWrap
-CS.XLua.CSObjectWrap.UnityEngineDebugWrap = XLua.CSObjectWrap.UnityEngineDebugWrap
-
----@return XLua.CSObjectWrap.UnityEngineDebugWrap
-function XLua.CSObjectWrap.UnityEngineDebugWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.UnityEngineDebugWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.UnityEngineGameObjectWrap : System.Object
-XLua.CSObjectWrap.UnityEngineGameObjectWrap = {}
----@alias CS.XLua.CSObjectWrap.UnityEngineGameObjectWrap XLua.CSObjectWrap.UnityEngineGameObjectWrap
-CS.XLua.CSObjectWrap.UnityEngineGameObjectWrap = XLua.CSObjectWrap.UnityEngineGameObjectWrap
-
----@return XLua.CSObjectWrap.UnityEngineGameObjectWrap
-function XLua.CSObjectWrap.UnityEngineGameObjectWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.UnityEngineGameObjectWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.UnityEngineMathfWrap : System.Object
-XLua.CSObjectWrap.UnityEngineMathfWrap = {}
----@alias CS.XLua.CSObjectWrap.UnityEngineMathfWrap XLua.CSObjectWrap.UnityEngineMathfWrap
-CS.XLua.CSObjectWrap.UnityEngineMathfWrap = XLua.CSObjectWrap.UnityEngineMathfWrap
-
----@return XLua.CSObjectWrap.UnityEngineMathfWrap
-function XLua.CSObjectWrap.UnityEngineMathfWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.UnityEngineMathfWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.UnityEngineMonoBehaviourWrap : System.Object
-XLua.CSObjectWrap.UnityEngineMonoBehaviourWrap = {}
----@alias CS.XLua.CSObjectWrap.UnityEngineMonoBehaviourWrap XLua.CSObjectWrap.UnityEngineMonoBehaviourWrap
-CS.XLua.CSObjectWrap.UnityEngineMonoBehaviourWrap = XLua.CSObjectWrap.UnityEngineMonoBehaviourWrap
-
----@return XLua.CSObjectWrap.UnityEngineMonoBehaviourWrap
-function XLua.CSObjectWrap.UnityEngineMonoBehaviourWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.UnityEngineMonoBehaviourWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.UnityEngineObjectWrap : System.Object
-XLua.CSObjectWrap.UnityEngineObjectWrap = {}
----@alias CS.XLua.CSObjectWrap.UnityEngineObjectWrap XLua.CSObjectWrap.UnityEngineObjectWrap
-CS.XLua.CSObjectWrap.UnityEngineObjectWrap = XLua.CSObjectWrap.UnityEngineObjectWrap
-
----@return XLua.CSObjectWrap.UnityEngineObjectWrap
-function XLua.CSObjectWrap.UnityEngineObjectWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.UnityEngineObjectWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.UnityEngineQuaternionWrap : System.Object
-XLua.CSObjectWrap.UnityEngineQuaternionWrap = {}
----@alias CS.XLua.CSObjectWrap.UnityEngineQuaternionWrap XLua.CSObjectWrap.UnityEngineQuaternionWrap
-CS.XLua.CSObjectWrap.UnityEngineQuaternionWrap = XLua.CSObjectWrap.UnityEngineQuaternionWrap
-
----@return XLua.CSObjectWrap.UnityEngineQuaternionWrap
-function XLua.CSObjectWrap.UnityEngineQuaternionWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.UnityEngineQuaternionWrap.__Register(L) end
----@param L System.IntPtr
----@return number
-function XLua.CSObjectWrap.UnityEngineQuaternionWrap.__CSIndexer(L) end
----@param L System.IntPtr
----@return number
-function XLua.CSObjectWrap.UnityEngineQuaternionWrap.__NewIndexer(L) end
-
----@class XLua.CSObjectWrap.UnityEngineTransformWrap : System.Object
-XLua.CSObjectWrap.UnityEngineTransformWrap = {}
----@alias CS.XLua.CSObjectWrap.UnityEngineTransformWrap XLua.CSObjectWrap.UnityEngineTransformWrap
-CS.XLua.CSObjectWrap.UnityEngineTransformWrap = XLua.CSObjectWrap.UnityEngineTransformWrap
-
----@return XLua.CSObjectWrap.UnityEngineTransformWrap
-function XLua.CSObjectWrap.UnityEngineTransformWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.UnityEngineTransformWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.UnityEngineVector2Wrap : System.Object
-XLua.CSObjectWrap.UnityEngineVector2Wrap = {}
----@alias CS.XLua.CSObjectWrap.UnityEngineVector2Wrap XLua.CSObjectWrap.UnityEngineVector2Wrap
-CS.XLua.CSObjectWrap.UnityEngineVector2Wrap = XLua.CSObjectWrap.UnityEngineVector2Wrap
-
----@return XLua.CSObjectWrap.UnityEngineVector2Wrap
-function XLua.CSObjectWrap.UnityEngineVector2Wrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.UnityEngineVector2Wrap.__Register(L) end
----@param L System.IntPtr
----@return number
-function XLua.CSObjectWrap.UnityEngineVector2Wrap.__CSIndexer(L) end
----@param L System.IntPtr
----@return number
-function XLua.CSObjectWrap.UnityEngineVector2Wrap.__NewIndexer(L) end
-
----@class XLua.CSObjectWrap.UnityEngineVector3Wrap : System.Object
-XLua.CSObjectWrap.UnityEngineVector3Wrap = {}
----@alias CS.XLua.CSObjectWrap.UnityEngineVector3Wrap XLua.CSObjectWrap.UnityEngineVector3Wrap
-CS.XLua.CSObjectWrap.UnityEngineVector3Wrap = XLua.CSObjectWrap.UnityEngineVector3Wrap
-
----@return XLua.CSObjectWrap.UnityEngineVector3Wrap
-function XLua.CSObjectWrap.UnityEngineVector3Wrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.UnityEngineVector3Wrap.__Register(L) end
----@param L System.IntPtr
----@return number
-function XLua.CSObjectWrap.UnityEngineVector3Wrap.__CSIndexer(L) end
----@param L System.IntPtr
----@return number
-function XLua.CSObjectWrap.UnityEngineVector3Wrap.__NewIndexer(L) end
-
----@class XLua.CSObjectWrap.UnityEngineVector4Wrap : System.Object
-XLua.CSObjectWrap.UnityEngineVector4Wrap = {}
----@alias CS.XLua.CSObjectWrap.UnityEngineVector4Wrap XLua.CSObjectWrap.UnityEngineVector4Wrap
-CS.XLua.CSObjectWrap.UnityEngineVector4Wrap = XLua.CSObjectWrap.UnityEngineVector4Wrap
-
----@return XLua.CSObjectWrap.UnityEngineVector4Wrap
-function XLua.CSObjectWrap.UnityEngineVector4Wrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.UnityEngineVector4Wrap.__Register(L) end
----@param L System.IntPtr
----@return number
-function XLua.CSObjectWrap.UnityEngineVector4Wrap.__CSIndexer(L) end
----@param L System.IntPtr
----@return number
-function XLua.CSObjectWrap.UnityEngineVector4Wrap.__NewIndexer(L) end
-
----@class XLua.CSObjectWrap.WitchModLuaModHookAdapterWrap : System.Object
-XLua.CSObjectWrap.WitchModLuaModHookAdapterWrap = {}
----@alias CS.XLua.CSObjectWrap.WitchModLuaModHookAdapterWrap XLua.CSObjectWrap.WitchModLuaModHookAdapterWrap
-CS.XLua.CSObjectWrap.WitchModLuaModHookAdapterWrap = XLua.CSObjectWrap.WitchModLuaModHookAdapterWrap
-
----@return XLua.CSObjectWrap.WitchModLuaModHookAdapterWrap
-function XLua.CSObjectWrap.WitchModLuaModHookAdapterWrap.New() end
----@param L System.IntPtr
-function XLua.CSObjectWrap.WitchModLuaModHookAdapterWrap.__Register(L) end
-
----@class XLua.CSObjectWrap.XLua_Gen_Initer_Register__ : System.Object
-XLua.CSObjectWrap.XLua_Gen_Initer_Register__ = {}
----@alias CS.XLua.CSObjectWrap.XLua_Gen_Initer_Register__ XLua.CSObjectWrap.XLua_Gen_Initer_Register__
-CS.XLua.CSObjectWrap.XLua_Gen_Initer_Register__ = XLua.CSObjectWrap.XLua_Gen_Initer_Register__
-
----@return XLua.CSObjectWrap.XLua_Gen_Initer_Register__
-function XLua.CSObjectWrap.XLua_Gen_Initer_Register__.New() end
-
----@class UI.ScreenEffect.ScreenEffectBase : UnityEngine.MonoBehaviour
----@field delay number
-UI.ScreenEffect.ScreenEffectBase = {}
----@alias CS.UI.ScreenEffect.ScreenEffectBase UI.ScreenEffect.ScreenEffectBase
-CS.UI.ScreenEffect.ScreenEffectBase = UI.ScreenEffect.ScreenEffectBase
-
-function UI.ScreenEffect.ScreenEffectBase:Play() end
-
----@class UI.ScreenEffect.ShakeScreenEffect : UI.ScreenEffect.ScreenEffectBase
----@field count number
----@field duration number
----@field intensity number
-UI.ScreenEffect.ShakeScreenEffect = {}
----@alias CS.UI.ScreenEffect.ShakeScreenEffect UI.ScreenEffect.ShakeScreenEffect
-CS.UI.ScreenEffect.ShakeScreenEffect = UI.ScreenEffect.ShakeScreenEffect
-
-function UI.ScreenEffect.ShakeScreenEffect:Play() end
-
----@class UnityEngine.UI.ScrollRectNonDrag : UnityEngine.EventSystems.UIBehaviour
----@field content UnityEngine.RectTransform
----@field horizontal boolean
----@field vertical boolean
----@field movementType UnityEngine.UI.ScrollRectNonDrag.MovementType
----@field elasticity number
----@field inertia boolean
----@field decelerationRate number
----@field scrollSensitivity number
----@field viewport UnityEngine.RectTransform
----@field horizontalScrollbar UnityEngine.UI.Scrollbar
----@field verticalScrollbar UnityEngine.UI.Scrollbar
----@field horizontalScrollbarVisibility UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
----@field verticalScrollbarVisibility UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
----@field horizontalScrollbarSpacing number
----@field verticalScrollbarSpacing number
----@field onValueChanged UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent
----@field velocity UnityEngine.Vector2
----@field normalizedPosition UnityEngine.Vector2
----@field horizontalNormalizedPosition number
----@field verticalNormalizedPosition number
----@field minWidth number
----@field preferredWidth number
----@field flexibleWidth number
----@field minHeight number
----@field preferredHeight number
----@field flexibleHeight number
----@field layoutPriority number
-UnityEngine.UI.ScrollRectNonDrag = {}
----@alias CS.UnityEngine.UI.ScrollRectNonDrag UnityEngine.UI.ScrollRectNonDrag
-CS.UnityEngine.UI.ScrollRectNonDrag = UnityEngine.UI.ScrollRectNonDrag
-
----@param executing UnityEngine.UI.CanvasUpdate
-function UnityEngine.UI.ScrollRectNonDrag:Rebuild(executing) end
-function UnityEngine.UI.ScrollRectNonDrag:LayoutComplete() end
-function UnityEngine.UI.ScrollRectNonDrag:GraphicUpdateComplete() end
----@return boolean
-function UnityEngine.UI.ScrollRectNonDrag:IsActive() end
-function UnityEngine.UI.ScrollRectNonDrag:StopMovement() end
----@param data UnityEngine.EventSystems.PointerEventData
-function UnityEngine.UI.ScrollRectNonDrag:OnScroll(data) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function UnityEngine.UI.ScrollRectNonDrag:OnInitializePotentialDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function UnityEngine.UI.ScrollRectNonDrag:OnBeginDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function UnityEngine.UI.ScrollRectNonDrag:OnEndDrag(eventData) end
----@param eventData UnityEngine.EventSystems.PointerEventData
-function UnityEngine.UI.ScrollRectNonDrag:OnDrag(eventData) end
-function UnityEngine.UI.ScrollRectNonDrag:CalculateLayoutInputHorizontal() end
-function UnityEngine.UI.ScrollRectNonDrag:CalculateLayoutInputVertical() end
-function UnityEngine.UI.ScrollRectNonDrag:SetLayoutHorizontal() end
-function UnityEngine.UI.ScrollRectNonDrag:SetLayoutVertical() end
-
----@class UnityEngine.UI.ScrollRectNonDrag.MovementType
----@field Unrestricted UnityEngine.UI.ScrollRectNonDrag.MovementType
----@field Elastic UnityEngine.UI.ScrollRectNonDrag.MovementType
----@field Clamped UnityEngine.UI.ScrollRectNonDrag.MovementType
-UnityEngine.UI.ScrollRectNonDrag.MovementType = {}
----@alias CS.UnityEngine.UI.ScrollRectNonDrag.MovementType UnityEngine.UI.ScrollRectNonDrag.MovementType
-CS.UnityEngine.UI.ScrollRectNonDrag.MovementType = UnityEngine.UI.ScrollRectNonDrag.MovementType
-
-
----@class UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
----@field Permanent UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
----@field AutoHide UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
----@field AutoHideAndExpandViewport UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
-UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility = {}
----@alias CS.UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
-CS.UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility = UnityEngine.UI.ScrollRectNonDrag.ScrollbarVisibility
-
-
----@class UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent : UnityEngine.Events.UnityEvent
-UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent = {}
----@alias CS.UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent
-CS.UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent = UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent
-
----@return UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent
-function UnityEngine.UI.ScrollRectNonDrag.ScrollRectEvent.New() end
-
----@class Component.UI.Animation.ClockAnimator : UnityEngine.MonoBehaviour
----@field clockHand UnityEngine.Transform
----@field clockBoard UnityEngine.Transform
----@field rotateSound UnityEngine.AudioClip
----@field rotationDuration number
----@field fullRotationEase DG.Tweening.Ease
----@field rotateCount number
-Component.UI.Animation.ClockAnimator = {}
----@alias CS.Component.UI.Animation.ClockAnimator Component.UI.Animation.ClockAnimator
-CS.Component.UI.Animation.ClockAnimator = Component.UI.Animation.ClockAnimator
-
-function Component.UI.Animation.ClockAnimator:Awake() end
----@param rotateType Component.UI.Animation.ClockAnimator.RotatePos
-function Component.UI.Animation.ClockAnimator:RotateToAngle(rotateType) end
-function Component.UI.Animation.ClockAnimator:RotateToSelf() end
-function Component.UI.Animation.ClockAnimator:RotateToFriend() end
-function Component.UI.Animation.ClockAnimator:RotateToEnemy() end
-function Component.UI.Animation.ClockAnimator:RotateToNeutral() end
-
----@class Component.UI.Animation.ClockAnimator.RotatePos
----@field Default Component.UI.Animation.ClockAnimator.RotatePos
----@field Self Component.UI.Animation.ClockAnimator.RotatePos
----@field Enemy Component.UI.Animation.ClockAnimator.RotatePos
----@field Friend Component.UI.Animation.ClockAnimator.RotatePos
----@field Neutral Component.UI.Animation.ClockAnimator.RotatePos
-Component.UI.Animation.ClockAnimator.RotatePos = {}
----@alias CS.Component.UI.Animation.ClockAnimator.RotatePos Component.UI.Animation.ClockAnimator.RotatePos
-CS.Component.UI.Animation.ClockAnimator.RotatePos = Component.UI.Animation.ClockAnimator.RotatePos
-
-
----@class Network.Query.QueryBase : System.Object
----@field QueryId number
-Network.Query.QueryBase = {}
----@alias CS.Network.Query.QueryBase Network.Query.QueryBase
-CS.Network.Query.QueryBase = Network.Query.QueryBase
-
-function Network.Query.QueryBase:CmdExecute() end
----@param response Network.Query.QueryBase
-function Network.Query.QueryBase:OnResponse(response) end
-
----@class Network.Query.QueryBase : Network.Query.QueryBase
----@field Result T
----@field Callback System.Action[T]
-Network.Query.QueryBase = {}
----@alias CS.Network.Query.QueryBase Network.Query.QueryBase
-CS.Network.Query.QueryBase = Network.Query.QueryBase
-
----@param response Network.Query.QueryBase
-function Network.Query.QueryBase:OnResponse(response) end
-
----@class Network.Query.QueryBaseSerializer : System.Object
-Network.Query.QueryBaseSerializer = {}
----@alias CS.Network.Query.QueryBaseSerializer Network.Query.QueryBaseSerializer
-CS.Network.Query.QueryBaseSerializer = Network.Query.QueryBaseSerializer
-
----@param writer Mirror.NetworkWriter
----@param value Network.Query.QueryBase
-function Network.Query.QueryBaseSerializer.Write(writer, value) end
----@param reader Mirror.NetworkReader
----@return Network.Query.QueryBase
-function Network.Query.QueryBaseSerializer.Read(reader) end
-
----@class Network.Query.QueryCareers : Network.Query.QueryBase
----@field Result Network.Query.QueryCareers -- infered from Network.Query.QueryBase`1[System.ValueTuple`2[System.String,DataConfig][]]
-Network.Query.QueryCareers = {}
----@alias CS.Network.Query.QueryCareers Network.Query.QueryCareers
-CS.Network.Query.QueryCareers = Network.Query.QueryCareers
-
----@return Network.Query.QueryCareers
-function Network.Query.QueryCareers.New() end
-function Network.Query.QueryCareers:CmdExecute() end
-
----@class Network.Query.QueryDeck : Network.Query.QueryBase
----@field instanceId string
----@field Result Network.Query.QueryDeck -- infered from Network.Query.QueryBase`1[Witch.UI.Window.OutDeckUIData]
-Network.Query.QueryDeck = {}
----@alias CS.Network.Query.QueryDeck Network.Query.QueryDeck
-CS.Network.Query.QueryDeck = Network.Query.QueryDeck
-
----@param instanceId string
----@return Network.Query.QueryDeck
-function Network.Query.QueryDeck.New(instanceId) end
-function Network.Query.QueryDeck:CmdExecute() end
-
----@class Network.Query.QueryFood : Network.Query.QueryBase
----@field Result Network.Query.QueryFood -- infered from Network.Query.QueryBase`1[System.Collections.Generic.List`1[DataConfig]]
-Network.Query.QueryFood = {}
----@alias CS.Network.Query.QueryFood Network.Query.QueryFood
-CS.Network.Query.QueryFood = Network.Query.QueryFood
-
----@return Network.Query.QueryFood
-function Network.Query.QueryFood.New() end
-function Network.Query.QueryFood:CmdExecute() end
-
----@class Network.Query.QueryStatus : Network.Query.QueryBase
----@field instanceId string
----@field Result Network.Query.QueryStatus -- infered from Network.Query.QueryBase`1[Witch.UI.Window.StatusUIData]
-Network.Query.QueryStatus = {}
----@alias CS.Network.Query.QueryStatus Network.Query.QueryStatus
-CS.Network.Query.QueryStatus = Network.Query.QueryStatus
-
----@param instanceId string
----@return Network.Query.QueryStatus
-function Network.Query.QueryStatus.New(instanceId) end
-function Network.Query.QueryStatus:CmdExecute() end
-
----@class Network.Command.RpcCommandBase : System.Object
-Network.Command.RpcCommandBase = {}
----@alias CS.Network.Command.RpcCommandBase Network.Command.RpcCommandBase
-CS.Network.Command.RpcCommandBase = Network.Command.RpcCommandBase
-
----@return Network.Command.RpcCommandBase
-function Network.Command.RpcCommandBase.New() end
-function Network.Command.RpcCommandBase:CmdExecute() end
-function Network.Command.RpcCommandBase:RpcExecute() end
-
----@class Network.Command.RpcCommandBaseSerializer : System.Object
-Network.Command.RpcCommandBaseSerializer = {}
----@alias CS.Network.Command.RpcCommandBaseSerializer Network.Command.RpcCommandBaseSerializer
-CS.Network.Command.RpcCommandBaseSerializer = Network.Command.RpcCommandBaseSerializer
-
----@param writer Mirror.NetworkWriter
----@param value Network.Command.RpcCommandBase
-function Network.Command.RpcCommandBaseSerializer.Write(writer, value) end
----@param reader Mirror.NetworkReader
----@return Network.Command.RpcCommandBase
-function Network.Command.RpcCommandBaseSerializer.Read(reader) end
-
----@class Network.Command.RpcEatFood : Network.Command.RpcCommandBase
----@field dataConfig DataConfig
----@field getId string
----@field isEat boolean
-Network.Command.RpcEatFood = {}
----@alias CS.Network.Command.RpcEatFood Network.Command.RpcEatFood
-CS.Network.Command.RpcEatFood = Network.Command.RpcEatFood
-
----@param dataConfig DataConfig
----@param getId string
----@return Network.Command.RpcEatFood
-function Network.Command.RpcEatFood.New(dataConfig, getId) end
-function Network.Command.RpcEatFood:CmdExecute() end
-function Network.Command.RpcEatFood:RpcExecute() end
-
----@class Network.Command.RpcGetItem : Network.Command.RpcCommandBase
----@field itemType string
----@field dataConfig DataConfig
----@field getId string
----@field isGet boolean
-Network.Command.RpcGetItem = {}
----@alias CS.Network.Command.RpcGetItem Network.Command.RpcGetItem
-CS.Network.Command.RpcGetItem = Network.Command.RpcGetItem
-
----@param itemType string
----@param dataConfig DataConfig
----@param getId string
----@return Network.Command.RpcGetItem
-function Network.Command.RpcGetItem.New(itemType, dataConfig, getId) end
-function Network.Command.RpcGetItem:CmdExecute() end
-function Network.Command.RpcGetItem:RpcExecute() end
-
----@class Network.Command.RpcSendChat : Network.Command.RpcCommandBase
----@field name string
----@field message string
-Network.Command.RpcSendChat = {}
----@alias CS.Network.Command.RpcSendChat Network.Command.RpcSendChat
-CS.Network.Command.RpcSendChat = Network.Command.RpcSendChat
-
----@param name string
----@param message string
----@return Network.Command.RpcSendChat
-function Network.Command.RpcSendChat.New(name, message) end
-function Network.Command.RpcSendChat:RpcExecute() end
-
----@class Network.Command.RpcSendEmoji : Network.Command.RpcCommandBase
----@field instanceid string
----@field emoji GifAsset
-Network.Command.RpcSendEmoji = {}
----@alias CS.Network.Command.RpcSendEmoji Network.Command.RpcSendEmoji
-CS.Network.Command.RpcSendEmoji = Network.Command.RpcSendEmoji
-
----@param instanceid string
----@param emoji GifAsset
----@return Network.Command.RpcSendEmoji
-function Network.Command.RpcSendEmoji.New(instanceid, emoji) end
-function Network.Command.RpcSendEmoji:RpcExecute() end
-
----@class Network.Command.RpcSendItem : Network.Command.RpcCommandBase
----@field dataConfig DataConfig
----@field itemType string
-Network.Command.RpcSendItem = {}
----@alias CS.Network.Command.RpcSendItem Network.Command.RpcSendItem
-CS.Network.Command.RpcSendItem = Network.Command.RpcSendItem
-
----@param itemType string
----@param dataConfig DataConfig
----@return Network.Command.RpcSendItem
-function Network.Command.RpcSendItem.New(itemType, dataConfig) end
-function Network.Command.RpcSendItem:CmdExecute() end
-function Network.Command.RpcSendItem:RpcExecute() end
-
----@class Network.Command.RpcUpdateWareShow : Network.Command.RpcCommandBase
-Network.Command.RpcUpdateWareShow = {}
----@alias CS.Network.Command.RpcUpdateWareShow Network.Command.RpcUpdateWareShow
-CS.Network.Command.RpcUpdateWareShow = Network.Command.RpcUpdateWareShow
-
----@return Network.Command.RpcUpdateWareShow
-function Network.Command.RpcUpdateWareShow.New() end
-function Network.Command.RpcUpdateWareShow:RpcExecute() end
-
----@class Fight.StatusCommand.ClientCommandBase : System.Object
----@field Type string
----@field Value number
----@field InstanceId string
----@field From string
-Fight.StatusCommand.ClientCommandBase = {}
----@alias CS.Fight.StatusCommand.ClientCommandBase Fight.StatusCommand.ClientCommandBase
-CS.Fight.StatusCommand.ClientCommandBase = Fight.StatusCommand.ClientCommandBase
-
-function Fight.StatusCommand.ClientCommandBase.RegisterFormatter() end
-function Fight.StatusCommand.ClientCommandBase:Validate() end
----@param value number
----@param instanceId string
----@return Fight.StatusCommand.ClientCommandBase
-function Fight.StatusCommand.ClientCommandBase:Create(value, instanceId) end
-function Fight.StatusCommand.ClientCommandBase:Execute() end
----@param origin Fight.StatusCommand.ClientCommandBase
----@return Fight.StatusCommand.ClientCommandBase
-function Fight.StatusCommand.ClientCommandBase:CopyFrom(origin) end
-
----@class Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter : MemoryPack.MemoryPackFormatter
-Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter = {}
----@alias CS.Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter
-CS.Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter = Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter
-
----@return Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter
-function Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter.New() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.StatusCommand.ClientCommandBase
----@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.ClientCommandBase
-function Fight.StatusCommand.ClientCommandBase.ClientCommandBaseFormatter:Deserialize(ref_reader, ref_value) end
-
----@class Fight.StatusCommand.ClientCommandBaseReaderWriter : System.Object
-Fight.StatusCommand.ClientCommandBaseReaderWriter = {}
----@alias CS.Fight.StatusCommand.ClientCommandBaseReaderWriter Fight.StatusCommand.ClientCommandBaseReaderWriter
-CS.Fight.StatusCommand.ClientCommandBaseReaderWriter = Fight.StatusCommand.ClientCommandBaseReaderWriter
-
----@param writer Mirror.NetworkWriter
----@param command Fight.StatusCommand.ClientCommandBase
-function Fight.StatusCommand.ClientCommandBaseReaderWriter.Write(writer, command) end
----@param reader Mirror.NetworkReader
----@return Fight.StatusCommand.ClientCommandBase
-function Fight.StatusCommand.ClientCommandBaseReaderWriter.Read(reader) end
-
----@class Fight.StatusCommand.CurHp : Fight.StatusCommand.ClientCommandBase
-Fight.StatusCommand.CurHp = {}
----@alias CS.Fight.StatusCommand.CurHp Fight.StatusCommand.CurHp
-CS.Fight.StatusCommand.CurHp = Fight.StatusCommand.CurHp
-
----@return Fight.StatusCommand.CurHp
-function Fight.StatusCommand.CurHp.New() end
-function Fight.StatusCommand.CurHp.RegisterFormatter() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.StatusCommand.CurHp
----@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.CurHp
-function Fight.StatusCommand.CurHp.Deserialize(ref_reader, ref_value) end
-
----@class Fight.StatusCommand.CurHp.CurHpFormatter : MemoryPack.MemoryPackFormatter
-Fight.StatusCommand.CurHp.CurHpFormatter = {}
----@alias CS.Fight.StatusCommand.CurHp.CurHpFormatter Fight.StatusCommand.CurHp.CurHpFormatter
-CS.Fight.StatusCommand.CurHp.CurHpFormatter = Fight.StatusCommand.CurHp.CurHpFormatter
-
----@return Fight.StatusCommand.CurHp.CurHpFormatter
-function Fight.StatusCommand.CurHp.CurHpFormatter.New() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.StatusCommand.CurHp
----@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.CurHp
-function Fight.StatusCommand.CurHp.CurHpFormatter:Deserialize(ref_reader, ref_value) end
-
----@class Fight.StatusCommand.Defend : Fight.StatusCommand.ClientCommandBase
-Fight.StatusCommand.Defend = {}
----@alias CS.Fight.StatusCommand.Defend Fight.StatusCommand.Defend
-CS.Fight.StatusCommand.Defend = Fight.StatusCommand.Defend
-
----@return Fight.StatusCommand.Defend
-function Fight.StatusCommand.Defend.New() end
-function Fight.StatusCommand.Defend.RegisterFormatter() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.StatusCommand.Defend
----@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.Defend
-function Fight.StatusCommand.Defend.Deserialize(ref_reader, ref_value) end
-
----@class Fight.StatusCommand.Defend.DefendFormatter : MemoryPack.MemoryPackFormatter
-Fight.StatusCommand.Defend.DefendFormatter = {}
----@alias CS.Fight.StatusCommand.Defend.DefendFormatter Fight.StatusCommand.Defend.DefendFormatter
-CS.Fight.StatusCommand.Defend.DefendFormatter = Fight.StatusCommand.Defend.DefendFormatter
-
----@return Fight.StatusCommand.Defend.DefendFormatter
-function Fight.StatusCommand.Defend.DefendFormatter.New() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.StatusCommand.Defend
----@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.Defend
-function Fight.StatusCommand.Defend.DefendFormatter:Deserialize(ref_reader, ref_value) end
-
----@class Fight.StatusCommand.MaxHp : Fight.StatusCommand.ClientCommandBase
-Fight.StatusCommand.MaxHp = {}
----@alias CS.Fight.StatusCommand.MaxHp Fight.StatusCommand.MaxHp
-CS.Fight.StatusCommand.MaxHp = Fight.StatusCommand.MaxHp
-
----@return Fight.StatusCommand.MaxHp
-function Fight.StatusCommand.MaxHp.New() end
-function Fight.StatusCommand.MaxHp.RegisterFormatter() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.StatusCommand.MaxHp
----@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.MaxHp
-function Fight.StatusCommand.MaxHp.Deserialize(ref_reader, ref_value) end
-
----@class Fight.StatusCommand.MaxHp.MaxHpFormatter : MemoryPack.MemoryPackFormatter
-Fight.StatusCommand.MaxHp.MaxHpFormatter = {}
----@alias CS.Fight.StatusCommand.MaxHp.MaxHpFormatter Fight.StatusCommand.MaxHp.MaxHpFormatter
-CS.Fight.StatusCommand.MaxHp.MaxHpFormatter = Fight.StatusCommand.MaxHp.MaxHpFormatter
-
----@return Fight.StatusCommand.MaxHp.MaxHpFormatter
-function Fight.StatusCommand.MaxHp.MaxHpFormatter.New() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.StatusCommand.MaxHp
----@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.MaxHp
-function Fight.StatusCommand.MaxHp.MaxHpFormatter:Deserialize(ref_reader, ref_value) end
-
----@class Fight.StatusCommand.ToughCount : Fight.StatusCommand.ClientCommandBase
-Fight.StatusCommand.ToughCount = {}
----@alias CS.Fight.StatusCommand.ToughCount Fight.StatusCommand.ToughCount
-CS.Fight.StatusCommand.ToughCount = Fight.StatusCommand.ToughCount
-
----@return Fight.StatusCommand.ToughCount
-function Fight.StatusCommand.ToughCount.New() end
-function Fight.StatusCommand.ToughCount.RegisterFormatter() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.StatusCommand.ToughCount
----@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.ToughCount
-function Fight.StatusCommand.ToughCount.Deserialize(ref_reader, ref_value) end
-
----@class Fight.StatusCommand.ToughCount.ToughCountFormatter : MemoryPack.MemoryPackFormatter
-Fight.StatusCommand.ToughCount.ToughCountFormatter = {}
----@alias CS.Fight.StatusCommand.ToughCount.ToughCountFormatter Fight.StatusCommand.ToughCount.ToughCountFormatter
-CS.Fight.StatusCommand.ToughCount.ToughCountFormatter = Fight.StatusCommand.ToughCount.ToughCountFormatter
-
----@return Fight.StatusCommand.ToughCount.ToughCountFormatter
-function Fight.StatusCommand.ToughCount.ToughCountFormatter.New() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.StatusCommand.ToughCount
----@return ,MemoryPack.MemoryPackReader,Fight.StatusCommand.ToughCount
-function Fight.StatusCommand.ToughCount.ToughCountFormatter:Deserialize(ref_reader, ref_value) end
-
----@class Fight.ObjTarget.ObjTargetAction : Fight.ObjTarget.ObjTargetBase
-Fight.ObjTarget.ObjTargetAction = {}
----@alias CS.Fight.ObjTarget.ObjTargetAction Fight.ObjTarget.ObjTargetAction
-CS.Fight.ObjTarget.ObjTargetAction = Fight.ObjTarget.ObjTargetAction
-
----@return Fight.ObjTarget.ObjTargetAction
-function Fight.ObjTarget.ObjTargetAction.New() end
-function Fight.ObjTarget.ObjTargetAction.RegisterFormatter() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.ObjTarget.ObjTargetAction
----@return ,MemoryPack.MemoryPackReader,Fight.ObjTarget.ObjTargetAction
-function Fight.ObjTarget.ObjTargetAction.Deserialize(ref_reader, ref_value) end
-
----@class Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter : MemoryPack.MemoryPackFormatter
-Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter = {}
----@alias CS.Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter
-CS.Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter = Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter
-
----@return Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter
-function Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter.New() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.ObjTarget.ObjTargetAction
----@return ,MemoryPack.MemoryPackReader,Fight.ObjTarget.ObjTargetAction
-function Fight.ObjTarget.ObjTargetAction.ObjTargetActionFormatter:Deserialize(ref_reader, ref_value) end
-
----@class Fight.ObjTarget.ObjTargetBase : System.Object
----@field Type string
----@field FromDataConfigId string
----@field ToAction string
----@field theData string
----@field ThisVars System.String[]
----@field Value string
----@field InstanceId string
----@field From string
-Fight.ObjTarget.ObjTargetBase = {}
----@alias CS.Fight.ObjTarget.ObjTargetBase Fight.ObjTarget.ObjTargetBase
-CS.Fight.ObjTarget.ObjTargetBase = Fight.ObjTarget.ObjTargetBase
-
-function Fight.ObjTarget.ObjTargetBase.RegisterFormatter() end
-function Fight.ObjTarget.ObjTargetBase:Validate() end
----@param instanceId string
----@param ObjAction string
----@param fromId string
----@param theData string
----@param Vars System.String[]
----@return Fight.ObjTarget.ObjTargetBase
-function Fight.ObjTarget.ObjTargetBase:Create(instanceId, ObjAction, fromId, theData, Vars) end
-function Fight.ObjTarget.ObjTargetBase:Execute() end
----@param origin Fight.ObjTarget.ObjTargetBase
----@return Fight.ObjTarget.ObjTargetBase
-function Fight.ObjTarget.ObjTargetBase:CopyFrom(origin) end
-
----@class Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter : MemoryPack.MemoryPackFormatter
-Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter = {}
----@alias CS.Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter
-CS.Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter = Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter
-
----@return Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter
-function Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter.New() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.ObjTarget.ObjTargetBase
----@return ,MemoryPack.MemoryPackReader,Fight.ObjTarget.ObjTargetBase
-function Fight.ObjTarget.ObjTargetBase.ObjTargetBaseFormatter:Deserialize(ref_reader, ref_value) end
-
----@class Fight.ObjTarget.ObjTargetBaseReaderWriter : System.Object
-Fight.ObjTarget.ObjTargetBaseReaderWriter = {}
----@alias CS.Fight.ObjTarget.ObjTargetBaseReaderWriter Fight.ObjTarget.ObjTargetBaseReaderWriter
-CS.Fight.ObjTarget.ObjTargetBaseReaderWriter = Fight.ObjTarget.ObjTargetBaseReaderWriter
-
----@param writer Mirror.NetworkWriter
----@param command Fight.ObjTarget.ObjTargetBase
-function Fight.ObjTarget.ObjTargetBaseReaderWriter.Write(writer, command) end
----@param reader Mirror.NetworkReader
----@return Fight.ObjTarget.ObjTargetBase
-function Fight.ObjTarget.ObjTargetBaseReaderWriter.Read(reader) end
-
----@class Fight.ActionCommand.ActionAnimation : Fight.ActionCommand.ActionCommandBase
-Fight.ActionCommand.ActionAnimation = {}
----@alias CS.Fight.ActionCommand.ActionAnimation Fight.ActionCommand.ActionAnimation
-CS.Fight.ActionCommand.ActionAnimation = Fight.ActionCommand.ActionAnimation
-
----@return Fight.ActionCommand.ActionAnimation
-function Fight.ActionCommand.ActionAnimation.New() end
-function Fight.ActionCommand.ActionAnimation.RegisterFormatter() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.ActionCommand.ActionAnimation
----@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.ActionAnimation
-function Fight.ActionCommand.ActionAnimation.Deserialize(ref_reader, ref_value) end
----@param State Witch.UI.Window.FightUI.AnimationData
----@return Fight.ActionCommand.ActionCommandBase
-function Fight.ActionCommand.ActionAnimation:Create(State) end
-
----@class Fight.ActionCommand.ActionAnimation.AnimationData : System.ValueType
----@field status System.String[]
----@field animationState IStatusManager.AnimatedState[]
----@field effectName string
-Fight.ActionCommand.ActionAnimation.AnimationData = {}
----@alias CS.Fight.ActionCommand.ActionAnimation.AnimationData Fight.ActionCommand.ActionAnimation.AnimationData
-CS.Fight.ActionCommand.ActionAnimation.AnimationData = Fight.ActionCommand.ActionAnimation.AnimationData
-
-function Fight.ActionCommand.ActionAnimation.AnimationData.RegisterFormatter() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.ActionCommand.ActionAnimation.AnimationData
----@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.ActionAnimation.AnimationData
-function Fight.ActionCommand.ActionAnimation.AnimationData.Deserialize(ref_reader, ref_value) end
-
----@class Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter : MemoryPack.MemoryPackFormatter
-Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter = {}
----@alias CS.Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter
-CS.Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter = Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter
-
----@return Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter
-function Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter.New() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.ActionCommand.ActionAnimation.AnimationData
----@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.ActionAnimation.AnimationData
-function Fight.ActionCommand.ActionAnimation.AnimationData.AnimationDataFormatter:Deserialize(ref_reader, ref_value) end
-
----@class Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter : MemoryPack.MemoryPackFormatter
-Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter = {}
----@alias CS.Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter
-CS.Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter = Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter
-
----@return Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter
-function Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter.New() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.ActionCommand.ActionAnimation
----@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.ActionAnimation
-function Fight.ActionCommand.ActionAnimation.ActionAnimationFormatter:Deserialize(ref_reader, ref_value) end
-
----@class Fight.ActionCommand.ActionCommandBase : System.Object
----@field Type string
----@field Value System.Byte[]
----@field From string
----@field Reliable boolean
-Fight.ActionCommand.ActionCommandBase = {}
----@alias CS.Fight.ActionCommand.ActionCommandBase Fight.ActionCommand.ActionCommandBase
-CS.Fight.ActionCommand.ActionCommandBase = Fight.ActionCommand.ActionCommandBase
-
-function Fight.ActionCommand.ActionCommandBase.RegisterFormatter() end
-function Fight.ActionCommand.ActionCommandBase:Execute() end
----@param origin Fight.ActionCommand.ActionCommandBase
----@return Fight.ActionCommand.ActionCommandBase
-function Fight.ActionCommand.ActionCommandBase:CopyFrom(origin) end
-
----@class Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter : MemoryPack.MemoryPackFormatter
-Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter = {}
----@alias CS.Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter
-CS.Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter = Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter
-
----@return Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter
-function Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter.New() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.ActionCommand.ActionCommandBase
----@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.ActionCommandBase
-function Fight.ActionCommand.ActionCommandBase.ActionCommandBaseFormatter:Deserialize(ref_reader, ref_value) end
-
----@class Fight.ActionCommand.ActionCommandBaseReaderWriter : System.Object
-Fight.ActionCommand.ActionCommandBaseReaderWriter = {}
----@alias CS.Fight.ActionCommand.ActionCommandBaseReaderWriter Fight.ActionCommand.ActionCommandBaseReaderWriter
-CS.Fight.ActionCommand.ActionCommandBaseReaderWriter = Fight.ActionCommand.ActionCommandBaseReaderWriter
-
----@param writer Mirror.NetworkWriter
----@param command Fight.ActionCommand.ActionCommandBase
-function Fight.ActionCommand.ActionCommandBaseReaderWriter.Write(writer, command) end
----@param reader Mirror.NetworkReader
----@return Fight.ActionCommand.ActionCommandBase
-function Fight.ActionCommand.ActionCommandBaseReaderWriter.Read(reader) end
-
----@class Fight.ActionCommand.DamageText : Fight.ActionCommand.ActionCommandBase
-Fight.ActionCommand.DamageText = {}
----@alias CS.Fight.ActionCommand.DamageText Fight.ActionCommand.DamageText
-CS.Fight.ActionCommand.DamageText = Fight.ActionCommand.DamageText
-
----@return Fight.ActionCommand.DamageText
-function Fight.ActionCommand.DamageText.New() end
-function Fight.ActionCommand.DamageText.RegisterFormatter() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.ActionCommand.DamageText
----@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DamageText
-function Fight.ActionCommand.DamageText.Deserialize(ref_reader, ref_value) end
----@param value Fight.ActionCommand.DamageText.DamageTextData
----@return Fight.ActionCommand.ActionCommandBase
-function Fight.ActionCommand.DamageText:Create(value) end
-
----@class Fight.ActionCommand.DamageText.DamageTextData : System.ValueType
----@field from string
----@field to string
----@field hit number
----@field originalVal number
----@field x number
----@field y number
----@field damageType string
-Fight.ActionCommand.DamageText.DamageTextData = {}
----@alias CS.Fight.ActionCommand.DamageText.DamageTextData Fight.ActionCommand.DamageText.DamageTextData
-CS.Fight.ActionCommand.DamageText.DamageTextData = Fight.ActionCommand.DamageText.DamageTextData
-
-function Fight.ActionCommand.DamageText.DamageTextData.RegisterFormatter() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.ActionCommand.DamageText.DamageTextData
----@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DamageText.DamageTextData
-function Fight.ActionCommand.DamageText.DamageTextData.Deserialize(ref_reader, ref_value) end
-
----@class Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter : MemoryPack.MemoryPackFormatter
-Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter = {}
----@alias CS.Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter
-CS.Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter = Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter
-
----@return Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter
-function Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter.New() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.ActionCommand.DamageText.DamageTextData
----@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DamageText.DamageTextData
-function Fight.ActionCommand.DamageText.DamageTextData.DamageTextDataFormatter:Deserialize(ref_reader, ref_value) end
-
----@class Fight.ActionCommand.DamageText.DamageTextFormatter : MemoryPack.MemoryPackFormatter
-Fight.ActionCommand.DamageText.DamageTextFormatter = {}
----@alias CS.Fight.ActionCommand.DamageText.DamageTextFormatter Fight.ActionCommand.DamageText.DamageTextFormatter
-CS.Fight.ActionCommand.DamageText.DamageTextFormatter = Fight.ActionCommand.DamageText.DamageTextFormatter
-
----@return Fight.ActionCommand.DamageText.DamageTextFormatter
-function Fight.ActionCommand.DamageText.DamageTextFormatter.New() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.ActionCommand.DamageText
----@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.DamageText
-function Fight.ActionCommand.DamageText.DamageTextFormatter:Deserialize(ref_reader, ref_value) end
-
----@class Fight.ActionCommand.Effect : Fight.ActionCommand.ActionCommandBase
-Fight.ActionCommand.Effect = {}
----@alias CS.Fight.ActionCommand.Effect Fight.ActionCommand.Effect
-CS.Fight.ActionCommand.Effect = Fight.ActionCommand.Effect
-
----@return Fight.ActionCommand.Effect
-function Fight.ActionCommand.Effect.New() end
-function Fight.ActionCommand.Effect.RegisterFormatter() end
----@param ref_reader MemoryPack.MemoryPackReader
----@param ref_value Fight.ActionCommand.Effect
----@return ,MemoryPack.MemoryPackReader,Fight.ActionCommand.Effect
-function Fight.ActionCommand.Effect.Deserialize(ref_reader, ref_value) end
----@param value Fight.ActionCommand.Effect.EffectData
----@return Fight.ActionCommand.ActionCommandBase
-function Fight.ActionCommand.Effect:Create(value) end
+---@param clipPath string
+function AudioManager:PlayVocal(roleId, clipPath) end

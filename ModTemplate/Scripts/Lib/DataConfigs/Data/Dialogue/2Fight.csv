@@ -4,8 +4,7 @@
 2,,,role_amelia,,0,,
 3,,,role_amelia,,0,,
 4,,,role_amelia,,0,,
-5,,,role_amelia,,2,PlayerInfo.EndDialogue();,WinTheFight();PlayerInfo.EndDialogue();
+5,,,role_amelia,,2,EndDialogue();,"ShowDialogue(""2Fight_8"");"
 6,,,role_amelia,,0,,
-7,,PlayerInfo.EndDialogue();WinTheFight();,role_narrator,,0,,
-8,,,role_narrator,,0,,
-*9,,,role_narrator,2Fight_*9,0,,
+7,,,role_narrator,,0,,
+8,,EndDialogue();PlayerInfo.WinTheFight();,role_narrator,,0,,
