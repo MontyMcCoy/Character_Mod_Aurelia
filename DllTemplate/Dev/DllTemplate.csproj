@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <RootNamespace>DllTemplate</RootNamespace>
-    <AssemblyName>Entry</AssemblyName>
+    <!-- Keep this in sync with ModConfig.json as ModName.ModAuthor to avoid assembly-name conflicts. -->
+    <AssemblyName>DllTemplate.YOURNAME</AssemblyName>
     <LangVersion>latest</LangVersion>
     <!-- 改成你的游戏路径 -->
     <GamePath>D:\Witch's Apocalyptic Journey</GamePath>

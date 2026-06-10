@@ -8,9 +8,12 @@
 
 - 项目文件在Dev文件夹下，发布时不需要留
 
-- 编译时，修改 `Dev/DllTemplate.csproj`，将 **GamePath** 改为你的游戏目录：
+- 编译时，修改 `Dev/DllTemplate.csproj`：
+  - 将 **GamePath** 改为你的游戏目录。
+  - 将 **AssemblyName** 改为 `ModName.ModAuthor`，并与 `ModConfig.json` 保持一致。不要使用 `Entry` 这类所有 Mod 共用的程序集名，否则多个 DLL Mod 容易在运行时冲突。
 
 ```xml
+<AssemblyName>DllTemplate.YOURNAME</AssemblyName>
 <GamePath>D:\Witch's Apocalyptic Journey</GamePath>
 <DllPath>$(GamePath)\Witch's Apocalyptic Journey_Data\Managed</DllPath>
 ```
@@ -39,4 +42,4 @@
 
 - Patch的方法参数可以不全，但必须保证顺序
 
-- 使用方式：**dotnet build**后将编译出的dll改名为Entry.dll拖入Scripts文件夹下
+- 使用方式：**dotnet build** 后将编译出的 dll 改名为 `Entry.dll` 拖入 `Scripts` 文件夹下。文件名仍然是 `Entry.dll`，但内部程序集名应保持为 `ModName.ModAuthor`。
