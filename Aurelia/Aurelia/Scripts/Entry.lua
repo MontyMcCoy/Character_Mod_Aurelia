@@ -1,17 +1,17 @@
--- 模组加载入口
+-- Module Entry point
 function ModConfig:Setup()
-    --self:RplaceCareer() -- 替换职业资源
-    self:AddMethodHookBefore("SettingUI.OnEnable", Test) -- 添加方法钩子
+    --self:RplaceCareer()
+    self:AddMethodHookBefore("SettingUI.OnEnable", Test) -- Add method hook
 end
 
 function ModConfig:RplaceCareer()
     local Debug = CS.UnityEngine.Debug;
-    Debug.Log("[Slay-Defect]资源已替换。") -- 替换职业资源
-    self:ReplaceAnimationLib("Idle", "Idle") -- 替换职业待机动画
-    self:ReplaceAnimationLib("Attack", "Attack") -- 替换职业攻击动画
-    self:ReplaceAnimationLib("Skill", "Skill") -- 替换职业技能动画
-    self:ReplaceAnimationLib("Hit", "Hit") -- 替换职业受击动画
-    self:ModifyDataConfig("career_3", "Name", "故障机器人") -- 修改职业名称
+    Debug.Log("[Slay-Defect]资源已替换。") -- Replacement of career resources
+    self:ReplaceAnimationLib("Idle", "Idle") -- Replace job idle animation
+    self:ReplaceAnimationLib("Attack", "Attack") -- Replace class attack animation
+    self:ReplaceAnimationLib("Skill", "Skill") -- Replace job skill animation
+    self:ReplaceAnimationLib("Hit", "Hit") -- Replace job hit animation
+    self:ModifyDataConfig("career_3", "Name", "故障机器人") -- Change job title
 end
 
 function ModConfig:ReplaceAnimationLib(name)
