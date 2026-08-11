@@ -1,0 +1,13 @@
+Id,SanMax,SkillScript,Animation,Vocal,Skill1,Skill2,ChoiceIcon,DollIcon,Character,Avatar,CareerImage,ActionImage1,ActionImage2,Dialogue,EmojiPath,AttackEffect,SkillEffect,HitEffect,DefendEffect
+唯一id,最大san,被动技能&初始化,动画文件夹路径,配音文件夹路径,技能卡牌，后续要改,,,玩偶路径,立绘路径,头像路径,职业图路径,主动技能图标1,,对话图路径，虽然其实用在statusui,表情包路径,,,,
+aurelia,80,"self:AddEvent(""Action"", function(actionData)
+    self:SetStatus(""Self"");
+    PlayerInfo.Money = PlayerInfo.Money + 2;
+end);
+self:AddEvent(""StartRound"", function()
+    self:SetStatus(""Self"");
+    local buff = self.Self:GetBuff(""aurelia_goldspent"");
+    if buff ~= nil then
+        buff.buffConfig.Level = 0;
+    end
+end);",Mods/Aurelia/ModResource/AnimationLib/Aurelia,Mods/Aurelia/ModResource/VocalLib/Aurelia,Aurelia_aurelia_skills_aurelia_liquidate,Aurelia_aurelia_skills_aurelia_insurancepolicy,Mods/Aurelia/ModResource/Icon/Choice/Aurelia,DollAni/原初魔女/玩偶_0,Mods/Aurelia/ModResource/Images/Character/Aurelia,Mods/Aurelia/ModResource/Images/Avatar/Aurelia,Mods/Aurelia/ModResource/Images/CareerImage/Aurelia,Icon/Role/技能素材/技能图标&小对话框/元素,,Mods/Aurelia/ModResource/Images/Dialogue/Character/Aurelia,AureliaEmoji,Aurelia-Attack,Aurelia-Skill,Aurelia-Hit,Aurelia-Defend

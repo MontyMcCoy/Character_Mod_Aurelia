@@ -1,0 +1,3 @@
+Id,Note,Name,Name_zh-Hant,Name_en,Name_ja,Description,Description_zh-Hant,Description_ja,Description_en
+唯一的标识（不能重复）,备注,名称,名稱,Name,名称,描述,描述,説明,Description
+aurelia_goldspent,,今日花费,今日花費,Gold Spent Today,今日の出費,"隐藏计数器，追踪本回合已花费的金币。回合开始时清零。",,,"Hidden counter tracking Gold spent this turn. Resets at the start of each round."

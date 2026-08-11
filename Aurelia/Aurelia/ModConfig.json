@@ -1,0 +1,9 @@
+{
+  "ModName": "Aurelia",
+  "ModVersion": "1.0",
+  "ModAuthor": "YOUR_NAME",
+  "ModDescription": "Aurelia, the Merchant Witch - Golden Toll. She treats every action like a transaction. Spend Gold to fuel devastating combat effects, sell cards for profit, and gamble everything on a single wager.",
+  "IconPath": "Icon.png",
+  "Enabled": true,
+  "Dependencies": null
+}

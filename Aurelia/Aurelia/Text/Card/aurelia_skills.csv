@@ -1,0 +1,4 @@
+Id,Note,Type,Name,Name_en,Name_zh-Hant,Name_ja,是否完成,Description,Description_zh-Hant,Description_en,Description_ja
+唯一的标识（不能重复）,,卡牌类型,名称,Name,名稱,名称,FALSE,描述,描述,Description,説明
+aurelia_liquidate,,技能牌,清算,Liquidate,清算,清算,TRUE,"卖出所选卡牌，获得等同于所选卡牌费用总和×20的金币。",,"Sell selected card(s) from your hand: gain Gold equal to 20 × the total of the card(s)' cost.",
+aurelia_insurancepolicy,,技能牌,保险单,Insurance Policy,保險單,保険証券,TRUE,"获得1层庇护。本回合每花费10金币，额外获得2层坚毅（最多10层）。",,"Gain 1 stack of Shelter. For every 10 Gold spent this turn, gain 2 stacks of Impregnable (max 10 stacks).",

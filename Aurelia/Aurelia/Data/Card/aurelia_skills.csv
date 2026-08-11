@@ -1,0 +1,22 @@
+Id,Rarity,Expend,Tag,InitScript,DrawScript,UseScript,DropScript,Icon,Effects,Action,PackBelong
+唯一标识,稀有度,花费,标签,更新显示信息用的,卡牌抽到后执行,卡牌使用后执行,卡牌进入弃牌堆后执行,图标资源的路径,特效路径,动作,
+*aurelia_liquidate,3,1,技能牌,,,"self:SetStatus(""Self"");
+CS.Witch.UI.Window.FightUI.Instance:SelectCardToAction(""1"", function(cardList)
+    local total = 0;
+    for i = 0, cardList.Count - 1 do
+        local c = cardList[i];
+        total = total + tonumber(c.data[""Expend""]);
+        self:BurnCard(c);
+    end
+    PlayerInfo.Money = PlayerInfo.Money + (total * 20);
+end, ""hand"");",,Icon/Card/aurelia_liquidate,,CommonCardItem,
+*aurelia_insurancepolicy,3,3,技能牌,,,"self:SetStatus(""Self"");
+self:AddBuff(""chrysalis"", ""1"");
+local buff = self.Self:GetBuff(""aurelia_goldspent"");
+local spent = 0;
+if buff ~= nil then spent = buff.buffConfig.Level end
+local stacks = spent // 10 * 2;
+if stacks > 10 then stacks = 10 end
+if stacks > 0 then
+    self:AddBuff(DataId.buff_impregnable, tostring(stacks));
+end",,Icon/Card/aurelia_insurancepolicy,,CommonCardItem,

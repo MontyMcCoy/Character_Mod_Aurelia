@@ -1,0 +1,3 @@
+Id,InitScript,ApplyScript,ClearScript,ReducePerTurn,ReducePerAttacked,ReducePerUse,UpperBound,Icon,Type,Rarity,Effects,SoundEffects,Action,CanZero
+BUFF的ID（唯一英文）,,BUFF生效时的效buff_BUFF的ID（唯一英文）时的效果,清除时效果,层数每回合减少数,层数每受击减少数,层数每行动减少数,层数上限,图标路径,类型,稀有度,特效,,,
+*aurelia_goldspent,,,,999,0,0,9999,Icon/Buff/负面,能力,1,,,0,1
