@@ -17,7 +17,11 @@ A mod for *Witch's Apocalyptic Journey*, built from the [apocalyptic-journey-mod
 
 - **The "go into debt" half of Open Tab** — there's no confirmed generic hook to intercept an arbitrary future Gold-spend across any card. In practice, each Gold-spending card will need its own affordability check + debt fallback written into its own script;
 
-- Art, animations, `Icon.png` — same as Vex, `ModResource/` is empty and the Career row already points at the expected paths.
+- Art, animations, `Icon.png`. Currently `ModResource/` is empty.
+- Full splash art
+- Round avatar icon
+- Diamond avatar icon
+- Emojis
 
 ## Open questions / needs verification in-engine
 
