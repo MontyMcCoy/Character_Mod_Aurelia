@@ -1,5 +1,11 @@
 Id,Rarity,Expend,Tag,InitScript,DrawScript,UseScript,DropScript,Icon,Effects,Action,PackBelong
 唯一标识,稀有度,花费,标签,更新显示信息用的,卡牌抽到后执行,卡牌使用后执行,卡牌进入弃牌堆后执行,图标资源的路径,特效路径,动作,
+
+--
+--Target self. Open card-selection UI on hand.
+--For each card the player selects: add its Expend (cost) to a running total, then burn it.
+--Add (total x 20) Gold to PlayerInfo.Money.
+--
 *aurelia_liquidate,3,1,技能牌,,,"self:SetStatus(""Self"");
 CS.Witch.UI.Window.FightUI.Instance:SelectCardToAction(""1"", function(cardList)
     local total = 0;
@@ -10,6 +16,13 @@ CS.Witch.UI.Window.FightUI.Instance:SelectCardToAction(""1"", function(cardList)
     end
     PlayerInfo.Money = PlayerInfo.Money + (total * 20);
 end, ""hand"");",,Icon/Card/aurelia_liquidate,,CommonCardItem,
+
+--
+--Insurance Policy (English reference)
+--Target self. Gain 1 stack of Shelter (chrysalis).
+--Read Gold spent this turn from the aurelia_goldspent tracking buff.
+--Convert to Impregnable: 2 stacks per 10 Gold spent, capped at 10 stacks.
+--
 *aurelia_insurancepolicy,3,3,技能牌,,,"self:SetStatus(""Self"");
 self:AddBuff(""chrysalis"", ""1"");
 local buff = self.Self:GetBuff(""aurelia_goldspent"");
