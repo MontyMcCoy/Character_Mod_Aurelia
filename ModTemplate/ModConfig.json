@@ -1,8 +1,8 @@
 {
-  "ModName": "ModTemplate",
+  "ModName": "Aurelia the Merchant Witch",
   "ModVersion": "1.0",
-  "ModAuthor": "YOUR_NAME",
-  "ModDescription": "Description",
+  "ModAuthor": "Setnom",
+  "ModDescription": "Character Mod for Witch Apocalyptic Journey",
   "IconPath": "Icon.png",
   "Enabled": false,
   "Dependencies": null
