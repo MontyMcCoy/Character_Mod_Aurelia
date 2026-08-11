@@ -13,10 +13,11 @@ A mod for *Witch's Apocalyptic Journey*, built from the [apocalyptic-journey-mod
 
 ## Not yet built
 
-- **The rest of her card pool** — Merchant's Toll, Appraise, Wager, Golden Toll, Barter, Balancing the Books, Pitch, Counterfeit, Shopping, Damaged Goods, Small Charge, Everything Must Go, Collateral, Letter of Credit, Money Printer, Bankrupt's Gambit, Debt, Monopoly, Hostile Takeover, Conglomerate. Several of these still had open rules questions in design discussion (dice syntax, Impregnable overflow, ambiguous timing) that should be resolved before implementing them in Lua.
-- **The "go into debt" half of Open Tab** — there's no confirmed generic hook to intercept an arbitrary future Gold-spend across any card. In practice, each Gold-spending card will need its own affordability check + debt fallback written into its own script; Open Tab's text is the design rule those cards should follow, not a single piece of code that enforces it automatically.
+- **The rest of her card pool**
+
+- **The "go into debt" half of Open Tab** — there's no confirmed generic hook to intercept an arbitrary future Gold-spend across any card. In practice, each Gold-spending card will need its own affordability check + debt fallback written into its own script;
+
 - Art, animations, `Icon.png` — same as Vex, `ModResource/` is empty and the Career row already points at the expected paths.
-- `ModAuthor` in `ModConfig.json`.
 
 ## Open questions / needs verification in-engine
 
