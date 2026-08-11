@@ -1,45 +1,34 @@
-# Witch's Apocalyptic Journey Mod Tutorial
+# Purpose
+A character mod for [Witch's Apocalyptic Journey](https://store.steampowered.com/app/3709430/Witchs_Apocalyptic_Journey/)
 
-English | [中文](README.zh-CN.md)
+**Concept:** Aurelia is a witch that spends gold to acquire power.
+Aurelia treats every action like a transaction. Nothing is free, and she'll happily pay top coin for what she wants and she's just as readily to sell off what's in her hand to raise a profit. Where other witches build power through skills and ritual, she simply buys it. The only question is whether she can afford it.
 
-This repository collects mod templates, examples, and development notes for Witch's Apocalyptic Journey. When creating a new mod, copy either `ModTemplate` or `DllTemplate` into your own mod folder, then edit the configuration and scripts by following the README in that template.
+# Aurelia, The Merchant Witch
+A custom playable character mod for **Witch's Apocalyptic Journey.**
 
-## Directory Guide
+*" ."*
 
-| Directory | Contents |
-| --- | --- |
-| `ModTemplate/` | Lua mod template with `ModConfig.json`, entry scripts, Data/Text sample tables, resource folders, and vanilla config references. Use it for most new cards, buffs, text, resource redirects, and Lua hooks. |
-| `DllTemplate/` | C# DLL hook template with a development project, sample entry point, and the runtime `Scripts/Entry.dll` layout. Use it when you need C# language features or more complex hooks. |
-| `Example/` | Completed sample mods. `Example/Defect` demonstrates how to organize config tables, a Lua entry script, and `ModResource` animation assets. |
+# Core Features
+→ Sell cards from hand for Gold (Liquidate) 
+→ Use Cards to spend/gain Gold. 
+→ spending gold to activate effects and skills (Insurance Policy) 
+→ if Aurelia overspends and can't afford the transaction she goes into debt.
 
-## File Guide
 
-| File | Contents |
-| --- | --- |
-| `LICENSE` | Repository license. |
-| `.gitignore` | Git ignore rules. |
+# Skills
+[Active] CD: 1 — Liquidate
+'Sell' selected card(s) from your hand: Gain Gold equal to 20 × the total of the card(s) cost. 
 
-## Quick Start
+[Active] CD: 3 — Insurance Policy
+Gain 1 stack of Shelter. For every 10 Gold spent this turn gain 2 stacks of Impregnable. Max 10 stacks.
+*Note: Shelter - This turn at most take 50% of your MAX HP. (already in vanilla game)*
 
-1. Choose a template:
-   - Lua mod: copy `ModTemplate`.
-   - C# DLL hook mod: copy `DllTemplate`.
-2. Rename the copied folder to your mod name, and keep the folder name consistent with `ModName` in `ModConfig.json`.
-3. Edit `ModConfig.json`. At minimum, fill in `ModName`, `ModAuthor`, `ModVersion`, `ModDescription`, and `IconPath`.
-4. Edit the parts you need:
-   - Lua entry: `Scripts/Entry.lua`
-   - Data configs: `Data/`
-   - Text configs: `Text/`
-   - Images, animations, and other assets: `ModResource/`
-5. See the template-specific guides:
-   - Lua template: [ModTemplate/README.md](ModTemplate/README.md)
-   - C# DLL template: [DllTemplate/readme.md](DllTemplate/readme.md)
-   - Sample mod: [Example/Defect/README.md](Example/Defect/README.md)
+[Passive] — Open Tab
+Whenever you play a card, gain 2 Gold. Whenever you would spend Gold you don't have to complete a transaction, you may go into debt instead. 
+[Debt]: Take True Damage equal to 5% of your Max HP for each 10 Gold still owed.
 
-## Upload to Steam Workshop
+# Thank you to the developers for the tutorials
+A character mod for *Witch's Apocalyptic Journey*, built from the [apocalyptic-journey-mod-tutorial](https://github.com/meowalive/apocalyptic-journey-mod-tutorial) `ModTemplate`.
 
-After your mod is finished and tested locally, use the upload tool shipped with the game:
-
-`D:\Witch's Apocalyptic Journey\Witch's Apocalyptic Journey_Data\StreamingAssets\Mod Upload Tool\WorkshopUploader.exe`
-
-For detailed steps, see [ModTemplate/README.md#10-publish-your-mod](ModTemplate/README.md#10-publish-your-mod).
+You can follow the full steps here: [tutorial repo README §10](https://github.com/meowalive/apocalyptic-journey-mod-tutorial/blob/main/ModTemplate/README.md#10-publish-your-mod).
