@@ -1,4 +1,4 @@
-# Aurelia — Golden Toll
+# Aurelia, the Merchant Witch — Open Tab
 
 A mod for *Witch's Apocalyptic Journey*, built from the [apocalyptic-journey-mod-tutorial](https://github.com/meowalive/apocalyptic-journey-mod-tutorial) `ModTemplate`.
 
